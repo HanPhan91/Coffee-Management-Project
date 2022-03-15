@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách nhân viên</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý nhân viên</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Ngày sinh</th>
+                    <th scope="col">Nhiệm vụ</th>
+                    <th scope="col" colspan="2">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each= "staff, count: ${staffs}">
+                        <tr th:id="'tr_'+ ${staff.id}">
+                            <td th:text="${count.count}"></td>
+                            <td th:text="${staff.name}"></td>
+                            <td th:text="${staff.address}"></td>
+                            <td th:text="${staff.phone}"></td>
+                            <td th:text="${staff.email}"></td>
+                            <td th:text="${staff.birthDay}"></td>
+                            <td th:text="${staff.position.name}"></td>
+                            <td><button class="btn btn-outline-warning"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td><button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+
+<th:block th:replace="layout/script :: script"/>
+</body>
+</html>

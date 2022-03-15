@@ -1,0 +1,26 @@
+
+.show {
+    display: block !important;
+}
+
+.hide{
+    display: none !important;
+}
+
+.modal-alert-danger {
+    padding: 10px 35px;
+    margin-bottom: 15px;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+label.error {
+    display: list-item !important;
+    margin-top: 5px !important;
+    color: #842029 !important;
+}
+
+input.error {
+    border: solid 1px red !important;
+}
