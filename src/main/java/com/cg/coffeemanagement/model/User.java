@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -41,9 +42,9 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private boolean deleted;
 
-    @OneToOne
-    @JoinColumn(name = "id_role")
-    private Role role;
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
 
     @OneToOne
     @JoinColumn(name = "id_staff")

@@ -66,4 +66,39 @@ $(document).ready(function () {
             editPosition();
         }
     });
+
+    //Validated Form Restore
+
+    $("#frmRestore").validate({
+        rules: {
+            namePositionRestore: {
+                required: true,
+                minlength: 5,
+                maxlength: 30
+            },
+        },
+        messages: {
+            namePositionRestore: {
+                required: "Tên chức vụ không được để trống",
+                minlength: "Tên chức vụ phải nằm trong khoảng 5-30 ký tự",
+                maxlength: "Tên chức vụ phải nằm trong khoảng 5-30 ký tự"
+            }
+        },
+        errorLabelContainer: '#modalRestore .modal-body .modal-alert-danger',
+        errorPlacement: function (error, element) {
+            error.appendTo("#modalRestore .modal-body .modal-alert-danger");
+        },
+        showErrors: function (errorMap, errorList) {
+            if (this.numberOfInvalids() > 0) {
+                $("#modalRestore .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+            } else {
+                $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
+                $("#modalRestore input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+            restorePosition();
+        }
+    });
 })

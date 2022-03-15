@@ -1,5 +1,6 @@
 package com.cg.coffeemanagement.services.Positions;
 
+import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
 import com.cg.coffeemanagement.repository.Positions.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,20 @@ public class PositionServicesImpl implements IPositionServices{
     public List<Position> findByDeletedFalse() {
         return positionRepository.findByDeletedFalse();
     }
+
+    @Override
+    public void deletePosition(Long id) {
+        positionRepository.deletePosition(id);
+    }
+
+    @Override
+    public List<Position> findByDeletedTrue() {
+        return positionRepository.findByDeletedTrue();
+    }
+
+    @Override
+    public void restorePosition(Long id) {
+        positionRepository.restorePosition(id);
+    }
+
 }
