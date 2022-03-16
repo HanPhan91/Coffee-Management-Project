@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,5 +49,9 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id_staff")
     private Staff staff;
+
+//    @OneToMany
+//    @JoinColumn(name = "id_order")
+//    private List<Order> order;
 
 }

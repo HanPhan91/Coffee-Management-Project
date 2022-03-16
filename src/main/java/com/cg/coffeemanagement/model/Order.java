@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import javax.persistence.Table;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -38,4 +37,13 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_table")
     private CoffeeTable table ;
+
+    @OneToOne
+    @JoinColumn(name = "id_discount")
+    private Discount discount;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
 }
