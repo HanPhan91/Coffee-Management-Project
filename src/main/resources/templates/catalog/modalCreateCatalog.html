@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreateCatalog">
+    <div class="modal" tabindex="-1" id="modalCreateCatalog">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm danh mục thức uống</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateCatalog">
+                        <div class="row">
+                            <input type="text" id="idCatalogUpdate" hidden>
+                            <div class="col">
+                                <label for="catalogNameCreate" class="form-label fw-bold">Tên danh mục</label>
+                                <input type="text" class="form-control" id="catalogNameCreate" name="catalogNameCreate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateCatalog">Tạo danh mục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //show modal create
+
+
+
+        //set event for button create
+
+    </script>
+</th:block>
