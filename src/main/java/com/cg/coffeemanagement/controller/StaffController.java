@@ -26,4 +26,13 @@ public class StaffController {
         modelAndView.addObject("staffs", staffs);
         return modelAndView;
     }
+
+    @GetMapping("/deleted")
+    public ModelAndView showStaffDeleted(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("staffs/deleted");
+        List<Staff> staffs = staffServices.findByDeletedTrue();
+        modelAndView.addObject("staffs", staffs);
+        return modelAndView;
+    }
 }

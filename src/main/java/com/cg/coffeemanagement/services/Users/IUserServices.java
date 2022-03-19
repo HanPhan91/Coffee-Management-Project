@@ -1,6 +1,8 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.TempDTO;
+import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 
 import java.util.List;
@@ -21,4 +23,5 @@ public interface IUserServices extends IGeneralServices<User> {
 
     @Override
     void remove(Long id);
+
 }

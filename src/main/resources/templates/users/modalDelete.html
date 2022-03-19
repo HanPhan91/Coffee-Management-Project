@@ -57,13 +57,12 @@
                     $("#tr_" + $("#idPositionDelete").val()).remove();
                     $("#modalDelete").modal("hide");
                     $("#frmDelete")[0].reset();
-                    swal("Thành công", "Chức vụ đã được xóa", "success");
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
                             $("#" + key).addClass("error");
                         });
                     } else {
@@ -73,11 +72,5 @@
                     $("#modalDelete .modal-body .modal-alert-danger").html(str);
                 })
         }
-        $("#modalDelete").on('hidden.bs.modal', function () {
-            $("#modalDelete .modal-body .modal-alert-danger").empty();
-            $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-            $("#modalDelete input.error").removeClass("error");
-            $("#frmDelete")[0].reset();
-        });
     </script>
 </th:block>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalEdit">
+    <div class="modal" tabindex="-1" id="modalEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật nhân viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditStaff">
+                        <div class="row">
+                            <input type="text" class="form-control" id="idStaffEdit" hidden>
+                            <div class="col co4">
+                                <label for="nameStaffEdit" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffEdit" name="nameStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffEdit" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffEdit" name="addressStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffEdit" class="form-label fw-bold">Số điện thoại nhân viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffEdit" name="phoneStaffEdit">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffEdit" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffEdit" name="emailStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffEdit" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="date" class="form-control" id="bodStaffEdit" name="bodStaffEdit">
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffEdit" class="form-label fw-bold">Chức vụ nhân viên:</label>
+                                <select class="form-select" id="positionStaffEdit">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEditStaff">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnEditStaff").on("click", function (){
+            $("#frmEditStaff").trigger("submit");
+        });
+
+        function editStaff(){
+            let id = $("#idStaffEdit").val();
+            let name = $("#nameStaffEdit").val().trim();
+            let address = $("#addressStaffEdit").val().trim();
+            let phone = $("#phoneStaffEdit").val().trim();
+            let email =$("#emailStaffEdit").val().trim();
+            let birthDay = new Date($("#bodStaffEdit").val()).toISOString().slice(0, 10);
+            let position = $("#positionStaffEdit").val();
+            let staff = new Staff(id, name, address, phone, email, birthDay, position);
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/staffs/edit/" + id,
+                data: JSON.stringify(staff)
+            })
+                .done(function (data){
+                    let str= `
+                        <tr id="tr_${data.id}">
+                                <td>${data.name}</td>
+                                <td>${data.address}</td>
+                                <td>${data.phone}</td>
+                                <td>${data.email}</td>
+                                <td>${data.birthDay}</td>
+                                <td>${data.position.name}</td>
+                                <td>
+                                    <button class="btn btn-outline-warning editStaff"><i class="fa fa-pencil-alt"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger deleteStaff"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                `;
+                    $("#tr_" + id).replaceWith(str);
+                    $("#modalEdit").modal("hide");
+                    $("#frmEditStaff")[0].reset();
+                    swal("Thành công", "Nhân viên đã được cập nhật", "success");
+                    handlerActionStaff();
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalEdit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalEdit .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#modalEdit").on('hidden.bs.modal', function () {
+            $("#modalEdit .modal-body .modal-alert-danger").empty();
+            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalEdit input.error").removeClass("error");
+            $("#positionStaffEdit option").remove();
+            $("#frmEditStaff")[0].reset();
+        });
+    </script>
+
+</th:block>

@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
-public class StaffServicesImpl implements IStaffServices{
+public class StaffServicesImpl implements IStaffServices {
 
     @Autowired
     private StaffRepository staffRepository;
@@ -43,5 +44,21 @@ public class StaffServicesImpl implements IStaffServices{
     @Override
     public List<Staff> findByDeletedFalse() {
         return staffRepository.findByDeletedFalse();
+    }
+
+    @Override
+    public List<Staff> findByDeletedTrue() {
+        return staffRepository.findByDeletedTrue();
+    }
+
+    @Override
+    public void deleteStaff(Long id) {
+        staffRepository.deleteStaff(id);
+
+    }
+
+    @Override
+    public void restoreStaff(Long id) {
+        staffRepository.restoreStaff(id);
     }
 }

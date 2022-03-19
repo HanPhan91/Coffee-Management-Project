@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +29,12 @@ public class PositionApi {
 
     @Autowired
     private IPermissionServices permissionServices;
+
+    @GetMapping
+    public ResponseEntity<?> getAllPosition() {
+        List<Position> positions = positionServices.findAll();
+        return new ResponseEntity<>(positions, HttpStatus.OK);
+    }
 
 
     @GetMapping("/{id}")
@@ -44,31 +51,31 @@ public class PositionApi {
     public ResponseEntity<?> doCreate(@Validated @RequestBody PositionDto positionDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
-        } else {
-            Position creaPosition = new Position();
-            creaPosition.setName(positionDto.getName());
-            Permission permission = permissionServices.findById(positionDto.getPermission()).get();
-            creaPosition.setPermission(permission);
-            Position returnPosition = positionServices.save(creaPosition);
-            return new ResponseEntity<>(returnPosition, HttpStatus.CREATED);
         }
+        Position creaPosition = new Position();
+        creaPosition.setName(positionDto.getName());
+        Permission permission = permissionServices.findById(positionDto.getPermission()).get();
+        creaPosition.setPermission(permission);
+        Position returnPosition = positionServices.save(creaPosition);
+        return new ResponseEntity<>(returnPosition, HttpStatus.CREATED);
+
     }
 
     @PutMapping("/edit")
     public ResponseEntity<?> doEdit(@Validated @RequestBody PositionDto positionDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
-        } else {
-            Optional<Position> opPosition = positionServices.findById(positionDto.getId());
-            if (opPosition.isPresent()) {
-                Position editPosition = opPosition.get();
-                editPosition.setName(positionDto.getName());
-                positionServices.save(editPosition);
-                return new ResponseEntity<>(positionServices.findById(positionDto.getId()).get(), HttpStatus.OK);
-            } else {
-                throw new DataInputException("Chức vụ không tồn tại");
-            }
         }
+        Optional<Position> opPosition = positionServices.findById(positionDto.getId());
+        if (opPosition.isPresent()) {
+            Position editPosition = opPosition.get();
+            editPosition.setName(positionDto.getName());
+            positionServices.save(editPosition);
+            return new ResponseEntity<>(positionServices.findById(positionDto.getId()).get(), HttpStatus.OK);
+        } else {
+            throw new DataInputException("Chức vụ không tồn tại");
+        }
+
     }
 
     @PutMapping("/delete")
@@ -86,17 +93,16 @@ public class PositionApi {
     public ResponseEntity<?> doRestore(@Validated @RequestBody PositionDto positionDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
+        }
+        Optional<Position> opPosition = positionServices.findById(positionDto.getId());
+        if (opPosition.isPresent()) {
+            Position restorePosition = opPosition.get();
+            restorePosition.setName(positionDto.getName());
+            positionServices.save(restorePosition);
+            positionServices.restorePosition(restorePosition.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            Optional<Position> opPosition = positionServices.findById(positionDto.getId());
-            if (opPosition.isPresent()) {
-                Position restorePosition = opPosition.get();
-                restorePosition.setName(positionDto.getName());
-                positionServices.save(restorePosition);
-                positionServices.restorePosition(restorePosition.getId());
-                return new ResponseEntity<>(positionServices.findById(positionDto.getId()).get(), HttpStatus.OK);
-            } else {
-                throw new DataInputException("Chức vụ không tồn tại");
-            }
+            throw new DataInputException("Chức vụ không tồn tại");
         }
     }
 }

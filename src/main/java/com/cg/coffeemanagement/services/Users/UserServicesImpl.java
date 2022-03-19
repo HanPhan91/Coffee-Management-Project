@@ -1,7 +1,10 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.repository.Users.UserRepository;
+import com.cg.coffeemanagement.services.Upload.UploadService;
+import com.cg.coffeemanagement.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,12 @@ public class UserServicesImpl implements IUserServices{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UploadService uploadService;
+
+    @Autowired
+    private UploadUtils uploadUtils;
 
     @Override
     public List<User> findAll() {

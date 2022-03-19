@@ -63,14 +63,19 @@
                     $("#tr_" + $("#idPositionEdit").val()).replaceWith(str);
                     $("#modalEdit").modal("hide");
                     $("#frmEdit")[0].reset();
-                    swal("Thành công", "Chức vụ mới đã được cập nhật","success");
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Chức vụ đã được tạo cập nhật',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
                     handlerAction();
                 })
                 .fail(function (jqXHR){
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
                             $("#" + key).addClass("error");
                         });
                     } else {
@@ -80,12 +85,7 @@
                     $("#modalEdit .modal-body .modal-alert-danger").html(str);
                 })
         }
-        $("#modalEdit").on('hidden.bs.modal', function () {
-            $("#modalEdit .modal-body .modal-alert-danger").empty();
-            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-            $("#modalEdit input.error").removeClass("error");
-            $("#frmEdit")[0].reset();
-        });
+
     </script>
 
 </th:block>

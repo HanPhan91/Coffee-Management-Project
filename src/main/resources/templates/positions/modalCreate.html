@@ -70,18 +70,13 @@
                 $("#frmCreate")[0].reset();
                 $("#perPositionCre option").remove();
                 handlerAction();
-                Swal.fire({
-                    title: 'Thành công!',
-                    text: 'Chức vụ mới đã được tạo',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
+                swal("Thành công", "Chức vụ mới đã được tạo", "success");
             })
             .fail(function (jqXHR){
                 let str = ``;
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -91,7 +86,13 @@
                 $("#modalCreate .modal-body .modal-alert-danger").html(str);
             })
         }
-
+        $("#modalCreate").on('hidden.bs.modal', function () {
+            $("#modalCreate .modal-body .modal-alert-danger").empty();
+            $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreate input.error").removeClass("error");
+            $("#perPositionCre option").remove();
+            $("#frmCreate")[0].reset();
+        });
     </script>
 
 </th:block>

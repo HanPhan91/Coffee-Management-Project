@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreate">
+    <div class="modal" tabindex="-1" id="modalCreate">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo nhân viên mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateStaff">
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="nameStaffCre" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffCre" name="nameStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffCre" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffCre" name="addressStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffCre" class="form-label fw-bold">Số điện thoại nhân viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffCre" name="phoneStaffCre">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffCre" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffCre" name="emailStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffCre" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="date" class="form-control" id="bodStaffCre" name="bodStaffCre">
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffCre" class="form-label fw-bold">Chức vụ nhân viên:</label>
+                                <select class="form-select" id="positionStaffCre">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreate">Tạo chức vụ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreate").on("click", function (){
+            $("#frmCreateStaff").trigger("submit");
+        });
+
+        function createStaff(){
+            let date = new Date($("#bodStaffCre").val()).toISOString().slice(0, 10);
+            let staff = new Staff(0,$("#nameStaffCre").val(), $("#addressStaffCre").val(), $("#phoneStaffCre").val(),
+                                   $("#emailStaffCre").val(), date , $("#positionStaffCre").val());
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/staffs/create",
+                data: JSON.stringify(staff)
+            })
+            .done(function (data){
+                let str= `
+                    <tr id="tr_${data.id}">
+                                <td>${data.name}</td>
+                                <td>${data.address}</td>
+                                <td>${data.phone}</td>
+                                <td>${data.email}</td>
+                                <td>${data.birthDay}</td>
+                                <td>${data.position.name}</td>
+                                <td>
+                                    <button class="btn btn-outline-warning editStaff" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger deleteStaff" data-id="${data.id}"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                `;
+                $("#tblStaff tbody").prepend(str);
+                $("#modalCreate").modal("hide");
+                $("#frmCreateStaff")[0].reset();
+                $("#positionStaffCre option").remove();
+                handlerActionStaff();
+                swal("Thành công", "Nhân viên mới đã được tạo", "success");
+            })
+            .fail(function (jqXHR){
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalCreate .modal-body .modal-alert-danger").html(str);
+            })
+        }
+
+        $("#modalCreate").on('hidden.bs.modal', function () {
+            $("#modalCreate .modal-body .modal-alert-danger").empty();
+            $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreate input.error").removeClass("error");
+            $("#positionStaffCre option").remove();
+            $("#frmCreateStaff")[0].reset();
+        });
+    </script>
+</th:block>

@@ -16,7 +16,7 @@
 }
 
 label.error {
-    display: list-item !important;
+    display: list-item;
     margin-top: 5px !important;
     color: #842029 !important;
 }

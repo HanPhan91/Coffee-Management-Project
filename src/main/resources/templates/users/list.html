@@ -40,14 +40,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-end">
-                    <button class="btn btn-outline-primary" id="createPosition"><i class="fa fa-plus-square"></i> Tạo
+                    <button class="btn btn-outline-primary" id="createUser"><i class="fa fa-plus-square"></i> Tạo
                         user mới
                     </button>
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <table class="table table-hover" id="tblPosition">
+                    <table class="table table-hover" id="tblUser">
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
@@ -55,6 +55,7 @@
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
                             <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
+                            <th scope="col" class="fw-bold fs-5">Avatar</th>
                             <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
                         </thead>
@@ -66,12 +67,13 @@
                                 <td th:text="${user.staff.name}"></td>
                                 <td th:text="${user.staff.position.name}"></td>
                                 <td th:text="${user.staff.createAt}"></td>
+                                <td>Avatar</td>
                                 <td class="text-center">
-                                    <button class="btn btn-outline-warning editPosition" th:data-id="${user.id}"><i
+                                    <button class="btn btn-outline-warning editUser" th:data-id="${user.id}"><i
                                             class="fa fa-pencil-alt"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-outline-danger deletePosition" th:data-id="${user.id}"><i
+                                    <button class="btn btn-outline-danger deleteUser" th:data-id="${user.id}"><i
                                             class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
@@ -82,7 +84,7 @@
             </div>
             <div class="row">
                 <div class="col text-end">
-                    <a class="btn btn-outline-danger" id="deletedPosition" th:href="@{/users/deleted}"><i class="fa fa-trash"></i> Danh sách user đã xóa
+                    <a class="btn btn-outline-danger" id="deletedUser" th:href="@{/users/deleted}"><i class="fa fa-trash"></i> Danh sách user đã xóa
                     </a>
                 </div>
             </div>
@@ -101,16 +103,34 @@
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
-<th:block th:replace="positions/modalCreate :: modalCreate"/>
-<th:block th:replace="positions/modalEdit :: modalEdit"/>
-<th:block th:replace="positions/modalDelete :: modalDelete"/>
-<script src="/assets/App/appPosition.js"></script>
-<script src="/assets/App/validatedPosition.js"></script>
+<th:block th:replace="users/modalCreate :: modalCreate"/>
+<th:block th:replace="users/modalEdit :: modalEdit"/>
+<th:block th:replace="users/modalDelete :: modalDelete"/>
+<script src="/assets/App/appUser.js"></script>
+<script src="/assets/App/validatedUser.js"></script>
 <script>
-    $("#createPosition").on("click", function () {
+    $("#createUser").on("click", function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/staffs"
+        })
+            .done(function (data){
+                let str="";
+                for (let i = 0; i < data.length; i++) {
+                    let staff = data[i];
+                    str+=`
+                    <option value="${staff.id}">${staff.name}</option>
+                `;
+                }
+                $("#staffCre").prepend(str);
+            })
+            .fail(function (){
+                window.location = "/errors";
+            })
+        
         $("#modalCreate").modal("show");
     });
-    handlerAction();
+    handlerActionUser();
 </script>
 
 </body>

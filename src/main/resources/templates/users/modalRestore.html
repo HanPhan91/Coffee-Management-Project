@@ -49,13 +49,12 @@
                     $("#tr_"+ $("#idPositionRestore").val()).remove();
                     $("#modalRestore").modal("hide");
                     $("#frmRestore")[0].reset();
-                    swal("Thành công", "Chức vụ mới đã được khôi phục", "success");
                 })
                 .fail(function (jqXHR){
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
                             $("#" + key).addClass("error");
                         });
                     } else {
@@ -65,12 +64,7 @@
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
                 })
         }
-        $("#modalRestore").on('hidden.bs.modal', function () {
-            $("#modalRestore .modal-body .modal-alert-danger").empty();
-            $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-            $("#modalRestore input.error").removeClass("error");
-            $("#frmRestore")[0].reset();
-        });
+
     </script>
 
 </th:block>
