@@ -81,6 +81,16 @@
                         </th:block>
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <div class="d-flex justify-content-end">
+                                <a type="button" class="btn btn-danger restoreCatalog" href="/catalogs/deleted">
+                                    <i class="fa fa-trash-restore"></i>
+                                    Khôi phục danh mục
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -222,39 +232,7 @@
     }
 
     function deleteCatalog() {
-        let catalog = {
-            id: $("#idCatalogDelete").val(),
-            catalogName: $("#catalogNameDelete").val(),
-        };
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "PUT",
-            url: "/api/catalogs/delete",
-            data: JSON.stringify(catalog)
-        })
-            .done(function (data) {
-                let currentRow = $("#tr_" + data.id);
-                currentRow.remove();
-                $("#modalDeleteCatalog").modal("hide");
-                $("#frmDeleteCatalog")[0].reset();
-                swal("Cập nhật thành công", "Danh mục đã được xoá", "success");
-            })
-            .fail(function (jqXHR) {
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                    $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
-                        $("#" + key).addClass("error");
-                    });
-                } else {
-                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
-                $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#modalDeleteCatalog .modal-body .modal-alert-danger").html(str);
-            })
+
     }
 
     function restoreCatalog() {
@@ -478,8 +456,39 @@
 
     //set event for button Delete
     $("#btnDeleteCatalog").on("click", function () {
-        deleteCatalog();
-    });
+        let catalog = {
+            id: $("#idCatalogDelete").val(),
+            catalogName: $("#catalogNameDelete").val(),
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: "/api/catalogs/delete",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let currentRow = $("#tr_" + data.id);
+                currentRow.remove();
+                $("#modalDeleteCatalog").modal("hide");
+                $("#frmDeleteCatalog")[0].reset();
+                swal("Cập nhật thành công", "Danh mục đã được xoá", "success");
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").html(str);
+            })    });
 
     $("#modalDeleteCatalog").one('hidden.bs.modal', function () {
         $("#modalDeleteCatalog .modal-body .modal-alert-danger").empty();

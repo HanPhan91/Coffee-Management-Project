@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -55,6 +52,10 @@ public class Drink {
     private boolean storage;
 
     private int inventory;
+
+    @ManyToOne
+    @JoinColumn(name = "id_catalog")
+    private Catalog catalog ;
 
 
 }

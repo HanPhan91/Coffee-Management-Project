@@ -20,7 +20,7 @@ public class CatalogController {
     @GetMapping
     public ModelAndView listCatalogs(){
         ModelAndView modelAndView = new ModelAndView();
-        List<Catalog> catalogs = catalogService.findAll();
+        List<Catalog> catalogs = catalogService.findAllNotDeleted();
         modelAndView.setViewName("catalog/list");
         modelAndView.addObject("catalogs",catalogs);
         return modelAndView;
