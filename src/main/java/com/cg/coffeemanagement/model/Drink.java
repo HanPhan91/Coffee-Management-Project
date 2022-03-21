@@ -47,9 +47,9 @@ public class Drink {
     private Date createdAt;
 
 
-    private String imgUrl;
+        private String imgUrl = "1";
 
-    private boolean storage;
+    private boolean storage = true;
 
     private int inventory;
 

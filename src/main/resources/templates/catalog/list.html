@@ -113,7 +113,6 @@
 <th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
 <script>
 
-
     $("#createCatalog").on("click", function () {
         $("#modalCreateCatalog").modal("show");
     });
@@ -126,6 +125,7 @@
         let catalog = {
             catalogName: $("#catalogNameCreate").val()
         };
+        debugger;
 
         $.ajax({
             headers: {
@@ -271,7 +271,6 @@
             })
     }
 
-
     function handlerShowModalEditCatalog() {
         $("button.editCatalog").on("click", function () {
             let id = $(this).data("id");
@@ -310,7 +309,6 @@
 
     //set event for button Create
     $("#btnCreateCatalog").on("click", function () {
-
         let catalog = {
             catalogName: $("#catalogNameCreate").val(),
         }
@@ -327,16 +325,16 @@
             .done(function (data) {
                 let str = `
                     <tr id="tr_${data.id}">
-                         <td th:text="${data.id}"></td>
-                         <td th:text="${data.catalogName}"></td>
+                         <td>${data.id}</td>
+                         <td>${data.catalogName}</td>
                          <td class="text-center">
-                         <button type="button" class="btn btn-outline-primary editCatalog" th:data-id="${data.id}">
+                         <button type="button" class="btn btn-outline-primary editCatalog" data-id="${data.id}">
                          <i class="fa fa-edit"></i>
                          </button>
                          </td>
                          <td class="text-center">
                          <button type="button" class="btn btn-outline-danger deleteCatalog"
-                                            th:data-id="${data.id}">
+                                            data-id="${data.id}">
                          <i class="fa fa-trash"></i>
                          </button>
                          </td>

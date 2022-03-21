@@ -79,10 +79,9 @@
                         <tr th:id="'tr_'+ ${drink.id}">
                             <td th:text="${drink.id}"></td>
                             <td th:text="${drink.name}"></td>
-                            <td class="drinkPrice"></td>
-                            <th:block th:each="catalog: ${catalogs}">
-                                <td th:if="${drink.idCatalog == catalog.id}" th:text="${catalog.catalogName}"></td>
-                            </th:block>
+                            <td th:text="${drink.price}"></td>
+                            <td th:text="${drink.getCatalog().getCatalogName()}"></td>
+
                             <td class="text-center">
                                 <button type="button" class="btn btn-outline-primary edit" th:data-id="${drink.id}">
                                     <i class="fa fa-edit"></i>
@@ -95,11 +94,11 @@
                                 </button>
                             </td>
                         </tr>
-                        <script th:inline="javascript">
-                            var id = [[${drink.id}]];
-                            var price = [[${drink.price}]];
-                            $("#tr_" + id + " .drinkPrice").append(separator(price));
-                        </script>
+<!--                        <script th:inline="javascript">-->
+<!--                            var id = [[${drink.id}]];-->
+<!--                            var price = [[${drink.price}]];-->
+<!--                            $("#tr_" + id + " .drinkPrice").append(separator(price));-->
+<!--                        </script>-->
                     </th:block>
 
                     </tbody>
@@ -131,73 +130,91 @@
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
-<!--<th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>-->
-<!--<th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>-->
+<th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>
+<th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>
 <!--<th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>-->
 </body>
 <script>
-    function handlerShowModalEdit() {
-        $("button.edit").on("click", function () {
-            let id = $(this).data("id");
+    $(document).ready(function (){
+        function handlerShowModalEdit() {
+            $("button.edit").on("click", function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/api/drinks/" + id
+                })
+                    .done(function (data) {
+                        $("#idDrinkUpdate").val(data.id);
+                        $("#drinkNameUpdate").val(data.name);
+                        $("#priceDrinkUpdate").val((data.price));
+                        $("#desDrinkUpdate").val(data.description);
+                        $("#inventoryDrinkUpdate").val(data.inventory);
+                        $("#modalUpdateDrink").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal withdraw error");
+                    })
+            });
+        }
+
+        handlerShowModalEdit();
+
+        $("#btnUpdateDrink").on("click", function () {
+            let id = $("#idDrinkUpdate").val(),
+                drink = {
+                    id: $(id),
+                    name: $("#drinkNameUpdate").val(),
+                    price: $("#priceDrinkUpdate").val(),
+                    description: $("#desDrinkUpdate").val(),
+                    inventory: $("#inventoryDrinkUpdate").val(),
+                    catalog: $("#catalogsUpdate").val
+                };
             $.ajax({
-                type: "GET",
-                url: "/api/drinks/update/" + id
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/drinks/update/" + id,
+                data: JSON.stringify(drink)
             })
                 .done(function (data) {
-                    let drinkId;
-                    let drinkName;
-                    let drinkPrice;
-                    let drinkDes;
-                    let catalogId;
-                    for (let i = 0; i < data[0].length; i++) {
-                        drinkId = data[0][i].id;
-                        drinkName = data[0][i].drinkName;
-                        drinkPrice = data[0][i].price;
-                        drinkDes = data[0][i].description;
-                        catalogId = data[0][i].idCatalog;
-                    }
-                    $("#idDrinkUpdate").val(drinkId);
-                    $("#drinkNameUpdate").val(drinkName);
-                    $("#priceDrinkUpdate").val(separator(drinkPrice));
-                    $("#desDrinkUpdate").val(drinkDes);
-                    for (let i = 0; i < data[1].length; i++){
-                        let id = data[1][i].id;
-                        let name = data[1][i].catalogName;
-                        if (id == catalogId) {
-                            $("#catalogsUpdate").append(`<option value=${id} selected>${name}</option>`);
-                        } else {
-                            $("#catalogsUpdate").append(`<option value=${id}>${name}</option>`);
-                        }
-                    }
-                    $("#modalUpdateDrink").modal("show");
+                    let str = `
+                    <tr id="tr_${data.id}">
+                    <td>${data.id}</td>
+                    <td>${data.name}</td>
+                    <td>${data.price}</td>
+                    <td>${data.description}</td>
+                    <td>${data.inventory}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary edit" ">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-success delete">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </td>
+                </tr>
+            `;
+
+
+                    let currentRow = $("#tr_" + data.id);
+                    currentRow.replaceWith(str);
+
+                    $("#modalUpdateDrink").modal("hide");
+
+                    $("#frmUpdateDrink")[0].reset();
+
+                    // handlerShowUpdateModal();
+
                 })
                 .fail(function (resp) {
-                    alert("Show modal withdraw error");
+                    console.log(resp);
+                    alert("Update Error");
                 })
         });
-    }
-
-    function handlerShowModalDelete() {
-        $("button.delete").on("click", function () {
-            let id = $(this).data("id");
-            $.ajax({
-                type: "GET",
-                url: "/api/drinks/" + id
-            })
-                .done(function (data) {
-                    $("#idDrinkDelete").val(data.id);
-                    $("#drinkNameDelete").val(data.drinkName);
-                    $("#priceDrinkDelete").val(separator(data.price));
-                    $("#desDrinkDelete").val(data.description);
-                    $("#modalDeleteDrink").modal("show");
-                })
-                .fail(function (resp) {
-                    alert("Show modal delete error");
-                })
-        });
-    }
-
-    handlerShowModalEdit();
-    handlerShowModalDelete();
+    })
 </script>
 </html>

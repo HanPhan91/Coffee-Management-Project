@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreateDrink">
+    <div class="modal" tabindex="-1" id="modalCreateDrink">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm mới thức uống</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+
+                    </div>
+                    <form id="frmCreateDrink">
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="drinkNameCreate" class="form-label fw-bold">Tên thức uống</label>
+                                <input type="text" class="form-control" id="drinkNameCreate" name="drinkNameCreate">
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="priceDrinkCreate" class="form-label fw-bold">Giá thức uống</label>
+                                <input type="text" class="form-control number-separator inNumber" id="priceDrinkCreate"
+                                       name="priceDrinkCreate">
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
+                                <select class="custom-select" id="catalogsCreate">
+
+                                </select>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="inventoryDrinkCreate" class="form-label fw-bold">Số lượng nhập</label>
+                                <input type="text" class="form-control number-separator inNumber" id="inventoryDrinkCreate"
+                                       name="priceDrinkCreate">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <label for="desDrinkCreate" class="form-label fw-bold">Mô tả</label>
+                                <textarea class="form-control" id="desDrinkCreate" name="desDrinkCreate" rows="4"
+                                          cols="100%"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateDrink">Tạo thức uống</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //show modal create
+        $("button.create").on("click", function () {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "/api/drinks/create",
+            })
+                .done(function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let id = data[i].id;
+                        let name = data[i].catalogName;
+                        $("#catalogsCreate").append(`<option value=${id}>${name}</option>`);
+                    }
+                    $("#modalCreateDrink").modal("show");
+                })
+                .fail(function (jqXHR) {
+                    console.log("get catalogs fails");
+                })
+        });
+
+        function createDrink() {
+            let drink = {
+                name: $("#drinkNameCreate").val(),
+                price: ($("#priceDrinkCreate").val()),
+                description: $("#desDrinkCreate").val(),
+                catalog: $("#catalogsCreate").val(),
+                inventory: $("#inventoryDrinkCreate").val()
+            };
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/drinks/create",
+                data: JSON.stringify(drink)
+            })
+                .done(function (data) {
+                    let drinkId;
+                    let drinkName;
+                    let drinkPrice;
+                    let drinkDes;
+                    for (let i = 0; i < data[0].length; i++) {
+                        drinkId = data[0][i].id;
+                        drinkName = data[0][i].drinkName;
+                        drinkPrice = data[0][i].price;
+                    }
+                    let catalogName = data[1][0];
+                    let str = `
+                    <tr id="'tr_'+ ${drinkId}">
+                                <td>${drinkId}</td>
+                                <td>${drinkName}</td>
+                                <td>${separator(drinkPrice)}</td>
+                                <td>${catalogName}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary edit text-center" data-id="${drinkId}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger delete text-center"
+                                            data-id="${drinkId}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                    `;
+                    $("#tblDrink tbody").prepend(str);
+                    $("#modalCreateDrink").modal("hide");
+                    $("#catalogsCreate option").remove();
+                    $("#frmCreateDrink")[0].reset();
+                    swal("Cập nhật thành công", "Thức uống mới đã được thêm", "success");
+
+                    handlerShowModalEdit();
+                    // handlerShowModalDelete();
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+        //set event for button create
+        $("#btnCreateDrink").on("click", function () {
+                        createDrink()
+        })
+
+        //reset modal Create
+        $("#modalCreateDrink").one('hidden.bs.modal', function () {
+            $("#modalCreateDrink .modal-body .modal-alert-danger").empty();
+            $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreateDrink input.error").removeClass("error");
+            $("#catalogsCreate option").remove();
+            $("#frmCreateDrink")[0].reset();
+        });
+    </script>
+
+</th:block>

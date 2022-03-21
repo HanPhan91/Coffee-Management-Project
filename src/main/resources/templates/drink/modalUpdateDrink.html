@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalUpdateDrink">
+    <div class="modal" tabindex="-1" id="modalUpdateDrink">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật thức uống</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+
+                    </div>
+                    <form id="frmUpdateDrink">
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <input type="text" id="idDrinkUpdate" hidden>
+                                <label for="drinkNameUpdate" class="form-label fw-bold">Tên thức uống</label>
+                                <input type="text" class="form-control" id="drinkNameUpdate" name="drinkNameUpdate">
+                            </div>
+                            <div class=" mb-3 col-6">
+                                <label for="priceDrinkUpdate" class="form-label fw-bold">Giá thức uống</label>
+                                <input type="text" class="form-control number-separator inNumber"
+                                       id="priceDrinkUpdate" name="priceDrinkUpdate">
+                            </div>
+                            <div class=" mb-3 col-6">
+                                <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
+                                <select class="custom-select" id="catalogsUpdate">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <label for="desDrinkUpdate" class="form-label fw-bold">Mô tả</label>
+                                <textarea class="form-control" id="desDrinkUpdate" name="desDrinkUpdate"
+                                          rows="4" cols="100%"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="inventoryDrinkUpdate" class="form-label fw-bold">Số lượng nhập</label>
+                            <input type="text" class="form-control" id="inventoryDrinkUpdate"
+                                   name="inventoryDrinkUpdate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnUpdateDrink">Sửa thức uống</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
