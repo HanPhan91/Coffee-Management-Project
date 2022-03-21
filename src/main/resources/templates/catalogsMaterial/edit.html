@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="edit">
+    <div class="modal" tabindex="-1" id="edit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Catalogs Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEdit">
+                        <div class="row">
+                            <input type="text" id="idCatalogsMaterialEdit" hidden >
+                            <div class="col">
+                                <label for="nameCatalogsMaterialEdit" class="form-label fw-bold">Name:</label>
+                                <input type="text" class="form-control" id="nameCatalogsMaterialEdit" name="fullNameEdit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnEdit").on("click", function (){
+            $("#frmEdit").trigger("submit");
+        });
+
+        function editCatalogMaterial(){
+            let catalogsMaterial = new CatalogsMaterial($("#nameCatalogsMaterialEdit").val().trim());
+            let id = $("#idCatalogsMaterialEdit").val();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/catalogsMaterial/edit/" + id,
+                data: JSON.stringify(catalogsMaterial)
+            })
+                .done(function (data){
+                    let str= `
+                    <tr id="tr_${data.id}">
+                            <td>${data.name}</td>
+                            <td>${data.createdAt}</td>
+                            <td><button class="btn btn-outline-warning editCatalogsMaterial" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td><button class="btn btn-outline-danger deleteCatalogsMaterial" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                `;
+                    $("#tr_"+id).replaceWith(str);
+                    $("#edit").modal("hide");
+                    $("#frmEdit")[0].reset();
+                    handlerActionCatalogsMaterial();
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#edit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#edit .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+    </script>
+
+</th:block>

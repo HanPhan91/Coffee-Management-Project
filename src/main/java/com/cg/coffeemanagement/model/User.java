@@ -24,7 +24,6 @@ public class User {
     @Id
     private Long id = System.currentTimeMillis() / 1000;
 
-
     @NotNull(message = "Tên đăng nhập không được để trống")
     @Size(min = 5, max = 30, message = "Tên đăng nhập phải nằm trong khoảng 5-30 ký tự")
     private String username;
