@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogs Material</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Catalogs Material</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col text-end">
+                    <button class="btn btn-outline-primary" id="catalogsMaterial"><i class="fa fa-plus-square"></i> Creat catalog material</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <table class="table table-hover" id="tblCatalogsMaterial">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-3">Catalogs Material</th>
+                            <th scope="col" class="fw-bold fs-3">Create At</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-3">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each= "catalogsMaterial, count: ${catalogsMaterials}">
+                            <tr th:id="'tr_'+ ${catalogsMaterial.id}">
+                                <td><a th:href="@{/catalogsMaterial/materials}" th:text="${catalogsMaterial.getName()}"></a></td>
+                                <td th:text="${catalogsMaterial.createdAt}"></td>
+                                <td class="text-center"><button class="btn btn-outline-warning editCatalogsMaterial" th:data-id="${catalogsMaterial.id}"><i class="fa fa-pencil-alt"></i></button></td>
+                                <td class="text-center"><button class="btn btn-outline-danger deleteCatalogsMaterial" th:data-id="${catalogsMaterial.id}"><i class="fa fa-trash"></i></button></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="catalogsMaterial/create :: create"/>
+<th:block th:replace="catalogsMaterial/edit :: edit"/>
+<script src="/assets/App/appCatalogMaterial.js"></script>
+<script src="/assets/App/validatedCatalogsMaterial.js"></script>
+<script>
+    $("#catalogsMaterial").on("click", function (){
+        $("#create").modal("show");
+    });
+    handlerActionCatalogsMaterial();
+</script>
+
+</body>
+</html>

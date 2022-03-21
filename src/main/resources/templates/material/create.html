@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="create">
+    <div class="modal" tabindex="-1" id="create">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Catalogs Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateCatalogsMaterials">
+                        <div class="row">
+                            <div class="col">
+                                <label for="nameCatalogsMaterialCre" class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" id="nameCatalogsMaterialCre" name="fullNameCreate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreate">Create Catalogs Material</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreate").on("click", function (){
+            $("#frmCreateCatalogsMaterials").trigger("submit");
+        });
+
+        function createCatalogsMaterial(){
+            let catalogsMaterial = $("#nameCatalogsMaterialCre").val().trim();
+            let catalog= new CatalogsMaterial(catalogsMaterial);
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/catalogsMaterial/create",
+                data: JSON.stringify(catalog)
+            })
+                .done(function (data){
+                    let str= `
+                    <tr id="tr_${data.id}">
+                            <td>${data.name}</td>
+                            <td>${data.createdAt}</td>
+                            <td><button class="btn btn-outline-warning editCatalogsMaterial" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td><button class="btn btn-outline-danger deleteCatelogsMaterial" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                `;
+                    $("#tblCatalogsMaterial").prepend(str);
+                    $("#create").modal("hide");
+                    $("#frmCreateCatalogsMaterials")[0].reset();
+                    handlerActionCatalogsMaterial();
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#create .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#create .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+    </script>
+
+</th:block>
