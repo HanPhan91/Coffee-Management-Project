@@ -1,9 +1,28 @@
 package com.cg.coffeemanagement.repository.Users;
 
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.UserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    List<User> findByDeletedFalse();
+
+    List<User> findByDeletedTrue();
+
+    @Modifying
+    @Query("UPDATE User u SET u.deleted = true WHERE u.id = :id")
+    void deleteUser(@Param("id") Long id);
+
+    @Modifying
+    @Query("UPDATE User u SET u.deleted = false WHERE u.id = :id")
+    void restoreUser(@Param("id") Long id);
+
 }

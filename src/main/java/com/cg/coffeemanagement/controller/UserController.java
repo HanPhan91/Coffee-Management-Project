@@ -18,10 +18,19 @@ public class UserController {
     private IUserServices userServices;
 
     @GetMapping
-    public ModelAndView showHome(){
+    public ModelAndView showUser(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/list");
-        List<User> users = userServices.findAll();
+        List<User> users = userServices.findByDeletedFalse();
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
+    @GetMapping("/deleted")
+    public ModelAndView showUserDeleted(){
+        ModelAndView modelAndView= new ModelAndView();
+        modelAndView.setViewName("users/deleted");
+        List<User> users = userServices.findByDeletedTrue();
         modelAndView.addObject("users", users);
         return modelAndView;
     }

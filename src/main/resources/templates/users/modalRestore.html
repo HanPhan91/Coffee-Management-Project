@@ -5,52 +5,74 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Khôi phục chức vụ</h5>
+                    <h5 class="modal-title">Khôi phục user</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-alert-danger hide">
                     </div>
-                    <form id="frmRestore">
+                    <form id="frmRestoreUser">
+                        <input type="text" id="idRestore" hidden>
                         <div class="row">
-                            <input type="text" id="idPositionRestore" hidden >
-                            <div class="col">
-                                <label for="namePositionRestore" class="form-label fw-bold">Tên chức vụ:</label>
-                                <input type="text" class="form-control" id="namePositionRestore" name="fullNameRestore">
+                            <div class="col col-md-6">
+                                <label for="usernameRestore" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameRestore" name="usernameRestore"
+                                       readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passRestore" class="form-label fw-bold">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="passRestore" name="passRestore">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="staffRestore" class="form-label fw-bold">Nhân viên được cấp:</label>
+                                <input type="text" class="form-control" id="staffRestore" name="staffRestore" readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="uploadRestore" class="form-label fw-bold">Ảnh đại diện:</label>
+                                <input type="file" class="form-control" id="uploadRestore"
+                                       accept="image/jpeg, image.png"/>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Khôi phục</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Cập nhật</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        $("#btnRestore").on("click", function (){
-            $("#frmRestore").trigger("submit");
+        $("#btnRestore").on("click", function () {
+            $("#frmRestoreUser").trigger("submit");
         });
 
-        function restorePosition(){
-            let postion = new Position($("#idPositionRestore").val(),$("#namePositionRestore").val().trim());
+        function restoreUser() {
+            let id = $("#idRestore").val();
+            let formData = new FormData();
+            formData.append("username", $("#usernameRestore").val().trim().toString());
+            formData.append("password", $("#passRestore").val().trim().toString());
+            if ($("#uploadRestore")[0].files[0] != null) {
+                formData.append("file", $("#uploadRestore")[0].files[0]);
+            }
             $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
                 type: "PUT",
-                url: "/api/positions/restore",
-                data: JSON.stringify(postion)
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/restore/" + id,
+                data: formData
             })
-                .done(function (data){
-                    $("#tr_"+ $("#idPositionRestore").val()).remove();
+                .done(function (data) {
+                    $("#tblUserDelete #tr_" + id).remove();
                     $("#modalRestore").modal("hide");
-                    $("#frmRestore")[0].reset();
+                    $("#frmRestoreUser")[0].reset();
+                    swal("Thành công", "User đã được khôi phục", "success");
                 })
-                .fail(function (jqXHR){
+                .fail(function (jqXHR) {
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
@@ -64,7 +86,6 @@
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
                 })
         }
-
     </script>
 
 </th:block>

@@ -26,7 +26,7 @@
         <div class="page-breadcrumb bg-white">
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Danh sách user</h4>
+                    <h4 class="page-title">Danh sách user đã xóa</h4>
                 </div>
             </div>
             <!-- /.col-lg-12 -->
@@ -40,14 +40,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-end">
-                    <button class="btn btn-outline-primary" id="createUser"><i class="fa fa-plus-square"></i> Tạo
-                        user mới
-                    </button>
+                    <a class="btn btn-outline-primary" th:href="@{/users}"><i
+                            class="fa fa-arrow-left"></i> Quay lại
+                    </a>
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <table class="table table-hover" id="tblUser">
+                    <table class="table table-hover" id="tblUserDelete">
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
@@ -56,7 +56,7 @@
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
                             <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
                             <th scope="col" class="fw-bold fs-5">Avatar</th>
-                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                            <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,23 +70,13 @@
                                 <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/></td>
                                 <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg" width="50px"/></td>
                                 <td class="text-center">
-                                    <button class="btn btn-outline-warning editUser" th:data-id="${user.id}"><i
-                                            class="fa fa-pencil-alt"></i></button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-danger deleteUser" th:data-id="${user.id}"><i
-                                            class="fa fa-trash"></i></button>
+                                    <button class="btn btn-outline-warning restoreUser" th:data-id="${user.id}"><i
+                                            class="fa fa-undo"></i></button>
                                 </td>
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col text-end">
-                    <a class="btn btn-outline-danger" id="deletedUser" th:href="@{/users/deleted}"><i class="fa fa-trash"></i> Danh sách user đã xóa
-                    </a>
                 </div>
             </div>
 
@@ -104,34 +94,27 @@
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
-<th:block th:replace="users/modalCreate :: modalCreate"/>
-<th:block th:replace="users/modalEdit :: modalEdit"/>
-<th:block th:replace="users/modalDelete :: modalDelete"/>
+<th:block th:replace="users/modalRestore :: modalRestore"/>
 <script src="/assets/App/appUser.js"></script>
 <script src="/assets/App/validatedUser.js"></script>
 <script>
-    $("#createUser").on("click", function () {
+    $("button.restoreUser").on("click", function () {
+        let id = $(this).data("id");
         $.ajax({
             type: "GET",
-            url: "/api/staffs"
+            url: "/api/users/" + id
         })
-            .done(function (data){
-                let str="";
-                for (let i = 0; i < data.length; i++) {
-                    let staff = data[i];
-                    str+=`
-                    <option value="${staff.id}">${staff.name}</option>
-                `;
-                }
-                $("#staffCre").prepend(str);
+            .done(function (data) {
+                $("#idRestore").val(data.id);
+                $("#usernameRestore").val(data.username);
+                $("#passRestore").val(data.password);
+                $("#staffRestore").val(data.staff.name);
+                $("#modalRestore").modal("show");
             })
-            .fail(function (){
+            .fail(function (resp) {
                 window.location = "/errors";
             })
-        
-        $("#modalCreate").modal("show");
     });
-    handlerActionUser();
 </script>
 
 </body>

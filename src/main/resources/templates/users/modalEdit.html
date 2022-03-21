@@ -5,24 +5,32 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Cập nhật chức vụ</h5>
+                    <h5 class="modal-title">Cập nhật user</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-alert-danger hide">
                     </div>
-                    <form id="frmEdit">
+                    <form id="frmEditUser">
+                        <input type="text" id="idEdit" hidden>
                         <div class="row">
-                            <input type="text" id="idPositionEdit" hidden >
-                            <div class="col">
-                                <label for="namePositionEdit" class="form-label fw-bold">Tên chức vụ:</label>
-                                <input type="text" class="form-control" id="namePositionEdit" name="fullNameEdit">
+                            <div class="col col-md-6">
+                                <label for="usernameEdit" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit" readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passEdit" class="form-label fw-bold">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="passEdit" name="passEdit">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
-                                <label for="perPositionEdit" class="form-label fw-bold">Tên chức vụ:</label>
-                                <input type="text" class="form-control" id="perPositionEdit" name="permissionEdit" readonly>
+                            <div class="col col-md-6">
+                                <label for="staffEdit" class="form-label fw-bold">Nhân viên được cấp:</label>
+                                <input type="text" class="form-control" id="staffEdit" name="staffEdit" readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="uploadEdit" class="form-label fw-bold">Ảnh đại diện:</label>
+                                <input type="file" class="form-control" id="uploadEdit" accept="image/jpeg, image.png"/>
                             </div>
                         </div>
                     </form>
@@ -36,42 +44,59 @@
     </div>
 
     <script>
-        $("#btnEdit").on("click", function (){
-            $("#frmEdit").trigger("submit");
+        $("#btnEdit").on("click", function () {
+            $("#frmEditUser").trigger("submit");
         });
-        function editPosition(){
-            let postion = new Position($("#idPositionEdit").val(), $("#namePositionEdit").val().trim(), $("#perPositionEdit").val());
+
+        function editUser() {
+            let id = $("#idEdit").val();
+            let formData = new FormData();
+            formData.append("username", $("#usernameEdit").val().trim().toString());
+            formData.append("password", $("#passEdit").val().trim().toString());
+            if ($("#uploadEdit")[0].files[0] != null) {
+                formData.append("file", $("#uploadEdit")[0].files[0]);
+            }
             $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
                 type: "PUT",
-                url: "/api/positions/edit",
-                data: JSON.stringify(postion)
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/edit/" + id,
+                data: formData
             })
-                .done(function (data){
-                    let str= `
-                    <tr id="tr_${data.id}">
-                            <td>${data.name}</td>
-                            <td>${data.createAt}</td>
-                            <td>${data.permission.permissionAccess}</td>
-                            <td><button class="btn btn-outline-warning editPosition" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger deletePosition" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
-                        </tr>
-                `;
-                    $("#tr_" + $("#idPositionEdit").val()).replaceWith(str);
+                .done(function (data) {
+                    let img;
+                    if (data.avatar == null){
+                        img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
+                    }
+                    else {
+                        img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
+                    }
+                    let str = `<tr id="'tr_'+ ${data.id}">
+                        <td>${data.username}</td>
+                        <td>${data.password}</td>
+                        <td>${data.staff.name}</td>
+                        <td>${data.staff.position.name}</td>
+                        <td>${data.staff.createAt}</td>
+                        <td>${img}</td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
+                                class="fa fa-pencil-alt"></i></button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
+                                class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    `;
+
+                    $("#tr_" + id).replaceWith(str);
                     $("#modalEdit").modal("hide");
-                    $("#frmEdit")[0].reset();
-                    Swal.fire({
-                        title: 'Thành công!',
-                        text: 'Chức vụ đã được tạo cập nhật',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    })
-                    handlerAction();
+                    $("#frmEditUser")[0].reset();
+                    handlerActionUser();
+                    swal("Thành công", "User đã được cập nhật", "success");
                 })
-                .fail(function (jqXHR){
+                .fail(function (jqXHR) {
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
@@ -85,7 +110,6 @@
                     $("#modalEdit .modal-body .modal-alert-danger").html(str);
                 })
         }
-
     </script>
 
 </th:block>

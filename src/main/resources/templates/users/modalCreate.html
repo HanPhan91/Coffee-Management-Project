@@ -19,7 +19,7 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="passCre" class="form-label fw-bold">Mật khẩu:</label>
-                                <input type="text" class="form-control" id="passCre" name="passCre">
+                                <input type="password" class="form-control" id="passCre" name="passCre">
                             </div>
                         </div>
                         <div class="row">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>
-                                <input type="file" class="form-control" id="uploadCre">
+                                <input type="file" class="form-control" id="uploadCre" accept="image/jpeg, image.png" />
                             </div>
                         </div>
                     </form>
@@ -51,20 +51,28 @@
 
         function createUser(){
             let formData = new FormData();
-            formData.append("username", $("#usernameCre").val());
-            formData.append("password", $("#passCre").val());
-            formData.append("staff", $("#staffCre").val());
-            formData.append("file", $("#uploadCre").val());
+            formData.append("username",$("#usernameCre").val().toString());
+            formData.append("password", $("#passCre").val().toString());
+            formData.append("id_staff", $("#staffCre").val().toString());
+            if ($("#uploadCre")[0].files[0] != null){
+                formData.append("file", $("#uploadCre")[0].files[0]);
+            }
             $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
                 type: "POST",
-                url: "/api/positions/create",
-                data: JSON.stringify(formData)
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/create",
+                data: formData
             })
             .done(function (data){
+                let img;
+                if (data.avatar == null){
+                    img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
+                }
+                else {
+                    img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
+                }
                 let str= `
                     <tr id="'tr_'+ ${data.id}">
                                 <td>${data.username}</td>
@@ -72,28 +80,23 @@
                                 <td>${data.staff.name}</td>
                                 <td>${data.staff.position.name}</td>
                                 <td>${data.staff.createAt}</td>
-                                <td>Avatar</td>
+                                <td>${img}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-outline-warning editPosition" data-id="${data.id}"><i
+                                    <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
                                             class="fa fa-pencil-alt"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-outline-danger deletePosition" data-id="${data.id}"><i
+                                    <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
                                             class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                 `;
-                $("#tblPosition tbody").prepend(str);
+                $("#tblUser tbody").prepend(str);
                 $("#modalCreate").modal("hide");
-                $("#frmCreate")[0].reset();
-                $("#perPositionCre option").remove();
-                handlerAction();
-                Swal.fire({
-                    title: 'Thành công!',
-                    text: 'Chức vụ mới đã được tạo',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
+                $("#frmCreateUser")[0].reset();
+                $("#staffCre option").remove();
+                handlerActionUser();
+                swal("Thành công", "User đã được cập nhật", "success");
             })
             .fail(function (jqXHR){
                 let str = ``;
@@ -109,7 +112,6 @@
                 $("#modalCreate .modal-body .modal-alert-danger").html(str);
             })
         }
-
     </script>
 
 </th:block>
