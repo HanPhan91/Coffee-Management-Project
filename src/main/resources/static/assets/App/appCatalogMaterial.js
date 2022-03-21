@@ -28,7 +28,6 @@ function handlerActionCatalogsMaterial() {
             url: "/api/catalogsMaterial/" + id
         })
             .done(function (data) {
-
             })
             .fail(function (resp) {
                 alert("Tải modal Xóa thất bại");
