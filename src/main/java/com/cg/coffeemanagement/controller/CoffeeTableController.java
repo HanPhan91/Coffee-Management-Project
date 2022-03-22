@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.controller;
 
 
+import com.cg.coffeemanagement.model.CoffeeTable;
 import com.cg.coffeemanagement.services.CoffeeTable.CoffeeTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/tables")
-public class CoffeeTable {
+public class CoffeeTableController {
         @Autowired
         CoffeeTableService coffeeTableService;
 
@@ -21,8 +22,10 @@ public class CoffeeTable {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("coffeeTable/list");
         List<CoffeeTable> table = coffeeTableService.findAllNotDeleted();
-
+        modelAndView.addObject("tables", table);
         return modelAndView;
     }
-    }
+
+
 }
+

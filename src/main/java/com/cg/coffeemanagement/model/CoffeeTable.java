@@ -25,7 +25,7 @@ public class CoffeeTable {
     private Long id = System.currentTimeMillis()/1000;
 
     @NotNull(message = "Tên bàn là bắt buộc")
-    @Size(min = 5, max = 50, message = "Tên thức uống phải nằm trong khoảng 5-50 ký tự")
+    @Size(min = 1, max = 50, message = "Tên thức uống phải nằm trong khoảng 5-50 ký tự")
     @Column(name = "drink_name")
     private String name;
 

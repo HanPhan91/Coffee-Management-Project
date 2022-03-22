@@ -1,6 +1,5 @@
 package com.cg.coffeemanagement.services.CoffeeTable;
-
-import com.cg.coffeemanagement.controller.CoffeeTable;
+import com.cg.coffeemanagement.model.CoffeeTable;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 

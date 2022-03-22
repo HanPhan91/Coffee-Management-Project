@@ -1,6 +1,6 @@
 package com.cg.coffeemanagement.services.CoffeeTable;
 
-import com.cg.coffeemanagement.controller.CoffeeTable;
+import com.cg.coffeemanagement.model.CoffeeTable;
 import com.cg.coffeemanagement.repository.CoffeeTable.CoffeeTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

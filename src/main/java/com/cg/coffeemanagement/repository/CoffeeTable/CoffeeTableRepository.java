@@ -1,6 +1,6 @@
 package com.cg.coffeemanagement.repository.CoffeeTable;
 
-import com.cg.coffeemanagement.controller.CoffeeTable;
+import com.cg.coffeemanagement.model.CoffeeTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

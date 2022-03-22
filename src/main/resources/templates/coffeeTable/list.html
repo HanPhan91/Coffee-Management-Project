@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+  <th:block th:replace="layout/head :: head"/>
+  <meta charset="UTF-8">
+  <title>Quản lý bàn</title>
+  <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
+</head>
+<body>
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
+  </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+  <th:block th:replace="layout/navBar :: navBar"/>
+  <th:block th:replace="layout/sideBar :: sideBar"/>
+
+  <!-- ============================================================== -->
+  <!--Primary Content-->
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb bg-white">
+      <div class="row align-items-center">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+          <h4 class="page-title">Quản lý bàn</h4>
+        </div>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col text-end">
+          <button class="btn btn-outline-primary" id = "createTable"><i class="fa fa-plus-square create"></i> Tạo
+            bàṇ mới
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <table class="table table-hover w-75" id="tblTable">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Tên bàn</th>
+              <th scope="col" colspan="2" class="text-center">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="table: ${tables}">
+              <tr th:id="'tr_'+ ${table.id}">
+                <td th:text="${table.id}"></td>
+                <td th:text="${table.name}"></td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-outline-primary edit"
+                          th:data-id="${table.id}">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-outline-danger delete"
+                          th:data-id="${table.id}">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </th:block>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col mb-2">
+              <div class="d-flex justify-content-end">
+                <a type="button" class="btn btn-danger restoreTable" href="/catalogs/deleted">
+                  <i class="fa fa-trash-restore"></i>
+                  Khôi phục danh mục
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="coffeeTable/modalCreateTable :: modalCreateTable"/>
+<th:block th:replace="coffeeTable/modalUpdateTable :: modalUpdateTable"/>
+<th:block th:replace="coffeeTable/modalDeleteTable :: modalDeleteTable"/>
+</body>
+<script>
+  $(document).ready(function (){
+    $("#createTable").on("click", function () {
+      $("#modalCreateTable").modal("show");
+    });
+
+    function createTable() {
+      let table = {
+        name: $("#tableNameCreate").val(),
+      }
+
+      $.ajax({
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        type: "POST",
+        url: "/api/tables/create",
+        data: JSON.stringify(table)
+      })
+              .done(function (data) {
+                let str = `
+                    <tr id="tr_${data.id}">
+                         <td>${data.id}</td>
+                         <td>${data.name}</td>
+                         <td class="text-center">
+                         <button type="button" class="btn btn-outline-primary edit" data-id="${data.id}">
+                         <i class="fa fa-edit"></i>
+                         </button>
+                         </td>
+                         <td class="text-center">
+                         <button type="button" class="btn btn-outline-danger delete"
+                                            data-id="${data.id}">
+                         <i class="fa fa-trash"></i>
+                         </button>
+                         </td>
+                         </tr>
+                `;
+                $("#tblTable tbody").prepend(str);
+
+                $("#modalCreateTable").modal("hide");
+
+                $("#frmCreateTable")[0].reset();
+
+                handlerShowUpdateModal();
+                handlerShowDeleteModal();
+
+              })
+              .fail(function (jgXHR) {
+                console.log(jgXHR);
+
+                let str = ``;
+
+                if (jgXHR.responseJSON) {
+                  $.each(jgXHR.responseJSON, function (key, value) {
+                    str += `<label id="${key}-error" class="error" for = "${key}">${value}</label> <br>`;
+                    $("#" + key).addClass("error");
+                  });
+                } else {
+                  str += `<label id ="message-error" class ="error" for= "message">ERROR_400</label>`;
+                }
+
+                $("#modalCreateTable .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalCreateTable .modal-body .modal-alert-danger").html(str)
+
+              })
+    }
+
+    function updateTable(){
+      let id = $("#idTableUpdate").val(),
+              table = {
+                id: $("#idTableUpdate").val(),
+                name: $("#tableNameUpdate").val(),
+
+              };
+      $.ajax({
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        type: "PUT",
+        url: "/api/tables/update/" + id,
+        data: JSON.stringify(table)
+      })
+              .done(function (data) {
+                let str = `
+                    <tr id="tr_${data.id}">
+                    <td>${data.id}</td>
+                    <td>${data.name}</td>
+                    <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary edit" data-id="${data.id}">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-danger delete"
+                                        data-id="${data.id}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                </tr>
+            `;
+
+
+                let currentRow = $("#tr_" + data.id);
+                currentRow.replaceWith(str);
+
+                $("#modalUpdateTable").modal("hide");
+
+                $("#frmUpdateTable")[0].reset();
+
+                handlerShowUpdateModal();
+                handlerShowDeleteModal();
+
+              })
+              .fail(function (resp) {
+                console.log(resp);
+                alert("Update Error");
+              })
+    }
+
+    function deleteTable(){
+      let table = {
+        id: $("#idTableDelete").val(),
+        name: $("#tableNameDelete").val(),
+      };
+      $.ajax({
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        type: "PUT",
+        url: "/api/tables/delete",
+        data: JSON.stringify(table)
+      })
+              .done(function (data) {
+                let currentRow = $("#tr_" + data.id);
+                currentRow.remove();
+                $("#modalDeleteTable").modal("hide");
+                $("#frmDeleteTable")[0].reset();
+                // swal("Cập nhật thành công","Thức uống đã được xoá", "success");
+              })
+              .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                  $.each(jqXHR.responseJSON, function (key, value) {
+                    str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                    $("#" + key).addClass("error");
+                  });
+                } else {
+                  str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteTable .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalDeleteTable .modal-body .modal-alert-danger").html(str);
+              })
+    }
+
+    function handlerShowUpdateModal(){
+      $("button.edit").on("click", function () {
+
+        let id = $(this).data("id");
+        $.ajax({
+          type: "GET",
+          url: "/api/tables/" + id
+        })
+                .done(function (data) {
+                  $("#idTableUpdate").val(data.id);
+                  $("#tableNameUpdate").val(data.name);
+                  $("#modalUpdateTable").modal("show");
+                })
+                .fail(function (resp) {
+                  alert("Show modal update error");
+                })
+      });
+    }
+
+    function handlerShowDeleteModal(){
+      $("button.delete").on("click", function () {
+      let id = $(this).data("id");
+      $.ajax({
+        type: "GET",
+        url: "/api/tables/" + id
+      })
+              .done(function (data) {
+                $("#idTableDelete").val(data.id);
+                $("#tableNameDelete").val(data.name);
+                $("#modalDeleteTable").modal("show");
+              })
+              .fail(function (resp) {
+                alert("Show modal delete error");
+              })
+      });
+    }
+    handlerShowDeleteModal();
+    handlerShowUpdateModal();
+    $("#btnCreateTable").on("click", function () {
+      createTable();
+    });
+    $("#btnUpdateTable").on("click", function () {
+      updateTable();
+    });
+
+    $("#btnDeleteTable").on("click", function () {
+      deleteTable();
+    });
+
+
+
+    //reset modal Create
+    $("#modalCreateTable").one('hidden.bs.modal', function () {
+      $("#modalCreateTable .modal-body .modal-alert-danger").empty();
+      $("#modalCreateTable .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+      $("#modalCreateTable input.error").removeClass("error");
+      $("#frmCreateTable")[0].reset();
+    });
+  })
+</script>
+</html>
