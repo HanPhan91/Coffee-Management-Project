@@ -57,5 +57,8 @@ public class Drink {
     @JoinColumn(name = "id_catalog")
     private Catalog catalog ;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cart")
+    private Cart cart;
 
 }
