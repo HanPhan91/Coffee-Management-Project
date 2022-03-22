@@ -28,7 +28,9 @@
                             <div class=" mb-3 col-6">
                                 <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
                                 <select class="custom-select" id="catalogsUpdate">
-
+                                    <th:block th:each="item : ${catalogs}">
+                                        <option th:value="${item.id}" th:text="${item.catalogName}"></option>
+                                    </th:block>
                                 </select>
                             </div>
                         </div>
@@ -41,7 +43,7 @@
                         </div>
                         <div class="mb-3 col-6">
                             <label for="inventoryDrinkUpdate" class="form-label fw-bold">Số lượng nhập</label>
-                            <input type="text" class="form-control" id="inventoryDrinkUpdate"
+                            <input type="text" class="form-control number-separator inNumber" id="inventoryDrinkUpdate"
                                    name="inventoryDrinkUpdate">
                         </div>
                     </form>

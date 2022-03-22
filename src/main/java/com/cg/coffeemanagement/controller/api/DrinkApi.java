@@ -60,7 +60,7 @@ public class DrinkApi {
         drink.setInventory(drinkDto.getInventory());
         drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
         Drink returnDrink = drinkService.save(drink);
-        returnDrink.setStorage(true);
+//        returnDrink.setStorage(true);
         return new ResponseEntity<>(returnDrink, HttpStatus.OK);
     }
 
@@ -79,9 +79,9 @@ public class DrinkApi {
             drinkUp.setInventory(drinkDto.getInventory());
             drinkUp.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
             Drink returnDrink = drinkService.save(drinkUp);
-            if(returnDrink.getInventory()>0){
-                returnDrink.setStorage(true);
-            }
+//            if(returnDrink.getInventory()>0){
+//                returnDrink.setStorage(true);
+//            }
             return new ResponseEntity<>(returnDrink, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -90,10 +90,10 @@ public class DrinkApi {
     }
 
     @PutMapping("/delete")
-    public ResponseEntity<?> doDelete(@RequestBody Drink drink) {
-        Optional opDrink = drinkService.findById(drink.getId());
+    public ResponseEntity<?> doDelete(@RequestBody DrinkDto drinkDto) {
+        Optional opDrink = drinkService.findById(drinkDto.getId());
         if (opDrink.isPresent()) {
-            drinkService.deleteDrinkById(drink.getId());
+            drinkService.deleteDrinkById(drinkDto.getId());
             return new ResponseEntity<>(opDrink.get(), HttpStatus.OK);
         } else {
             throw new DataInputException("Customer's not valid");

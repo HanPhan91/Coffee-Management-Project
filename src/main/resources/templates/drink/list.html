@@ -127,47 +127,148 @@
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
-    </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>
 <th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>
-<!--<th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>-->
+<th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>
+
 </body>
 <script>
     $(document).ready(function (){
-        function handlerShowModalEdit() {
-            $("button.edit").on("click", function () {
-                let id = $(this).data("id");
-                $.ajax({
-                    type: "GET",
-                    url: "/api/drinks/" + id
+        //show modal create
+        $("button.create").on("click", function () {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "/api/drinks/create",
+            })
+                .done(function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let id = data[i].id;
+                        let name = data[i].catalogName;
+                        $("#catalogsCreate").append(`<option value=${id}>${name}</option>`);
+                    }
+                    $("#modalCreateDrink").modal("show");
                 })
-                    .done(function (data) {
-                        $("#idDrinkUpdate").val(data.id);
-                        $("#drinkNameUpdate").val(data.name);
-                        $("#priceDrinkUpdate").val((data.price));
-                        $("#desDrinkUpdate").val(data.description);
-                        $("#inventoryDrinkUpdate").val(data.inventory);
-                        $("#modalUpdateDrink").modal("show");
-                    })
-                    .fail(function (resp) {
-                        alert("Show modal withdraw error");
-                    })
-            });
+                .fail(function (jqXHR) {
+                    console.log("get catalogs fails");
+                })
+        });
+
+        function createDrink() {
+            let drink = {
+                name: $("#drinkNameCreate").val(),
+                price: ($("#priceDrinkCreate").val()),
+                description: $("#desDrinkCreate").val(),
+                catalog: $("#catalogsCreate").val(),
+                inventory: $("#inventoryDrinkCreate").val()
+            };
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/drinks/create",
+                data: JSON.stringify(drink)
+            })
+                .done(function (data) {
+                    let str = `
+                    <tr id="tr_${data.id}">
+                        <td>${data.id}</td>
+                        <td>${data.name}</td>
+                        <td>${data.price}</td>
+                        <td>${data.catalog.catalogName}</td>
+                        <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary edit" data-id="${data.id}">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-danger delete"
+                                        data-id="$data.id}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                    </tr>
+                    `;
+                    $("#tblDrink tbody").prepend(str);
+                    $("#modalCreateDrink").modal("hide");
+                    $("#catalogsCreate option").remove();
+                    $("#frmCreateDrink")[0].reset();
+                    // swal("Cập nhật thành công", "Thức uống mới đã được thêm", "success");
+
+                    handlerShowModalEdit();
+                    handlerShowModalDelete();
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
+                })
         }
+        function deleteDrink() {
+            let drink = {
+                id: $("#idDrinkDelete").val(),
+                drinkName: $("#drinkNameDelete").val(),
+                price: ($("#priceDrinkDelete").val()),
+                description: $("#desDrinkDelete").val(),
+                inventory: $("#inventoryDrinkDelete").val()
+            };
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/drinks/delete",
+                data: JSON.stringify(drink)
+            })
+                .done(function (data) {
+                    let currentRow = $("#tr_" + data.id);
+                    currentRow.remove();
+                    $("#modalDeleteDrink").modal("hide");
+                    $("#frmDeleteDrink")[0].reset();
+                    // swal("Cập nhật thành công","Thức uống đã được xoá", "success");
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalDeleteDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalDeleteDrink .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        function updateDrink(){
 
-        handlerShowModalEdit();
-
-        $("#btnUpdateDrink").on("click", function () {
             let id = $("#idDrinkUpdate").val(),
                 drink = {
-                    id: $(id),
+                    id: $("#idDrinkUpdate").val(),
                     name: $("#drinkNameUpdate").val(),
                     price: $("#priceDrinkUpdate").val(),
                     description: $("#desDrinkUpdate").val(),
                     inventory: $("#inventoryDrinkUpdate").val(),
-                    catalog: $("#catalogsUpdate").val
+                    catalog: $("#catalogsUpdate").val()
+
                 };
             $.ajax({
                 headers: {
@@ -185,17 +286,17 @@
                     <td>${data.name}</td>
                     <td>${data.price}</td>
                     <td>${data.description}</td>
-                    <td>${data.inventory}</td>
-                    <td>
-                        <button type="button" class="btn btn-outline-secondary edit" ">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-success delete">
-                            <i class="fa fa-plus"></i>
-                        </a>
-                    </td>
+                    <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary edit" data-id="${data.id}">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-danger delete"
+                                        data-id="${data.id}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
                 </tr>
             `;
 
@@ -207,14 +308,92 @@
 
                     $("#frmUpdateDrink")[0].reset();
 
-                    // handlerShowUpdateModal();
+                    handlerShowModalEdit();
+                    handlerShowModalDelete();
 
                 })
                 .fail(function (resp) {
                     console.log(resp);
                     alert("Update Error");
                 })
+        }
+
+        function handlerShowModalEdit() {
+            $("button.edit").on("click", function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/api/drinks/" + id
+                })
+                    .done(function (data) {
+                        $("#idDrinkUpdate").val(data.id);
+                        $("#drinkNameUpdate").val(data.name);
+                        $("#priceDrinkUpdate").val((data.price));
+                        $("#desDrinkUpdate").val(data.description);
+                        $("#inventoryDrinkUpdate").val(data.inventory);
+                        $("#modalUpdateDrink").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal update error");
+                    })
+            });
+        }
+        function handlerShowModalDelete() {
+            $("button.delete").on("click", function () {
+                let id = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/api/drinks/" + id
+                })
+                    .done(function (data) {
+                        $("#idDrinkDelete").val(data.id);
+                        $("#drinkNameDelete").val(data.name);
+                        $("#priceDrinkDelete").val((data.price));
+                        $("#desDrinkDelete").val(data.description);
+                        $("#inventoryDrinkDelete").val(data.inventory);
+                        $("#modalDeleteDrink").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal delete error");
+                    })
+            });
+        }
+
+        handlerShowModalEdit();
+        handlerShowModalDelete();
+
+        $("#btnUpdateDrink").on("click", function () {
+            updateDrink();
+        });
+
+        //set event for button create
+        $("#btnCreateDrink").on("click", function () {
+            createDrink()
+        })
+
+        //reset modal Create
+        $("#modalCreateDrink").one('hidden.bs.modal', function () {
+            $("#modalCreateDrink .modal-body .modal-alert-danger").empty();
+            $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreateDrink input.error").removeClass("error");
+            $("#catalogsCreate option").remove();
+            $("#frmCreateDrink")[0].reset();
+        });
+
+
+        //set event for button delete
+        $("#btnDeleteDrink").on("click", function () {
+            deleteDrink();
+        });
+
+        $("#modalDeleteDrink").one('hidden.bs.modal', function () {
+            $("#modalDeleteDrink .modal-body .modal-alert-danger").empty();
+            $("#modalDeleteDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalDeleteDrink input.error").removeClass("error");
+            $("#frmDeleteDrink")[0].reset();
         });
     })
+
+
 </script>
 </html>
