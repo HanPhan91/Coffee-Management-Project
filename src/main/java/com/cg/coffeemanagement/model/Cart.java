@@ -20,13 +20,13 @@ public class Cart {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name = "id_drink")
     private Set<Drink> drink;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_table")
-    private Set<CoffeeTable> coffeeTable;
+    private CoffeeTable coffeeTable;
 
     private int quantity;
 

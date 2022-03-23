@@ -111,6 +111,9 @@
 <th:block th:replace="catalog/modalCreateCatalog :: modalCreateCatalog"/>
 <th:block th:replace="catalog/modalUpdateCatalog :: modalUpdateCatalog"/>
 <th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
+<!--<script src="./assets/App/validatedCatalog.js"></script>-->
+<script src="sweetalert2.all.min.js"></script>
+
 <script>
 
     $("#createCatalog").on("click", function () {
@@ -190,7 +193,7 @@
         })
             .done(function (data) {
                 let str = `
-                        <tr th:id="'tr_'+ ${data.id}">
+                        <tr id="tr_${data.id}">
                                     <td>${data.id}</td>
                                     <td>${data.catalogName}</td>
                                     <td class="text-center">
@@ -207,10 +210,11 @@
                         </tr>
                     `;
                 let currentRow = $("#tr_" + data.id);
+                console.log(currentRow);
                 currentRow.replaceWith(str);
                 $("#modalUpdateCatalog").modal("hide");
                 $("#frmUpdateCatalog")[0].reset();
-                swal("Cập nhật thành công", "Danh mục đã được chỉnh sửa", "success");
+                // swal("Cập nhật thành công", "Danh mục đã được chỉnh sửa", "success");
                 handlerShowModalEditCatalog();
                 handlerShowModalDeleteCatalog();
             })
@@ -231,6 +235,39 @@
 
     function deleteCatalog() {
 
+        let catalog = {
+            id: $("#idCatalogDelete").val(),
+            catalogName: $("#catalogNameDelete").val(),
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: "/api/catalogs/delete",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let currentRow = $("#tr_" + data.id);
+                currentRow.remove();
+                $("#modalDeleteCatalog").modal("hide");
+                $("#frmDeleteCatalog")[0].reset();
+                swal("Cập nhật thành công", "Danh mục đã được xoá", "success");
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").html(str);
+            })
     }
 
     function restoreCatalog() {
@@ -374,59 +411,12 @@
         $("#modalCreateCatalog input.error").removeClass("error");
         $("#frmCreateCatalog")[0].reset();
     });
-
-    //set event for button update
+    // $("#btnUpdateCatalog").on("click", function (){
+    //     $("#frmUpdateCatalog").trigger("submit");
+    // });
+    // set event for button update
     $("#btnUpdateCatalog").on("click", function () {
-        let catalog = {
-            id: $("#idCatalogUpdate").val(),
-            catalogName: $("#catalogNameUpdate").val()
-        }
-
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "PUT",
-            url: "/api/catalogs/update",
-            data: JSON.stringify(catalog)
-        })
-            .done(function (data) {
-                let str = `
-                <tr id="tr_${data.id}">
-                    <td>${data.id}</td>
-                    <td>${data.catalogName}</td>
-                    <td class="text-center">
-                                    <button type="button" class="btn btn-outline-primary editCatalog"
-                                            th:data-id="${data.id}">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-outline-danger deleteCatalog"
-                                            th:data-id="${data.id}">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                    </td>
-                </tr>
-            `;
-
-
-                let currentRow = $("#tr_" + data.id);
-                currentRow.replaceWith(str);
-
-                $("#modalUpdateCatalog").modal("hide");
-
-                $("#frmUpdateCatalog")[0].reset();
-
-                handlerShowModalEditCatalog();
-                handlerShowModalDeleteCatalog();
-            })
-            .fail(function (resp) {
-                console.log(resp);
-                alert("Update Error");
-            })
+        updateCatalog()
     });
 
     $("#modalUpdateCatalog").one('hidden.bs.modal', function () {
@@ -452,39 +442,8 @@
 
     //set event for button Delete
     $("#btnDeleteCatalog").on("click", function () {
-        let catalog = {
-            id: $("#idCatalogDelete").val(),
-            catalogName: $("#catalogNameDelete").val(),
-        };
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "PUT",
-            url: "/api/catalogs/delete",
-            data: JSON.stringify(catalog)
-        })
-            .done(function (data) {
-                let currentRow = $("#tr_" + data.id);
-                currentRow.remove();
-                $("#modalDeleteCatalog").modal("hide");
-                $("#frmDeleteCatalog")[0].reset();
-                swal("Cập nhật thành công", "Danh mục đã được xoá", "success");
-            })
-            .fail(function (jqXHR) {
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                    $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
-                        $("#" + key).addClass("error");
-                    });
-                } else {
-                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
-                $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#modalDeleteCatalog .modal-body .modal-alert-danger").html(str);
-            })    });
+        deleteCatalog()
+    });
 
     $("#modalDeleteCatalog").one('hidden.bs.modal', function () {
         $("#modalDeleteCatalog .modal-body .modal-alert-danger").empty();

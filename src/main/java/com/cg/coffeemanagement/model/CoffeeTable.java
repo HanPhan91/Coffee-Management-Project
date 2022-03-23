@@ -26,7 +26,7 @@ public class CoffeeTable {
 
     @NotNull(message = "Tên bàn là bắt buộc")
     @Size(min = 1, max = 50, message = "Tên thức uống phải nằm trong khoảng 5-50 ký tự")
-    @Column(name = "drink_name")
+    @Column(name = "name")
     private String name;
 
     private String description;

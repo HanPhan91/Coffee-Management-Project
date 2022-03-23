@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,11 +24,22 @@ public class CoffeeTableApi {
     @Autowired
     AppUtil appUtil;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<CoffeeTable> getById(@PathVariable Long id) {
         Optional<CoffeeTable> coffeeTable = coffeeTableService.findById(id);
         if (coffeeTable.isPresent()) {
             return new ResponseEntity<>(coffeeTable.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CoffeeTable>> getAllTable() {
+        List<CoffeeTable> coffeeTable = coffeeTableService.findAll();
+        if (!coffeeTable.isEmpty()) {
+            return new ResponseEntity<>(coffeeTable, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
