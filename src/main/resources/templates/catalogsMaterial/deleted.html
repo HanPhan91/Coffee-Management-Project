@@ -1,0 +1,113 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Danh sách chức vụ đã xóa</title>-->
+<!--  <th:block th:replace="layout/head :: head"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="preloader">-->
+<!--  <div class="lds-ripple">-->
+<!--    <div class="lds-pos"></div>-->
+<!--    <div class="lds-pos"></div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"-->
+<!--     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">-->
+<!--  <th:block th:replace="layout/navBar :: navBar"/>-->
+<!--  <th:block th:replace="layout/sideBar :: sideBar"/>-->
+
+<!--  &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--  &lt;!&ndash;Primary Content&ndash;&gt;-->
+<!--  <div class="page-wrapper">-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Bread crumb and right sidebar toggle &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    <div class="page-breadcrumb bg-white">-->
+<!--      <div class="row align-items-center">-->
+<!--        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">-->
+<!--          <h4 class="page-title">Quản lý chức vụ đã xóa</h4>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /.col-lg-12 &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; End Bread crumb and right sidebar toggle &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Container fluid  &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    <div class="container-fluid">-->
+<!--      <div class="row">-->
+<!--        <div class="col text-end">-->
+<!--          <a class="btn btn-outline-primary" id="createPosition" th:href="@{/positions}"><i class="fa fa-arrow-left"></i> Quay lại-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col text-center">-->
+<!--          <table class="table table-hover" id="tblPosition">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th scope="col" class="fw-bold fs-5">Chức vụ</th>-->
+<!--              <th scope="col" class="fw-bold fs-5">Ngày tạo</th>-->
+<!--              <th scope="col" class="fw-bold fs-5">Phân quyền</th>-->
+<!--              <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <th:block th:each="position: ${positions}">-->
+<!--              <tr th:id="'tr_'+ ${position.id}">-->
+<!--                <td th:text="${position.name}"></td>-->
+<!--                <td th:text="${position.createAt}"></td>-->
+<!--                <td th:text="${position.permission.permissionAccess}"></td>-->
+<!--                <td class="text-center">-->
+<!--                  <button class="btn btn-outline-warning restorePosition" th:data-id="${position.id}"><i-->
+<!--                          class="fa fa-undo"></i></button>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </th:block>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; End Container fluid  &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; footer &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    <th:block th:replace="layout/footer :: footer"/>-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; End footer &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--  </div>-->
+<!--</div>-->
+<!--<th:block th:replace="layout/script :: script"/>-->
+<!--<th:block th:replace="positions/modalRestore :: modalRestore"/>-->
+<!--<script src="/assets/App/appPosition.js"></script>-->
+<!--<script src="/assets/App/validatedPosition.js"></script>-->
+<!--<script>-->
+<!--  function handlerRestore(){-->
+<!--    $("button.restorePosition").on("click",function (){-->
+<!--      let id = $(this).data("id");-->
+<!--      $.ajax({-->
+<!--        type: "GET",-->
+<!--        url: "/api/positions/" + id-->
+<!--      })-->
+<!--              .done(function (data) {-->
+<!--                $("#idPositionRestore").val(data.id);-->
+<!--                $("#namePositionRestore").val(data.name);-->
+<!--                $("#modalRestore").modal("show");-->
+<!--              })-->
+<!--              .fail(function (resp) {-->
+<!--                window.location = "https://viblo.asia.vn";-->
+<!--              })-->
+<!--    });-->
+<!--  }-->
+<!--  handlerRestore();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
