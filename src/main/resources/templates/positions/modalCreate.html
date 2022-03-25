@@ -18,6 +18,14 @@
                                 <input type="text" class="form-control" id="namePositionCre" name="fullNameCreate">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="perPositionCre" class="form-label fw-bold">Phân quyền:</label>
+                                <select class="form-select" id="perPositionCre">
+
+                                </select>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -34,8 +42,8 @@
         });
 
         function createPosition(){
-            let postion = new Position($("#namePositionCre").val().trim());
-
+            let permission = parseInt($("#perPositionCre").val());
+            let position = new Position(0, $("#namePositionCre").val().trim(), permission);
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -43,27 +51,32 @@
                 },
                 type: "POST",
                 url: "/api/positions/create",
-                data: JSON.stringify(postion)
+                data: JSON.stringify(position)
             })
             .done(function (data){
                 let str= `
                     <tr id="tr_${data.id}">
                             <td>${data.name}</td>
                             <td>${data.createAt}</td>
-                            <td><button class="btn btn-outline-warning editPosition" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger deletePosition" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
+                            <td>${data.permission.permissionAccess}</td>
+                            <td class="text-center">
+                                <button class="btn btn-outline-warning editPosition" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td class="text-center">
+                                <button class="btn btn-outline-danger deletePosition" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
                         </tr>
                 `;
-                $("#tblPosition").prepend(str);
+                $("#tblPosition tbody").prepend(str);
                 $("#modalCreate").modal("hide");
                 $("#frmCreate")[0].reset();
+                $("#perPositionCre option").remove();
                 handlerAction();
+                swal("Thành công", "Chức vụ mới đã được tạo", "success");
             })
             .fail(function (jqXHR){
                 let str = ``;
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -73,7 +86,13 @@
                 $("#modalCreate .modal-body .modal-alert-danger").html(str);
             })
         }
-
+        $("#modalCreate").on('hidden.bs.modal', function () {
+            $("#modalCreate .modal-body .modal-alert-danger").empty();
+            $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreate input.error").removeClass("error");
+            $("#perPositionCre option").remove();
+            $("#frmCreate")[0].reset();
+        });
     </script>
 
 </th:block>

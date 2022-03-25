@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @NoArgsConstructor
@@ -27,15 +30,6 @@ public class OrderDetail {
 
     @Column(name = "sub_total")
     private BigDecimal subTotal;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "drink_id")
-    private Drink drink;
-
 
 
 }

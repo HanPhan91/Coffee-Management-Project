@@ -34,4 +34,8 @@ public class Position {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss Z", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "create_at", updatable = false)
     private Date createAt;
+
+    @OneToOne
+    @JoinColumn(name = "id_permission")
+    private Permission permission;
 }

@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,13 +18,13 @@ public class Cart {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_drink")
-    private Set<Drink> drink;
+    private Drink drink;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_table")
-    private Set<CoffeeTable> coffeeTable;
+    private CoffeeTable coffeeTable;
 
     private int quantity;
 

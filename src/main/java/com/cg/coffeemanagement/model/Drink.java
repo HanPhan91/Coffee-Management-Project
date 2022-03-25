@@ -52,9 +52,5 @@ public class Drink {
 
     private String imgUrl;
 
-    private boolean storage;
-
-    private int inventory;
-
 
 }

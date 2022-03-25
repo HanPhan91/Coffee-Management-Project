@@ -19,6 +19,12 @@
                                 <input type="text" class="form-control" id="namePositionEdit" name="fullNameEdit">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="perPositionEdit" class="form-label fw-bold">Tên chức vụ:</label>
+                                <input type="text" class="form-control" id="perPositionEdit" name="permissionEdit" readonly>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -33,17 +39,15 @@
         $("#btnEdit").on("click", function (){
             $("#frmEdit").trigger("submit");
         });
-
         function editPosition(){
-            let postion = new Position($("#namePositionEdit").val().trim());
-            let id = $("#idPositionEdit").val();
+            let postion = new Position($("#idPositionEdit").val(), $("#namePositionEdit").val().trim(), $("#perPositionEdit").val());
             $.ajax({
                 headers: {
                     "Accept": "application/json",
                     "Content-type": "application/json"
                 },
                 type: "PUT",
-                url: "/api/positions/edit/" + id,
+                url: "/api/positions/edit",
                 data: JSON.stringify(postion)
             })
                 .done(function (data){
@@ -51,20 +55,22 @@
                     <tr id="tr_${data.id}">
                             <td>${data.name}</td>
                             <td>${data.createAt}</td>
+                            <td>${data.permission.permissionAccess}</td>
                             <td><button class="btn btn-outline-warning editPosition" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
                             <td><button class="btn btn-outline-danger deletePosition" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
                         </tr>
                 `;
-                    $("#tr_"+id).replaceWith(str);
+                    $("#tr_" + $("#idPositionEdit").val()).replaceWith(str);
                     $("#modalEdit").modal("hide");
                     $("#frmEdit")[0].reset();
+                    swal("Thành công", "Chức vụ mới đã được cập nhật","success");
                     handlerAction();
                 })
                 .fail(function (jqXHR){
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
                             $("#" + key).addClass("error");
                         });
                     } else {
@@ -74,7 +80,12 @@
                     $("#modalEdit .modal-body .modal-alert-danger").html(str);
                 })
         }
-
+        $("#modalEdit").on('hidden.bs.modal', function () {
+            $("#modalEdit .modal-body .modal-alert-danger").empty();
+            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalEdit input.error").removeClass("error");
+            $("#frmEdit")[0].reset();
+        });
     </script>
 
 </th:block>

@@ -11,13 +11,13 @@
                     <!-- Logo icon -->
                     <b class="logo-icon">
                         <!-- Dark Logo icon -->
-                        <img src="./assets/plugins/images/logo-icon.png" alt="homepage" />
+                        <img src="/assets/plugins/images/logo-icon.png" alt="homepage" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
                     <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="./assets/plugins/images/logo-text.png" alt="homepage" />
+                            <img src="/assets/plugins/images/logo-text.png" alt="homepage" />
                         </span>
                 </a>
                 <!-- ============================================================== -->
@@ -54,9 +54,11 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <li>
-                        <a class="profile-pic" href="#">
-                            <img src="./assets/plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                 class="img-circle"><span class="text-white font-medium">Steave</span></a>
+                        <a class="profile-pic" th:href="@{/profile/__${user.username}__}">
+                            <img alt="user-img" th:if="${user.avatar == null}" src="/assets/plugins/images/users/1.jpg" width="36" class="img-circle">
+                            <img alt="user-img" th:if="${user.avatar != null}" th:src="${user.avatar.fileUrl}" width="36" class="img-circle">
+                            <span class="text-white font-medium" th:text="${user.username}"></span></a>
+
                     </li>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
