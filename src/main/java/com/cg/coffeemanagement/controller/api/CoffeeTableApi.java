@@ -37,7 +37,7 @@ public class CoffeeTableApi {
 
     @GetMapping()
     public ResponseEntity<List<CoffeeTable>> getAllTable() {
-        List<CoffeeTable> coffeeTable = coffeeTableService.findAll();
+        List<CoffeeTable> coffeeTable = coffeeTableService.findAllNotDeleted();
         if (!coffeeTable.isEmpty()) {
             return new ResponseEntity<>(coffeeTable, HttpStatus.OK);
         } else {

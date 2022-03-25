@@ -202,7 +202,7 @@
                     $("#modalCreateDrink").modal("hide");
                     $("#catalogsCreate option").remove();
                     $("#frmCreateDrink")[0].reset();
-                    // swal("Cập nhật thành công", "Thức uống mới đã được thêm", "success");
+                    swal("Cập nhật thành công", "Thức uống mới đã được thêm", "success");
 
                     handlerShowModalEdit();
                     handlerShowModalDelete();
@@ -243,7 +243,7 @@
                     currentRow.remove();
                     $("#modalDeleteDrink").modal("hide");
                     $("#frmDeleteDrink")[0].reset();
-                    // swal("Cập nhật thành công","Thức uống đã được xoá", "success");
+                    swal("Cập nhật thành công","Thức uống đã được xoá", "success");
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -308,6 +308,7 @@
                     $("#modalUpdateDrink").modal("hide");
 
                     $("#frmUpdateDrink")[0].reset();
+                    swal("thành công", "Thức uống đã được chỉnh sửa", "success");
 
                     handlerShowModalEdit();
                     handlerShowModalDelete();

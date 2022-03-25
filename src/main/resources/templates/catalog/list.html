@@ -112,7 +112,6 @@
 <th:block th:replace="catalog/modalUpdateCatalog :: modalUpdateCatalog"/>
 <th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
 <!--<script src="./assets/App/validatedCatalog.js"></script>-->
-<script src="sweetalert2.all.min.js"></script>
 
 <script>
 
@@ -158,7 +157,7 @@
                 $("#tblCatalog tbody").prepend(str);
                 $("#modalCreateCatalog").modal("hide");
                 $("#frmCreateCatalog")[0].reset();
-                swal("Cập nhật thành công", "Danh mục mới đã được thêm", "success");
+                swal("thành công", "Danh mục mới đã được thêm", "success");
                 handlerShowModalEditCatalog();
                 handlerShowModalDeleteCatalog();
             })
@@ -214,7 +213,7 @@
                 currentRow.replaceWith(str);
                 $("#modalUpdateCatalog").modal("hide");
                 $("#frmUpdateCatalog")[0].reset();
-                // swal("Cập nhật thành công", "Danh mục đã được chỉnh sửa", "success");
+                swal("Cập nhật thành công", "Danh mục đã được chỉnh sửa", "success");
                 handlerShowModalEditCatalog();
                 handlerShowModalDeleteCatalog();
             })
@@ -344,65 +343,7 @@
 
     //set event for button Create
     $("#btnCreateCatalog").on("click", function () {
-        let catalog = {
-            catalogName: $("#catalogNameCreate").val(),
-        }
-
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "POST",
-            url: "/api/catalogs/create",
-            data: JSON.stringify(catalog)
-        })
-            .done(function (data) {
-                let str = `
-                    <tr id="tr_${data.id}">
-                         <td>${data.id}</td>
-                         <td>${data.catalogName}</td>
-                         <td class="text-center">
-                         <button type="button" class="btn btn-outline-primary editCatalog" data-id="${data.id}">
-                         <i class="fa fa-edit"></i>
-                         </button>
-                         </td>
-                         <td class="text-center">
-                         <button type="button" class="btn btn-outline-danger deleteCatalog"
-                                            data-id="${data.id}">
-                         <i class="fa fa-trash"></i>
-                         </button>
-                         </td>
-                         </tr>
-                `;
-
-                $("#tblCatalog tbody").prepend(str);
-
-                $("#modalCreateCatalog").modal("hide");
-
-                $("#frmCreateCatalog")[0].reset();
-
-                // handlerShowUpdateModal();
-                // handlerDepositModal();
-                // handlerWithdrawModal();
-            })
-            .fail(function (jgXHR) {
-                console.log(jgXHR);
-
-                let str = ``;
-
-                if (jgXHR.responseJSON) {
-                    $.each(jgXHR.responseJSON, function (key, value) {
-                        str += `<label id="${key}-error" class="error" for = "${key}">${value}</label> <br>`;
-                        $("#" + key).addClass("error");
-                    });
-                } else {
-                    str += `<label id ="message-error" class ="error" for= "message">ERROR_400</label>`;
-                }
-
-                $("#modalCreateCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#modalCreateCatalog .modal-body .modal-alert-danger").html(str)
-            })
+        createCatalog();
     });
     //reset modal Create
     $("#modalCreateCatalog").one('hidden.bs.modal', function () {
@@ -411,9 +352,7 @@
         $("#modalCreateCatalog input.error").removeClass("error");
         $("#frmCreateCatalog")[0].reset();
     });
-    // $("#btnUpdateCatalog").on("click", function (){
-    //     $("#frmUpdateCatalog").trigger("submit");
-    // });
+
     // set event for button update
     $("#btnUpdateCatalog").on("click", function () {
         updateCatalog()

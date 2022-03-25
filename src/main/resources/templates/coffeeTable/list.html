@@ -155,6 +155,7 @@
                 $("#modalCreateTable").modal("hide");
 
                 $("#frmCreateTable")[0].reset();
+                swal("thành công", "Bàn mới đã được thêm", "success");
 
                 handlerShowUpdateModal();
                 handlerShowDeleteModal();
@@ -222,6 +223,7 @@
                 $("#modalUpdateTable").modal("hide");
 
                 $("#frmUpdateTable")[0].reset();
+                swal("thành công", "Bàn đã được cập nhật", "success");
 
                 handlerShowUpdateModal();
                 handlerShowDeleteModal();
@@ -252,7 +254,7 @@
                 currentRow.remove();
                 $("#modalDeleteTable").modal("hide");
                 $("#frmDeleteTable")[0].reset();
-                // swal("Cập nhật thành công","Thức uống đã được xoá", "success");
+                swal("Thành công","Bàn đã được xoá", "success");
               })
               .fail(function (jqXHR) {
                 let str = ``;

@@ -31,6 +31,13 @@ public class DrinkApi {
     @Autowired
     CatalogService catalogService;
 
+
+    @GetMapping
+    public ResponseEntity<List<Drink>> showListDrink(){
+    List<Drink> drink = drinkService.findAllNotDeleted();
+    return new ResponseEntity<>(drink,HttpStatus.OK);
+    }
+
     @GetMapping("/create")
     public ResponseEntity<?> getCatalogsCreate() {
         List<Catalog> listCatalog = catalogService.findAllNotDeleted();
