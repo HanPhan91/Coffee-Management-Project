@@ -21,16 +21,19 @@ function handlerActionCatalogsMaterial() {
             })
     });
 
-    $("button .deleteCatalogsMaterial").on("click", function () {
+    $("button.deleteCatalogsMaterial").on("click", function () {
         let id = $(this).data("id");
         $.ajax({
             type: "GET",
             url: "/api/catalogsMaterial/" + id
         })
             .done(function (data) {
+                $("#idCatalogsMaterialDelete").val(data.id);
+                $("#nameCatalogsMaterialDelete").val(data.name);
+                $("#delete").modal("show");
             })
             .fail(function (resp) {
-                alert("Tải modal Xóa thất bại");
+                alert(" Xóa thất bại");
             })
     });
 }

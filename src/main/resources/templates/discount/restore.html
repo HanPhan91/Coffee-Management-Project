@@ -1,10 +1,81 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="restoreDiscount">
+    <div class="modal" tabindex="-1" id="restoreDiscount">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">RESTORE</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestoreDiscount">
+                        <div class="row">
+                            <input type="text" id="idDiscountRestore" hidden >
+                            <div class="col col-md-6">
+                                <label for="codeDiscountRestore" class="form-label fw-bold">Mã KM</label>
+                                <input type="text" class="form-control" id="codeDiscountRestore" name="codeDiscountRestore">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="descriptionDiscountRestore" class="form-label fw-bold">Mô tả</label>
+                                <input type="text" class="form-control" id="descriptionDiscountRestore" name="descriptionDiscountRestore">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestoreDiscount">Restore</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnRestoreDiscount").on("click", function (){
+            $("#frmRestoreDiscount").trigger("submit");
+        });
+
+        function restoreDiscount(){
+            let id = $("#idDiscountRestore").val();
+            let discount = new Discount($("#codeDiscountRestore").val().trim(), $("#descriptionDiscountRestore").val().trim());
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/discount/restore/" + id,
+                data: JSON.stringify(discount)
+            })
+                .done(function (data){
+                    $("#tr_"+ $("#idDiscountRestore").val()).remove();
+                    $("#restoreDiscount").modal("hide");
+                    $("#frmRestoreDiscount")[0].reset();
+                    swal("Thành công", " Khuyến mãi được khôi phục", "success");
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#restoreDiscount .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#restoreDiscount .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#restoreDiscount").on('hidden.bs.modal', function () {
+            $("#restoreDiscount .modal-body .modal-alert-danger").empty();
+            $("#restoreDiscount .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#restoreDiscount input.error").removeClass("error");
+            $("#frmRestoreDiscount")[0].reset();
+        });
+    </script>
+
+</th:block>

@@ -44,7 +44,7 @@ public class MaterialApi {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         } else {
-           // List<User> users = userService.findAll();
+
             User user=new User();
             user.setId(1L);
             material.setUser(user);

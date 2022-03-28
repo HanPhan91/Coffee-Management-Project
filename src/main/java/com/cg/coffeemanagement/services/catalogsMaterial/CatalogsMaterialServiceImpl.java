@@ -40,4 +40,26 @@ public class CatalogsMaterialServiceImpl implements ICatalogsMaterialService{
     public void remove(Long id) {
 
     }
+
+    @Override
+    public List<CatalogsMaterial> findByDeletedFalse() {
+        return catalogsMaterialRepository.findByDeletedFalse();
+    }
+
+    @Override
+    public List<CatalogsMaterial> findByDeletedTrue() {
+        return catalogsMaterialRepository.findByDeletedTrue();
+    }
+
+    @Override
+    public void deleteCatalogsMaterial(Long id) {
+        catalogsMaterialRepository.deleteCatalogsMaterial(id);
+
+    }
+
+    @Override
+    public void restoreCatalogsMaterial(Long id) {
+        catalogsMaterialRepository.restoreCatalogsMaterial(id);
+
+    }
 }

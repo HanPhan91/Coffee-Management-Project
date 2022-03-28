@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="restore">
+    <div class="modal" tabindex="-1" id="restore">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">RESTORE</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestore">
+                        <div class="row">
+                            <input type="text" id="idCatalogsMaterialRestore" hidden >
+                            <div class="col">
+                                <label for="nameCatalogsMaterialRestore" class="form-label fw-bold">CatalogsMaterial</label>
+                                <input type="text" class="form-control" id="nameCatalogsMaterialRestore" name="fullNameRestore">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Restore</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnRestore").on("click", function (){
+            $("#frmRestore").trigger("submit");
+        });
+
+        function restoreCatalogsMaterial(){
+            let id = $("#idCatalogsMaterialRestore").val();
+            let catalogsMaterial = new CatalogsMaterial($("#nameCatalogsMaterialRestore").val().trim());
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/catalogsMaterial/restore/" + id,
+                data: JSON.stringify(catalogsMaterial)
+            })
+                .done(function (data){
+                    $("#tr_"+ $("#idCatalogsMaterialRestore").val()).remove();
+                    $("#restore").modal("hide");
+                    $("#frmRestore")[0].reset();
+                    swal("Thành công", " Danh mục nguyên liệu được khôi phục", "success");
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#restore .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#restore .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#restore").on('hidden.bs.modal', function () {
+            $("#restore .modal-body .modal-alert-danger").empty();
+            $("#restore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#restore input.error").removeClass("error");
+            $("#frmRestore")[0].reset();
+        });
+    </script>
+
+</th:block>

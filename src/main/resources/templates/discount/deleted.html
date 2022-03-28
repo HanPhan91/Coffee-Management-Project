@@ -1,10 +1,121 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Danh sách khuyến mãi đã xóa</title>
+    <th:block th:replace="layout/head :: head"/>
 </head>
 <body>
-$END$
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý đã xóa</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col text-end">
+                    <a class="btn btn-outline-primary" id="createDiscount" th:href="@{/discount}"><i class="fa fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <table class="table table-hover" id="tblDiscount">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-3">Mã KM</th>
+                            <th scope="col" class="fw-bold fs-3">Mô tả</th>
+                            <th scope="col" class="fw-bold fs-3">Phần trăm KM</th>
+                            <th scope="col" class="fw-bold fs-3">TG bắt đầu</th>
+                            <th scope="col" class="fw-bold fs-3">TG kết thúc</th>
+                            <th scope="col" class="fw-bold fs-3">số lượng</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-3">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="discount: ${discounts}">
+                            <tr th:id="'tr_'+ ${discount.id}">
+                                <td th:text="${discount.code}"></td>
+                                <td th:text="${discount.description}"></td>
+                                <td th:text="${discount.percentDiscount}"></td>
+                                <td th:text="${discount.createdAt}"></td>
+                                <td th:text="${discount.endedAt}"></td>
+                                <td th:text="${discount.quantity}"></td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-warning restoreDiscount" th:data-id="${discount.id}"><i
+                                            class="fa fa-undo"></i></button>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="discount/restore :: restoreDiscount"/>
+<script src="/assets/App/appDiscount.js"></script>
+<script src="/assets/App/validateDiscount.js"></script>
+<script>
+    function handlerRestore(){
+        $("button.restoreDiscount").on("click",function (){
+            let id = $(this).data("id");
+            $.ajax({
+                type: "GET",
+                url: "/api/discount/" + id
+            })
+                .done(function (data) {
+                    $("#idDiscountRestore").val(data.id);
+                    $("#codeDiscountRestore").val(data.code);
+                    $("#descriptionDiscountRestore").val(data.description);
+
+                    $("#restoreDiscount").modal("show");
+                })
+                .fail(function (resp) {
+                    window.location = "https://viblo.asia.vn";
+                })
+        });
+    }
+    handlerRestore();
+</script>
 </body>
 </html>

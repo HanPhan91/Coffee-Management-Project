@@ -66,6 +66,12 @@
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <div class="col text-end">
+                    <a class="btn btn-outline-danger" id="deleteCatalogsMaterial" th:href="@{/catalogsMaterial/deleted}"><i class="fa fa-trash"></i> Danh sách đã xóa
+                    </a>
+                </div>
+            </div>
 
         </div>
         <!-- ============================================================== -->
@@ -83,6 +89,7 @@
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="catalogsMaterial/create :: create"/>
 <th:block th:replace="catalogsMaterial/edit :: edit"/>
+<th:block th:replace="catalogsMaterial/delete :: delete"/>
 <script src="/assets/App/appCatalogMaterial.js"></script>
 <script src="/assets/App/validatedCatalogsMaterial.js"></script>
 <script>

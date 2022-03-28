@@ -55,6 +55,7 @@
                             <td><button class="btn btn-outline-danger deleteCatalogsMaterial" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
                         </tr>
                 `;
+                    swal("Thành công", "Danh mục nguyên liệu đã được xóa", "success");
                     $("#tr_"+id).replaceWith(str);
                     $("#edit").modal("hide");
                     $("#frmEdit")[0].reset();

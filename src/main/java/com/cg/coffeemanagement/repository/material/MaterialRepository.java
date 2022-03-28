@@ -11,6 +11,4 @@ import java.util.List;
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     Page<Material> findByCatalogsMaterialId(Long catalogsMaterialId, Pageable pageable);
-
-    List<Material> findByDeletedFalse();
 }

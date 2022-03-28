@@ -10,5 +10,5 @@ import java.util.List;
 public interface IMaterialService extends IGeneralServices<Material> {
     Page<Material> findByCatalogMaterialId(Long id, Pageable pageable);
 
-    List<Material> findByDeletedFalse();
+//    List<Material> findByDeletedFalse();
 }

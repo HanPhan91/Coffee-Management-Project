@@ -2,7 +2,8 @@ package com.cg.coffeemanagement.controller.api;
 
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.CatalogsMaterial;
-import com.cg.coffeemanagement.services.Materials.IMaterialService;
+//import com.cg.coffeemanagement.model.dto.CatalogsMaterialDto;
+import com.cg.coffeemanagement.model.dto.CatalogsMaterialDto;
 import com.cg.coffeemanagement.services.catalogsMaterial.ICatalogsMaterialService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,34 @@ public class CatalogsMaterialApi {
             } else {
                 throw new DataInputException("danh mục nguyên liệu không tồn tại");
             }
+        }
+    }
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<?> doDelete(@PathVariable Long id ,@RequestBody CatalogsMaterialDto catalogsMaterialDto) {
+        Optional<CatalogsMaterial> optionalCatalogsMaterial = catalogsMaterialService.findById(id);
+        if (optionalCatalogsMaterial.isPresent()) {
+            catalogsMaterialService.deleteCatalogsMaterial(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            throw new DataInputException("Danh mục nguyên liệu không tồn tại");
+        }
+    }
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<?> doRestore(@PathVariable Long id, @Validated @RequestBody CatalogsMaterialDto catalogsMaterialDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return appUtil.mapErrorToResponse(bindingResult);
+        }
+        Optional<CatalogsMaterial> opCatalogsMaterial = catalogsMaterialService.findById(id);
+        if (opCatalogsMaterial.isPresent()) {
+            CatalogsMaterial restoreCatalogsMaterial = opCatalogsMaterial.get();
+            restoreCatalogsMaterial.setName(catalogsMaterialDto.getName());
+            catalogsMaterialService.save(restoreCatalogsMaterial);
+            catalogsMaterialService.restoreCatalogsMaterial(restoreCatalogsMaterial.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            throw new DataInputException("Danh mục nguyên liệu không tồn tại");
         }
     }
 }

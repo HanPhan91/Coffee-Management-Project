@@ -15,18 +15,11 @@
                         <div class="row">
                             <input type="text" id="idCatalogsMaterialDelete" hidden>
                             <div class="col">
-                                <label for="nameCatalogsMaterialDelete" class="form-label fw-bold">Tên chức vụ:</label>
-                                <input type="text" class="form-control" id="nameCatalogsMaterialDelete" name="fullNameDelete"
+                                <label for="nameCatalogsMaterialDelete" class="form-label fw-bold">CatalogsMaterial</label>
+                                <input type="text" class="form-control" id="nameCatalogsMaterialDelete" name="nameCatalogsMaterialDelete"
                                        readonly>
                             </div>
                         </div>
-<!--                        <div class="row">-->
-<!--                            <div class="col">-->
-<!--                                <label for="perPositionDelete" class="form-label fw-bold">Phân quyền:</label>-->
-<!--                                <input type="text" class="form-control" id="perPositionDelete" name="fullNameDelete"-->
-<!--                                       readonly>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -43,21 +36,22 @@
         });
 
         function deleteCatalogsMaterial() {
-            let postion = new Position($("#idCatalogsMaterialDeleteDelete").val(), $("#nameCatalogsMaterialDelete").val().trim());
+            let id =$("#idCatalogsMaterialDelete").val();
+            let catalogsMaterial = new CatalogsMaterial($("#idCatalogsMaterialDelete").val(), $("#nameCatalogsMaterialDelete").val().trim());
             $.ajax({
                 headers: {
                     "Accept": "application/json",
                     "Content-type": "application/json"
                 },
                 type: "PUT",
-                url: "/api/positions/delete",
-                data: JSON.stringify(postion)
+                url: "/api/catalogsMaterial/delete/"+id,
+                data: JSON.stringify(catalogsMaterial)
             })
                 .done(function (data) {
-                    $("#tr_" + $("#idPositionDelete").val()).remove();
+                    $("#tr_" + id).remove();
                     $("#delete").modal("hide");
                     $("#frmDelete")[0].reset();
-                    swal("Thành công", "Chức vụ đã được xóa", "success");
+                    swal("Thành công", "Danh mục nguên liệu đã được xóa", "success");
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -73,7 +67,7 @@
                     $("#delete .modal-body .modal-alert-danger").html(str);
                 })
         }
-        $("#modalDelete").on('hidden.bs.modal', function () {
+        $("#delete").on('hidden.bs.modal', function () {
             $("#delete .modal-body .modal-alert-danger").empty();
             $("#delete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
             $("#delete input.error").removeClass("error");

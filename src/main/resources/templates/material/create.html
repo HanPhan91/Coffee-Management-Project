@@ -14,7 +14,7 @@
                     <form id="frmCreateMaterial">
                         <div class="row">
                             <div class="col col-md-6">
-                                <label for="nameMaterialCre" class="form-label fw-bold">Name</label>
+                                <label for="nameMaterialCre" class="form-label fw-bold">Material</label>
                                 <input type="text" class="form-control" id="nameMaterialCre" name="fullNameCreate">
                             </div>
                             <div class="col col-md-6">
@@ -26,15 +26,6 @@
                             <div class="col col-md-6">
                                 <label for="quantityMaterialCre" class="form-label fw-bold">Quantity</label>
                                 <input type="text" class="form-control" id="quantityMaterialCre" name="quantityCreate">
-                            </div>
-                            <div class="col col-md-6">
-<!--                                <label for="userMaterialCre" class="form-label fw-bold">User</label>-->
-
-<!--                                <select class="form-select" id="userMaterialCre" th:field="*{user}">-->
-<!--                                    <th:block th:each="user: ${users}">-->
-<!--                                        <option th:value="${user.id}" th:text="${user.name}"></option>-->
-<!--                                    </th:block>-->
-<!--                                </select>-->
                             </div>
                         </div>
                         <input type="text" id="catalogsMaterialId"  hidden th:value="${catalogsMaterialId}"  name="catalogsMaterial.id">
@@ -79,9 +70,9 @@
                             <td>${data.user.username}</td>
 
                             <td><button class="btn btn-outline-warning editMaterial" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger deleteMaterial" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
                         </tr>
                 `;
+                    swal("Thành công", " Tạo nguyên liệu thành công", "success");
                     $("#tblMaterial").prepend(str);
                     $("#createMaterial").modal("hide");
                     $("#frmCreateMaterial")[0].reset();

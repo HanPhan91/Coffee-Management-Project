@@ -1,10 +1,109 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="deleteDiscount">
+    <div class="modal" tabindex="-1" id="deleteDiscount">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete discount</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmDeleteDiscount">
+                        <div class="row">
+                            <input type="text" id="idDiscountDelete" hidden>
+                            <div class="col col-md-6">
+                                <label for="codeDiscountDelete" class="form-label fw-bold">Mã KM</label>
+                                <input type="text" class="form-control" id="codeDiscountDelete" name="codeDiscountDelete"
+                                       readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="descriptionDisCountDelete" class="form-label fw-bold">Mô tả</label>
+                                <input type="text" class="form-control" id="descriptionDisCountDelete" name="descriptionDisCountDelete" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="percentDiscountDelete" class="form-label fw-bold">% khuyến mãi</label>
+                                <input type="text" class="form-control" id="percentDiscountDelete" name="percentDiscountDelete"
+                                       readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="createdAtDisCountDelete" class="form-label fw-bold">Ngày bắt đầu</label>
+                                <input type="text" class="form-control" id="createdAtDisCountDelete" name="createdAtDisCountDelete" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="endedAtDiscountDelete" class="form-label fw-bold">Ngày kết thúc</label>
+                                <input type="text" class="form-control" id="endedAtDiscountDelete" name="endedAtDiscountDelete"
+                                       readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="quantityDisCountDelete" class="form-label fw-bold">Số lượng</label>
+                                <input type="text" class="form-control" id="quantityDisCountDelete" name="quantityDisCountDelete" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnDeleteDiscount">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnDeleteDiscount").on("click", function () {
+            deleteDiscount();
+        });
+
+        function deleteDiscount() {
+            let id =$("#idDiscountDelete").val();
+            let discount = new Discount($("#idDiscountDelete").val(), $("#codeDiscountDelete").val().trim());
+            discount.description = frmDeleteDiscount.descriptionDisCountDelete.value;
+            discount.percentDiscount = frmDeleteDiscount.percentDiscountDelete.value;
+            discount.createdAt = frmDeleteDiscount.createdAtDisCountDelete.value;
+            discount.endedAt = frmDeleteDiscount.endedAtDiscountDelete.value;
+            discount.quantity = frmDeleteDiscount.quantityDisCountDelete.value;
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/discount/delete/"+id,
+                data: JSON.stringify(discount)
+            })
+                .done(function (data) {
+                    $("#tr_" + id).remove();
+                    $("#deleteDiscount").modal("hide");
+                    $("#frmDeleteDiscount")[0].reset();
+                    swal("Thành công", "Khuyến mãi đã được xóa", "success");
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#deleteDiscount .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#deleteDiscount .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#deleteDiscount").on('hidden.bs.modal', function () {
+            $("#deleteDiscount .modal-body .modal-alert-danger").empty();
+            $("#deleteDiscount .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#deleteDiscount input.error").removeClass("error");
+            $("#frmDeleteDiscount")[0].reset();
+        });
+    </script>
+</th:block>

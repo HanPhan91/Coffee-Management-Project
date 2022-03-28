@@ -28,17 +28,4 @@ function handlerActionMaterial() {
             })
     });
 
-    $("button .deleteMaterial").on("click", function () {
-        let id = $(this).data("id");
-        $.ajax({
-            type: "GET",
-            url: "/api/materials/" + id
-        })
-            .done(function (data) {
-
-            })
-            .fail(function (resp) {
-                alert("Tải modal Xóa thất bại");
-            })
-    });
 }

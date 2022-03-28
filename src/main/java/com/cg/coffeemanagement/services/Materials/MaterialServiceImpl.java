@@ -48,8 +48,8 @@ public class MaterialServiceImpl implements IMaterialService {
         return materialRepository.findByCatalogsMaterialId(catalogsMaterialId, pageable);
     }
 
-    @Override
-    public List<Material> findByDeletedFalse() {
-        return materialRepository.findByDeletedFalse();
-    }
+//    @Override
+//    public List<Material> findByDeletedFalse() {
+//        return materialRepository.findByDeletedFalse();
+//    }
 }
