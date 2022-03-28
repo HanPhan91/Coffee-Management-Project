@@ -76,7 +76,6 @@
             <version>1.27.0</version>
         </dependency>
         <dependency>
-<<<<<<< HEAD
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -85,26 +84,6 @@
             <artifactId>spring-security-core</artifactId>
             <version>5.3.5.RELEASE</version>
         </dependency>
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.security/spring-security-web &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-web</artifactId>-->
-<!--            <version>5.6.2</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.security/spring-security-config &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-config</artifactId>-->
-<!--            <version>5.6.2</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-taglibs</artifactId>-->
-<!--            <version>5.6.2</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -121,10 +100,6 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.2</version>
             <scope>runtime</scope>
-=======
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
->>>>>>> han
         </dependency>
 
     </dependencies>
