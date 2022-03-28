@@ -3,7 +3,7 @@ package com.cg.coffeemanagement.controller.api;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.UserDto;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserApi {
     private AppUtil appUtil;
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
 
     @GetMapping("/{id}")

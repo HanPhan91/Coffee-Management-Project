@@ -1,15 +1,8 @@
 package com.cg.coffeemanagement.controller;
 
-import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-
-import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.services.Users.IUserServices;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,16 +15,13 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userService;
 
     @GetMapping
     public ModelAndView showUser(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/list");
-        List<User> users = userServices.findByDeletedFalse();
-        User user = userServices.getByUsername(Principal.getPrincipal()).get();
-        modelAndView.addObject("user", user);
-
+        List<User> users = userService.findByDeletedFalse();
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -40,11 +30,7 @@ public class UserController {
     public ModelAndView showUserDeleted(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/deleted");
-        List<User> users = userServices.findByDeletedTrue();
-
-        User user = userServices.getByUsername(Principal.getPrincipal()).get();
-        modelAndView.addObject("user", user);
-
+        List<User> users = userService.findByDeletedTrue();
         modelAndView.addObject("users", users);
         return modelAndView;
     }
