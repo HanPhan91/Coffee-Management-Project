@@ -31,11 +31,7 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>
-<<<<<<< HEAD
-                                <input type="file" class="form-control" id="uploadCre" accept="image/jpeg, image.png"/>
-=======
-                                <input type="file" class="form-control" id="uploadCre" accept="image/jpeg, image.png" />
->>>>>>> han
+                                <input type="file" class="form-control" id="uploadCre" accept="image/jpeg, image/png"/>
                             </div>
                         </div>
                     </form>
@@ -49,7 +45,6 @@
     </div>
 
     <script>
-<<<<<<< HEAD
         $("#btnCreateUser").on("click", function () {
             $("#frmCreateUser").trigger("submit");
         });
@@ -60,134 +55,73 @@
             formData.append("password", $("#passCre").val().toString());
             formData.append("id_staff", $("#staffCre").val().toString());
             if ($("#uploadCre")[0].files[0] != null) {
-=======
-        $("#btnCreateUser").on("click", function (){
-            $("#frmCreateUser").trigger("submit");
-        });
-
-        function createUser(){
-            let formData = new FormData();
-            formData.append("username",$("#usernameCre").val().toString());
-            formData.append("password", $("#passCre").val().toString());
-            formData.append("id_staff", $("#staffCre").val().toString());
-            if ($("#uploadCre")[0].files[0] != null){
->>>>>>> han
-                formData.append("file", $("#uploadCre")[0].files[0]);
-            }
-            $.ajax({
-                type: "POST",
-                contentType: false,
-                cache: false,
-                processData: false,
-                url: "/api/users/create",
-                data: formData
-            })
-<<<<<<< HEAD
-                .done(function (data) {
-                //     let img;
-                //     if (data.avatar == null) {
-                //         img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
-                //     } else {
-                //         img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
-                //     }
-                //     let str = `
-                //     <tr id="'tr_'+ ${data.id}">
-                //                 <td>${data.username}</td>
-                //                 <td>${data.staff.name}</td>
-                //                 <td>${data.staff.position.name}</td>
-                //                 <td>${data.staff.createAt}</td>
-                //                 <td>${img}</td>
-                //                 <td class="text-center">
-                //                     <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
-                //                             class="fa fa-pencil-alt"></i></button>
-                //                 </td>
-                //                 <td class="text-center">
-                //                     <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
-                //                             class="fa fa-trash"></i></button>
-                //                 </td>
-                //             </tr>
-                // `;
-                //     $("#tblUser tbody").prepend(str);
-                //     $("#modalCreate").modal("hide");
-                //     $("#frmCreateUser")[0].reset();
-                //     $("#staffCre option").remove();
-                //     handlerActionUser();
-                //     swal("Thành công", "User đã được cập nhật", "success");
-                    swal("Thành công", "User mới đã được tạo", "success").then(function() {
-                        window.location = "/users";
-                    });
+                $("#btnCreateUser").on("click", function () {
+                    $("#frmCreateUser").trigger("submit");
+                });
+                $.ajax({
+                    type: "POST",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    url: "/api/users/create",
+                    data: formData
                 })
-                .fail(function (jqXHR) {
-                    let str = ``;
-                    if (jqXHR.responseJSON) {
-                        $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                            $("#" + key).addClass("error");
+                    .done(function (data) {
+                        //     let img;
+                        //     if (data.avatar == null) {
+                        //         img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
+                        //     } else {
+                        //         img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
+                        //     }
+                        //     let str = `
+                        //     <tr id="'tr_'+ ${data.id}">
+                        //                 <td>${data.username}</td>
+                        //                 <td>${data.staff.name}</td>
+                        //                 <td>${data.staff.position.name}</td>
+                        //                 <td>${data.staff.createAt}</td>
+                        //                 <td>${img}</td>
+                        //                 <td class="text-center">
+                        //                     <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
+                        //                             class="fa fa-pencil-alt"></i></button>
+                        //                 </td>
+                        //                 <td class="text-center">
+                        //                     <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
+                        //                             class="fa fa-trash"></i></button>
+                        //                 </td>
+                        //             </tr>
+                        // `;
+                        //     $("#tblUser tbody").prepend(str);
+                        //     $("#modalCreate").modal("hide");
+                        //     $("#frmCreateUser")[0].reset();
+                        //     $("#staffCre option").remove();
+                        //     handlerActionUser();
+                        //     swal("Thành công", "User đã được cập nhật", "success");
+                        swal("Thành công", "User mới đã được tạo", "success").then(function () {
+                            window.location = "/users";
                         });
-                    } else {
-                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                    }
-                    $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                    $("#modalCreate .modal-body .modal-alert-danger").html(str);
-                })
-        }
-
-        $("#modalCreate").on('hidden.bs.modal', function () {
-            $("#modalCreate .modal-body .modal-alert-danger").empty();
-            $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-            $("#modalCreate input.error").removeClass("error");
-            $("#staffCre option").remove();
-            $("#frmCreateUser")[0].reset();
-        });
-=======
-            .done(function (data){
-                let img;
-                if (data.avatar == null){
-                    img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
-                }
-                else {
-                    img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
-                }
-                let str= `
-                    <tr id="'tr_'+ ${data.id}">
-                                <td>${data.username}</td>
-                                <td>${data.password}</td>
-                                <td>${data.staff.name}</td>
-                                <td>${data.staff.position.name}</td>
-                                <td>${data.staff.createAt}</td>
-                                <td>${img}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
-                                            class="fa fa-pencil-alt"></i></button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                `;
-                $("#tblUser tbody").prepend(str);
-                $("#modalCreate").modal("hide");
-                $("#frmCreateUser")[0].reset();
+                    })
+                    .fail(function (jqXHR) {
+                        let str = ``;
+                        if (jqXHR.responseJSON) {
+                            $.each(jqXHR.responseJSON, function (key, value) {
+                                str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                                $("#" + key).addClass("error");
+                            });
+                        } else {
+                            str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                        }
+                        $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                        $("#modalCreate .modal-body .modal-alert-danger").html(str);
+                    })
+            }
+            $("#modalCreate").on('hidden.bs.modal', function () {
+                $("#modalCreate .modal-body .modal-alert-danger").empty();
+                $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+                $("#modalCreate input.error").removeClass("error");
                 $("#staffCre option").remove();
-                handlerActionUser();
-                swal("Thành công", "User đã được cập nhật", "success");
-            })
-            .fail(function (jqXHR){
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                    $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                        $("#" + key).addClass("error");
-                    });
-                } else {
-                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
-                $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#modalCreate .modal-body .modal-alert-danger").html(str);
-            })
+                $("#frmCreateUser")[0].reset();
+            });
         }
->>>>>>> han
     </script>
 
 </th:block>

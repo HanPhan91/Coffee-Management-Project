@@ -2,75 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="modalRestore">
     <div class="modal" tabindex="-1" id="modalRestore">
-<<<<<<< HEAD
         <div class="modal-dialog modal-dialog-centered modal-sm">
-=======
-        <div class="modal-dialog modal-dialog-centered modal-lg">
->>>>>>> han
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Khôi phục user</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-alert-danger hide">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Khôi phục user</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="frmRestoreUser">
-                        <input type="text" id="idRestore" hidden>
-                        <div class="row">
-<<<<<<< HEAD
-                            <div class="col">
-=======
-                            <div class="col col-md-6">
->>>>>>> han
-                                <label for="usernameRestore" class="form-label fw-bold">Tên đăng nhập:</label>
-                                <input type="text" class="form-control" id="usernameRestore" name="usernameRestore"
-                                       readonly>
-                            </div>
-<<<<<<< HEAD
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="passRestore" class="form-label fw-bold">Mật khẩu:</label>-->
-<!--                                <input type="password" class="form-control" id="passRestore" name="passRestore">-->
-<!--                            </div>-->
+                    <div class="modal-body">
+                        <div class="modal-alert-danger hide">
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="staffRestore" class="form-label fw-bold">Nhân viên được cấp:</label>
-                                <input type="text" class="form-control" id="staffRestore" name="staffRestore" readonly>
+                        <form id="frmRestoreUser">
+                            <input type="text" id="idRestore" hidden>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col col-md-6">
+                                        <label for="usernameRestore" class="form-label fw-bold">Tên đăng nhập:</label>
+                                        <input type="text" class="form-control" id="usernameRestore"
+                                               name="usernameRestore"
+                                               readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-md-6">
+                                        <label for="passRestore" class="form-label fw-bold">Mật khẩu:</label>
+                                        <input type="password" class="form-control" id="passRestore" name="passRestore">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-md-6">
+                                        <label for="staffRestore" class="form-label fw-bold">Nhân viên được
+                                            cấp:</label>
+                                        <input type="text" class="form-control" id="staffRestore" name="staffRestore"
+                                               readonly>
+                                    </div>
+                                    <div class="col col-md-6">
+                                        <label for="uploadRestore" class="form-label fw-bold">Ảnh đại diện:</label>
+                                        <input type="file" class="form-control" id="uploadRestore"
+                                               accept="image/jpeg, image.png"/>
+                                    </div>
+                                </div>
                             </div>
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="uploadRestore" class="form-label fw-bold">Ảnh đại diện:</label>-->
-<!--                                <input type="file" class="form-control" id="uploadRestore"-->
-<!--                                       accept="image/jpeg, image.png"/>-->
-<!--                            </div>-->
-=======
-                            <div class="col col-md-6">
-                                <label for="passRestore" class="form-label fw-bold">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="passRestore" name="passRestore">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col col-md-6">
-                                <label for="staffRestore" class="form-label fw-bold">Nhân viên được cấp:</label>
-                                <input type="text" class="form-control" id="staffRestore" name="staffRestore" readonly>
-                            </div>
-                            <div class="col col-md-6">
-                                <label for="uploadRestore" class="form-label fw-bold">Ảnh đại diện:</label>
-                                <input type="file" class="form-control" id="uploadRestore"
-                                       accept="image/jpeg, image.png"/>
-                            </div>
->>>>>>> han
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Cập nhật</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-primary" id="btnRestore">Cập nhật</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         $("#btnRestore").on("click", function () {
             $("#frmRestoreUser").trigger("submit");
@@ -93,20 +75,9 @@
                 data: formData
             })
                 .done(function (data) {
-<<<<<<< HEAD
-                    // $("#tblUserDelete #tr_" + id).remove();
-                    // $("#modalRestore").modal("hide");
-                    // $("#frmRestoreUser")[0].reset();
-                    // swal("Thành công", "User đã được khôi phục", "success");
-                    swal("Thành công", "User đã được khôi phục", "success").then(function() {
+                    swal("Thành công", "User đã được khôi phục", "success").then(function () {
                         window.location = "deleted";
                     });
-=======
-                    $("#tblUserDelete #tr_" + id).remove();
-                    $("#modalRestore").modal("hide");
-                    $("#frmRestoreUser")[0].reset();
-                    swal("Thành công", "User đã được khôi phục", "success");
->>>>>>> han
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -122,15 +93,12 @@
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
                 })
         }
-<<<<<<< HEAD
+
         $("#modalRestore").on('hidden.bs.modal', function () {
             $("#modalRestore .modal-body .modal-alert-danger").empty();
             $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
             $("#modalRestore input.error").removeClass("error");
             $("#frmRestoreUser")[0].reset();
         });
-=======
->>>>>>> han
     </script>
-
 </th:block>
