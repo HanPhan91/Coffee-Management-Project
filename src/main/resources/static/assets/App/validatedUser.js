@@ -49,6 +49,13 @@ $(document).ready(function () {
                 minlength: 5,
                 maxlength: 30,
             },
+<<<<<<< HEAD
+=======
+            passEdit: {
+                required: true,
+                minlength: 3,
+            },
+>>>>>>> han
         },
         messages: {
             usernameEdit: {
@@ -56,6 +63,13 @@ $(document).ready(function () {
                 minlength: "Tên đăng nhập phải có độ dài nằm trong khoảng 5-30 ký tự",
                 maxlength: "Tên đăng nhập phải có độ dài nằm trong khoảng 5-30 ký tự",
             },
+<<<<<<< HEAD
+=======
+            passEdit: {
+                required: "Mật khẩu không được để trống",
+                minlength: "Mật khẩu phải dài hơn trong khoảng 3 ký tự",
+            },
+>>>>>>> han
         },
         errorLabelContainer: '#modalEdit .modal-body .modal-alert-danger',
         errorPlacement: function (error, element) {

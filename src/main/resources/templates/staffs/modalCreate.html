@@ -71,6 +71,7 @@
                 data: JSON.stringify(staff)
             })
             .done(function (data){
+<<<<<<< HEAD
                 // let str= `
                 //     <tr id="tr_${data.id}">
                 //                 <td>${data.name}</td>
@@ -97,6 +98,30 @@
                     window.location = "/staffs";
                 });
 
+=======
+                let str= `
+                    <tr id="tr_${data.id}">
+                                <td>${data.name}</td>
+                                <td>${data.address}</td>
+                                <td>${data.phone}</td>
+                                <td>${data.email}</td>
+                                <td>${data.birthDay}</td>
+                                <td>${data.position.name}</td>
+                                <td>
+                                    <button class="btn btn-outline-warning editStaff" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger deleteStaff" data-id="${data.id}"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                `;
+                $("#tblStaff tbody").prepend(str);
+                $("#modalCreate").modal("hide");
+                $("#frmCreateStaff")[0].reset();
+                $("#positionStaffCre option").remove();
+                handlerActionStaff();
+                swal("Thành công", "Nhân viên mới đã được tạo", "success");
+>>>>>>> han
             })
             .fail(function (jqXHR){
                 let str = ``;

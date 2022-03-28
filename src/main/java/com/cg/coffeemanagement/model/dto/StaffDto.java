@@ -1,12 +1,22 @@
 package com.cg.coffeemanagement.model.dto;
 
+<<<<<<< HEAD
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+=======
+import com.cg.coffeemanagement.model.Position;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jdk.jfr.Timestamp;
+>>>>>>> han
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+<<<<<<< HEAD
+=======
+import org.hibernate.annotations.CreationTimestamp;
+>>>>>>> han
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

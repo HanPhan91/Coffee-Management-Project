@@ -2,8 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
     <title>Danh sách khuyến mãi đã xóa</title>
     <th:block th:replace="layout/head :: head"/>
+=======
+    <title>Quản lý danh mục</title>
+    <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
 </head>
 <body>
 <div class="preloader">
@@ -40,8 +45,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-end">
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
                     <a class="btn btn-outline-primary" id="createDiscount" th:href="@{/discount}"><i class="fa fa-arrow-left"></i> Quay lại
                     </a>
+=======
+                    <button class="btn btn-outline-primary" id="createCatalog"><i class="fa fa-plus-square"></i> Tạo
+                        danh mục̣ mới
+                    </button>
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
                 </div>
             </div>
             <div class="row">
@@ -68,13 +79,39 @@
                                 <td th:text="${discount.endedAt}"></td>
                                 <td th:text="${discount.quantity}"></td>
                                 <td class="text-center">
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
                                     <button class="btn btn-outline-warning restoreDiscount" th:data-id="${discount.id}"><i
                                             class="fa fa-undo"></i></button>
+=======
+                                    <button type="button" class="btn btn-outline-primary editCatalog"
+                                            th:data-id="${catalog.id}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger deleteCatalog"
+                                            th:data-id="${catalog.id}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
                                 </td>
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
+=======
+                    <div class="row">
+                        <div class="col mb-2">
+                            <div class="d-flex justify-content-end">
+                                <a type="button" class="btn btn-danger restoreCatalog" href="/catalogs/deleted">
+                                    <i class="fa fa-trash-restore"></i>
+                                    Khôi phục danh mục
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
                 </div>
             </div>
 
@@ -92,12 +129,214 @@
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
 <th:block th:replace="discount/restore :: restoreDiscount"/>
 <script src="/assets/App/appDiscount.js"></script>
 <script src="/assets/App/validateDiscount.js"></script>
 <script>
     function handlerRestore(){
         $("button.restoreDiscount").on("click",function (){
+=======
+<th:block th:replace="catalog/modalCreateCatalog :: modalCreateCatalog"/>
+<th:block th:replace="catalog/modalUpdateCatalog :: modalUpdateCatalog"/>
+<th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
+<!--<script src="./assets/App/validatedCatalog.js"></script>-->
+
+<script>
+
+    $("#createCatalog").on("click", function () {
+        $("#modalCreateCatalog").modal("show");
+    });
+
+
+    handlerShowModalDeleteCatalog();
+    handlerShowModalEditCatalog();
+
+    function createCatalog() {
+        let catalog = {
+            catalogName: $("#catalogNameCreate").val()
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "POST",
+            url: "/api/catalogs/create",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let str = `
+                        <tr th:id="'tr_'+ ${data.id}">
+                                    <td>${data.id}</td>
+                                    <td>${data.catalogName}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-primary editCatalog" data-id="${data.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-danger deleteCatalog"
+                                                data-id="${data.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                        </tr>
+                    `;
+                $("#tblCatalog tbody").prepend(str);
+                $("#modalCreateCatalog").modal("hide");
+                $("#frmCreateCatalog")[0].reset();
+                swal("thành công", "Danh mục mới đã được thêm", "success");
+                handlerShowModalEditCatalog();
+                handlerShowModalDeleteCatalog();
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalCreateCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalCreateCatalog .modal-body .modal-alert-danger").html(str);
+            })
+    }
+
+    function updateCatalog() {
+        let catalog = {
+            id: $("#idCatalogUpdate").val(),
+            catalogName: $("#catalogNameUpdate").val(),
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: "/api/catalogs/update",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let str = `
+                        <tr id="tr_${data.id}">
+                                    <td>${data.id}</td>
+                                    <td>${data.catalogName}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-primary editCatalog" data-id="${data.id}">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-outline-danger deleteCatalog"
+                                                data-id="${data.id}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                        </tr>
+                    `;
+                let currentRow = $("#tr_" + data.id);
+                console.log(currentRow);
+                currentRow.replaceWith(str);
+                $("#modalUpdateCatalog").modal("hide");
+                $("#frmUpdateCatalog")[0].reset();
+                swal("Cập nhật thành công", "Danh mục đã được chỉnh sửa", "success");
+                handlerShowModalEditCatalog();
+                handlerShowModalDeleteCatalog();
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalUpdateCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalUpdateCatalog .modal-body .modal-alert-danger").html(str);
+            })
+    }
+
+    function deleteCatalog() {
+
+        let catalog = {
+            id: $("#idCatalogDelete").val(),
+            catalogName: $("#catalogNameDelete").val(),
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: "/api/catalogs/delete",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let currentRow = $("#tr_" + data.id);
+                currentRow.remove();
+                $("#modalDeleteCatalog").modal("hide");
+                $("#frmDeleteCatalog")[0].reset();
+                swal("Cập nhật thành công", "Danh mục đã được xoá", "success");
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalDeleteCatalog .modal-body .modal-alert-danger").html(str);
+            })
+    }
+
+    function restoreCatalog() {
+        let catalog = {
+            id: $("#idCatalogRestore").val(),
+            catalogName: $("#catalogNameRestore").val(),
+        };
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: "/api/catalogs/restore",
+            data: JSON.stringify(catalog)
+        })
+            .done(function (data) {
+                let currentRow = $("#tr_" + data.id);
+                currentRow.remove();
+                $("#modalRestoreCatalog").modal("hide");
+                $("#frmRestoreCatalog")[0].reset();
+                swal("Cập nhật thành công", "Danh mục đã được khôi phục", "success");
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalRestoreCatalog .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalRestoreCatalog .modal-body .modal-alert-danger").html(str);
+            })
+    }
+
+    function handlerShowModalEditCatalog() {
+        $("button.editCatalog").on("click", function () {
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
             let id = $(this).data("id");
             $.ajax({
                 type: "GET",
@@ -115,7 +354,60 @@
                 })
         });
     }
+<<<<<<< HEAD:src/main/resources/templates/discount/deleted.html
     handlerRestore();
+=======
+
+    //set event for button Create
+    $("#btnCreateCatalog").on("click", function () {
+        createCatalog();
+    });
+    //reset modal Create
+    $("#modalCreateCatalog").one('hidden.bs.modal', function () {
+        $("#modalCreateCatalog .modal-body .modal-alert-danger").empty();
+        $("#modalCreateCatalog .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalCreateCatalog input.error").removeClass("error");
+        $("#frmCreateCatalog")[0].reset();
+    });
+
+    // set event for button update
+    $("#btnUpdateCatalog").on("click", function () {
+        updateCatalog()
+    });
+
+    $("#modalUpdateCatalog").one('hidden.bs.modal', function () {
+        $("#modalUpdateCatalog .modal-body .modal-alert-danger").empty();
+        $("#modalUpdateCatalog .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalUpdateCatalog input.error").removeClass("error");
+        $("#frmUpdateCatalog")[0].reset();
+    });
+
+
+    //set event for button Restore
+    $("#btnRestoreCatalog").on("click", function () {
+        $("#frmRestoreCatalog").trigger("submit");
+    });
+
+    $("#modalRestoreCatalog").one('hidden.bs.modal', function () {
+        $("#modalRestoreCatalog .modal-body .modal-alert-danger").empty();
+        $("#modalRestoreCatalog .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalRestoreCatalog input.error").removeClass("error");
+        $("#frmRestoreCatalog")[0].reset();
+    });
+
+
+    //set event for button Delete
+    $("#btnDeleteCatalog").on("click", function () {
+        deleteCatalog()
+    });
+
+    $("#modalDeleteCatalog").one('hidden.bs.modal', function () {
+        $("#modalDeleteCatalog .modal-body .modal-alert-danger").empty();
+        $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalDeleteCatalog input.error").removeClass("error");
+        $("#frmDeleteCatalog")[0].reset();
+    });
+>>>>>>> quang:src/main/resources/templates/catalog/list.html
 </script>
 </body>
 </html>

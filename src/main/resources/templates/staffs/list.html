@@ -38,7 +38,11 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+<<<<<<< HEAD
             <div class="row mb-2">
+=======
+            <div class="row">
+>>>>>>> han
                 <div class="col text-end">
                     <button class="btn btn-outline-primary" id="createStaff"><i class="fa fa-plus-square"></i> Tạo
                         nhân viên mới
@@ -47,7 +51,11 @@
             </div>
             <div class="row">
                 <div class="col text-center">
+<<<<<<< HEAD
                     <table class="table table-striped" id="tblStaff">
+=======
+                    <table class="table table-hover" id="tblStaff">
+>>>>>>> han
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
@@ -60,6 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
                         <!--                        <th:block th:each="staff: ${staffs}">-->
                         <!--                            <tr th:id="'tr_'+ ${staff.id}">-->
                         <!--                                <td th:text="${staff.name}"></td>-->
@@ -76,6 +85,24 @@
                         <!--                                </td>-->
                         <!--                            </tr>-->
                         <!--                        </th:block>-->
+=======
+                        <th:block th:each="staff: ${staffs}">
+                            <tr th:id="'tr_'+ ${staff.id}">
+                                <td th:text="${staff.name}"></td>
+                                <td th:text="${staff.address}"></td>
+                                <td th:text="${staff.phone}"></td>
+                                <td th:text="${staff.email}"></td>
+                                <td th:text="${staff.birthDay}"></td>
+                                <td th:text="${staff.position.name}"></td>
+                                <td>
+                                    <button class="btn btn-outline-warning editStaff" th:data-id="${staff.id}"><i class="fa fa-pencil-alt"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger deleteStaff" th:data-id="${staff.id}"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </th:block>
+>>>>>>> han
                         </tbody>
                     </table>
                 </div>
@@ -107,6 +134,7 @@
 <script src="/assets/App/appStaff.js"></script>
 <script src="/assets/App/validatedStaff.js"></script>
 <script src="/assets/App/appPosition.js"></script>
+<<<<<<< HEAD
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
     $("#tblStaff").DataTable({
@@ -134,12 +162,15 @@
         ],
     });
 </script>
+=======
+>>>>>>> han
 <script>
     $("#createStaff").on("click", function () {
         $.ajax({
             type: "GET",
             url: "/api/positions"
         })
+<<<<<<< HEAD
             .done(function (data) {
                 let str = "";
                 for (let i = 0; i < data.length; i++) {
@@ -160,10 +191,35 @@
             })
 
 
+=======
+            .done(function (data){
+                let str="";
+                for (let i = 0; i < data.length; i++) {
+                    let position = data[i];
+                    str+=`
+                    <option value="${position.id}">${position.name}</option>
+                `;
+                }
+                $("#positionStaffCre").prepend(str);
+            })
+        .fail(function (){
+            window.location = "/errors";
+        })
+
+        let limitDay = "";
+        let today = new Date();
+        limitDay= `${today.getFullYear() - 16}-12-31`;
+        $("#bodStaffCre").attr("max", limitDay);
+        $("#modalCreate").modal("show");
+>>>>>>> han
     });
     handlerActionStaff();
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> han
 </script>
 </body>
 </html>

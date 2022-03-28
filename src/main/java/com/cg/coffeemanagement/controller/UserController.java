@@ -1,10 +1,16 @@
 package com.cg.coffeemanagement.controller;
 
+<<<<<<< HEAD
 import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Users.IUserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+=======
+import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.services.Users.IUserServices;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> han
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +30,11 @@ public class UserController {
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/list");
         List<User> users = userServices.findByDeletedFalse();
+<<<<<<< HEAD
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
         modelAndView.addObject("user", user);
+=======
+>>>>>>> han
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -35,8 +44,11 @@ public class UserController {
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/deleted");
         List<User> users = userServices.findByDeletedTrue();
+<<<<<<< HEAD
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
         modelAndView.addObject("user", user);
+=======
+>>>>>>> han
         modelAndView.addObject("users", users);
         return modelAndView;
     }

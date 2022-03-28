@@ -74,9 +74,16 @@
                 data: JSON.stringify(staff)
             })
                 .done(function (data) {
+<<<<<<< HEAD
                     swal("Thành công", "Nhân viên đã được xóa", "success").then(function() {
                         window.location = "/staffs";
                     });
+=======
+                    $("#tr_" + $("#idStaffDelete").val()).remove();
+                    $("#modalDelete").modal("hide");
+                    $("#frmDeleteStaff")[0].reset();
+                    swal("Thành công", "Nhân viên mới đã được xóa", "success");
+>>>>>>> han
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -92,11 +99,14 @@
                     $("#modalDelete .modal-body .modal-alert-danger").html(str);
                 })
         }
+<<<<<<< HEAD
         $("#modalDelete").on('hidden.bs.modal', function () {
             $("#modalDelete .modal-body .modal-alert-danger").empty();
             $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
             $("#modalDelete input.error").removeClass("error");
             $("#frmCreateStaff")[0].reset();
         });
+=======
+>>>>>>> han
     </script>
 </th:block>
