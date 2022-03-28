@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="modalDelete">
     <div class="modal" tabindex="-1" id="modalDelete">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Xóa user</h5>
@@ -14,17 +14,17 @@
                     <form id="frmDeleteUser">
                         <input type="text" id="idDelete" hidden>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col">
                                 <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameDelete" name="usernameDelete" readonly>
                             </div>
-                            <div class="col col-md-6">
-                                <label for="passDelete" class="form-label fw-bold">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="passDelete" name="passDelete" readonly>
-                            </div>
+<!--                            <div class="col col-md-6">-->
+<!--                                <label for="passDelete" class="form-label fw-bold">Mật khẩu:</label>-->
+<!--                                <input type="password" class="form-control" id="passDelete" name="passDelete" readonly>-->
+<!--                            </div>-->
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col">
                                 <label for="staffDelete" class="form-label fw-bold">Nhân viên được cấp:</label>
                                 <input type="text" class="form-control" id="staffDelete" name="staffDelete" readonly>
                             </div>
@@ -62,10 +62,13 @@
                 data: formData
             })
                 .done(function (data) {
-                    $("#tr_" + id).remove();
-                    $("#modalDelete").modal("hide");
-                    $("#frmDeleteUser")[0].reset();
-                    swal("Thành công", "User đã được xóa", "success");
+                    // $("#tr_" + id).remove();
+                    // $("#modalDelete").modal("hide");
+                    // $("#frmDeleteUser")[0].reset();
+                    // swal("Thành công", "User đã được xóa", "success");
+                    swal("Thành công", "User mới đã được xóa", "success").then(function() {
+                        window.location = "/users";
+                    });
                 })
                 .fail(function (jqXHR) {
                     let str = ``;

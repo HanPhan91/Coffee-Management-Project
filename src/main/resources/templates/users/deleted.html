@@ -98,6 +98,7 @@
 <script th:inline="javascript">
     var listUser = [[${users}]];
     $("#tblUserDelete").DataTable({
+        "ordering": false,
         data: listUser,
         columns: [
             {data: 'username'},
@@ -116,7 +117,7 @@
             },
             {
                 data: 'id', render: function (data, type, row, meta) {
-                    return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-trash"></i></button>`;
+                    return `<button class="btn btn-outline-warning restoreUser" data-id="${data}"><i class="fa fa-undo"></i></button>`;
                 }
             },
         ],

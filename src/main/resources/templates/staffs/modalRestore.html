@@ -55,12 +55,10 @@
             </div>
         </div>
     </div>
-
     <script>
         $("#btnRestore").on("click", function () {
             $("#frmRestoreStaff").trigger("submit");
         });
-
         function restoreStaff() {
             let id = $("#idStaffRestore").val();
             let name = $("#nameStaffRestore").val().trim();
@@ -80,10 +78,13 @@
                 data: JSON.stringify(staff)
             })
                 .done(function (data) {
-                    $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
-                    $("#modalRestore").modal("hide");
-                    $("#frmRestoreStaff")[0].reset();
-                    swal("Thành công", "Nhân viên đã được khôi phục", "success");
+                    // $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
+                    // $("#modalRestore").modal("hide");
+                    // $("#frmRestoreStaff")[0].reset();
+                    // swal("Thành công", "Nhân viên đã được khôi phục", "success");
+                    swal("Thành công", "Nhân viên đã được khôi phục", "success").then(function() {
+                        window.location = "deleted";
+                    });
                 })
                 .fail(function (jqXHR) {
                     let str = ``;

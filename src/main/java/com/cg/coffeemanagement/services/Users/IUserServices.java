@@ -1,5 +1,6 @@
 package com.cg.coffeemanagement.services.Users;
 
+import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.TempDTO;
 import com.cg.coffeemanagement.model.dto.UserDto;
@@ -45,4 +46,7 @@ public interface IUserServices extends IGeneralServices<User>, UserDetailsServic
     Optional<User> findUserDTOByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    void changePass(@Param("id") Long id, String pass);
+    void saveAvatar( @Param("id")Long id, @Param("avatar") Avatar avatar);
 }

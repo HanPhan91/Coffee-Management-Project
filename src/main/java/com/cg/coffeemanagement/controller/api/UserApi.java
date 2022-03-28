@@ -55,8 +55,6 @@ public class UserApi {
         }
         Optional<User> opUser = userServices.findById(id);
         if (opUser.isPresent()) {
-            System.out.println("Pass:");
-            System.out.println(userDto.getPassword());
             User editUser = userServices.edit(opUser.get(), userDto);
             return new ResponseEntity<>(editUser, HttpStatus.OK);
         } else {

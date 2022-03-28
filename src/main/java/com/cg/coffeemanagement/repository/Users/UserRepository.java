@@ -1,7 +1,9 @@
 package com.cg.coffeemanagement.repository.Users;
 
+import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.UserDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +16,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByDeletedFalse();
+    List<User> findByDeletedFalse(Sort createAt);
 
-    List<User> findByDeletedTrue();
+    List<User> findByDeletedTrue(Sort createAt);
 
     @Modifying
     @Query("UPDATE User u SET u.deleted = true WHERE u.id = :id")
@@ -32,4 +34,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserDTOByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    @Modifying
+    @Query("UPDATE User u SET u.password= :pass WHERE u.id= :id")
+    void changePass(@Param("id") Long id, String pass);
+
+    @Modifying
+    @Query("UPDATE User u SET u.avatar= :avatar WHERE u.id= :id")
+    void saveAvatar(@Param("id") Long id, @Param("avatar") Avatar avatar);
 }

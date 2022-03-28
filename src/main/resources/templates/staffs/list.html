@@ -110,6 +110,7 @@
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
     $("#tblStaff").DataTable({
+        "ordering": false,
         data: listStaffs,
         columns: [
             {data: 'name'},
@@ -120,14 +121,16 @@
             {data: 'position.name'},
             {
                 data: 'id', render: function (data, type, row, meta) {
-                    return `<button class="btn btn-outline-warning editStaff" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>`;
+                    return `<button class="btn btn-outline-warning editStaff" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            <button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>
+                            `;
                 }
             },
-            {
-                data: 'id', render: function (data, type, row, meta) {
-                    return `<button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>`;
-                }
-            },
+            // {
+            //     data: 'id', render: function (data, type, row, meta) {
+            //         return `<button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>`;
+            //     }
+            // },
         ],
     });
 </script>
@@ -145,17 +148,18 @@
                     <option value="${position.id}">${position.name}</option>
                 `;
                 }
+                let limitDay = "";
+                let today = new Date();
+                limitDay = `${today.getFullYear() - 16}-12-31`;
+                $("#bodStaffCre").attr("max", limitDay);
+                $("#modalCreate").modal("show");
                 $("#positionStaffCre").prepend(str);
             })
             .fail(function () {
                 window.location = "/errors";
             })
 
-        let limitDay = "";
-        let today = new Date();
-        limitDay = `${today.getFullYear() - 16}-12-31`;
-        $("#bodStaffCre").attr("max", limitDay);
-        $("#modalCreate").modal("show");
+
     });
     handlerActionStaff();
 

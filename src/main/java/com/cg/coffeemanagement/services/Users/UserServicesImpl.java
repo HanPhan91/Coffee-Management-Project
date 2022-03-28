@@ -1,8 +1,8 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.exception.DataInputException;
-import com.cg.coffeemanagement.exception.EmailExistsException;
 import com.cg.coffeemanagement.model.*;
+import com.cg.coffeemanagement.model.dto.AvatarDto;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.repository.Staffs.StaffRepository;
 import com.cg.coffeemanagement.repository.Users.AvataRepository;
@@ -10,18 +10,14 @@ import com.cg.coffeemanagement.repository.Users.UserRepository;
 import com.cg.coffeemanagement.services.Upload.UploadService;
 import com.cg.coffeemanagement.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -72,18 +68,23 @@ public class UserServicesImpl implements IUserServices {
     }
 
     @Override
+    public void saveAvatar(Long id,  Avatar avatar) {
+        userRepository.saveAvatar(id, avatar);
+    }
+
+    @Override
     public void remove(Long id) {
 
     }
 
     @Override
     public List<User> findByDeletedFalse() {
-        return userRepository.findByDeletedFalse();
+        return userRepository.findByDeletedFalse(Sort.by(Sort.Direction.DESC, "createAt"));
     }
 
     @Override
     public List<User> findByDeletedTrue() {
-        return userRepository.findByDeletedTrue();
+        return userRepository.findByDeletedTrue(Sort.by(Sort.Direction.DESC, "createAt"));
     }
 
     @Override
@@ -112,27 +113,11 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public User edit(User user, UserDto userDto) {
-        if (userDto.getFile() == null) {
-            user.setAvatar(null);
-            if (userDto.getPassword().equals("null")) {
-                return user;
-            }
-            user.setPassword(userDto.getPassword());
-            save(user);
-            return user;
-        } else {
-            Avatar avatar = avataRepository.save(userDto.toAvatar());
-            user.setAvatar(avatar);
-            if (userDto.getPassword().isEmpty()) {
-                save(user);
-                uploadAndSaveAvatar(userDto, user, avatar);
-                return user;
-            }
-            user.setPassword(userDto.getPassword());
-            save(user);
-            uploadAndSaveAvatar(userDto, user, avatar);
-            return user;
-        }
+        Avatar avatar = avataRepository.save(userDto.toAvatar());
+        user.setAvatar(avatar);
+        saveAvatar(user.getId(), avatar);
+        uploadAndSaveAvatar(userDto, user, avatar);
+        return user;
     }
 
     public void uploadAndSaveAvatar(UserDto userDto, User user, Avatar avatar) {
@@ -178,4 +163,9 @@ public class UserServicesImpl implements IUserServices {
         return UserPrinciple.build(userOptional.get());
     }
 
+    @Override
+    public void changePass(Long id, String password){
+        String pass = passwordEncoder.encode(password);
+        userRepository.changePass(id, pass);
+    }
 }

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -25,9 +26,13 @@ public class User {
     @Id
     private Long id = System.currentTimeMillis() / 1000;
 
+    @NotBlank(message = "Tên đăng nhập không được để trống")
+    @Size(min = 5, max = 30, message = "Tên đăng nhập phải có độ dài trong khoảng 5-30 ký tự")
     @Column(unique = true)
     private String username;
 
+    @NotBlank(message = "Mật khẩu không được để trống")
+    @Size(min = 6, max = 30, message = "Mật khẩu phải lớn hơn 6 ký tự")
     @Column(updatable = false)
     private String password;
 

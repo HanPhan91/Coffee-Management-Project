@@ -30,10 +30,10 @@ public class PositionController {
         ModelAndView modelAndView = new ModelAndView();
         List<Position> positions = positionServices.findByDeletedFalse();
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
-
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("positions/list");
         modelAndView.addObject("positions", positions);
-        modelAndView.addObject("user", user);
+
         return modelAndView;
     }
 
