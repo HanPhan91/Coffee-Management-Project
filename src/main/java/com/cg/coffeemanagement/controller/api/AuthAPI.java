@@ -1,10 +1,7 @@
 package com.cg.coffeemanagement.controller.api;
 
-import com.cg.coffeemanagement.exception.DataInputException;
-import com.cg.coffeemanagement.exception.EmailExistsException;
 import com.cg.coffeemanagement.model.JwtResponse;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.model.dto.UserDto;
 //import com.cg.coffeemanagement.services.Role.IRoleServices;
 import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.services.jwt.JwtService;
@@ -25,9 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")

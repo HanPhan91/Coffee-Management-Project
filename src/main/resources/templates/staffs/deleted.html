@@ -60,21 +60,20 @@
                         </tr>
                         </thead>
                         <tbody>
-
-                        <th:block th:each="staff: ${staffs}">
-                            <tr th:id="'tr_'+ ${staff.id}">
-                                <td th:text="${staff.name}"></td>
-                                <td th:text="${staff.address}"></td>
-                                <td th:text="${staff.phone}"></td>
-                                <td th:text="${staff.email}"></td>
-                                <td th:text="${staff.birthDay}"></td>
-                                <td th:text="${staff.position.name}"></td>
-                                <td>
-                                    <button class="btn btn-outline-warning restoreStaff" th:data-id="${staff.id}">
-                                        <i class="fa fa-undo"></i></button>
-                                </td>
-                            </tr>
-                        </th:block>
+                        <!--                        <th:block th:each="staff: ${staffs}">-->
+                        <!--                            <tr th:id="'tr_'+ ${staff.id}">-->
+                        <!--                                <td th:text="${staff.name}"></td>-->
+                        <!--                                <td th:text="${staff.address}"></td>-->
+                        <!--                                <td th:text="${staff.phone}"></td>-->
+                        <!--                                <td th:text="${staff.email}"></td>-->
+                        <!--                                <td th:text="${staff.birthDay}"></td>-->
+                        <!--                                <td th:text="${staff.position.name}"></td>-->
+                        <!--                                <td>-->
+                        <!--                                    <button class="btn btn-outline-warning restoreStaff" th:data-id="${staff.id}">-->
+                        <!--                                        <i class="fa fa-undo"></i></button>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                 </div>
@@ -131,6 +130,7 @@
             window.location = "/errors";
         })
     $("button.restoreStaff").on("click", function () {
+
         let id = $(this).data("id");
         $.ajax({
             type: "GET",
@@ -138,7 +138,6 @@
         })
             .done(function (data) {
                 $("#idStaffRestore").val(data.id);
-                $("#idStaffRestore").val(id);
                 $("#nameStaffRestore").val(data.name);
                 $("#addressStaffRestore").val(data.address);
                 $("#phoneStaffRestore").val(data.phone);
@@ -157,14 +156,14 @@
                         str += `<option value="${pos.id}">${pos.name}</option>`;
                     }
                 }
+                $("#positionStaffRestore").prepend(str);
                 $("#modalRestore").modal("show");
             })
             .fail(function (resp) {
                 window.location = "/errors";
             })
     });
-    handlerActionStaff();
-
+    // handlerActionStaff();
 </script>
 </body>
 </html>

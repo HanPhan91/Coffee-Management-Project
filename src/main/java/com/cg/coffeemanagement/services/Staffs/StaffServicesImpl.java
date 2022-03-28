@@ -63,20 +63,4 @@ public class StaffServicesImpl implements IStaffServices {
     public void restoreStaff(Long id) {
         staffRepository.restoreStaff(id);
     }
-
-    @Override
-    public List<Staff> findByDeletedTrue() {
-        return staffRepository.findByDeletedTrue();
-    }
-
-    @Override
-    public void deleteStaff(Long id) {
-        staffRepository.deleteStaff(id);
-
-    }
-
-    @Override
-    public void restoreStaff(Long id) {
-        staffRepository.restoreStaff(id);
-    }
 }

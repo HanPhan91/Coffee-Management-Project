@@ -77,30 +77,30 @@
                 data: JSON.stringify(staff)
             })
                 .done(function (data){
+                //     let str= `
+                //         <tr id="tr_${data.id}">
+                //                 <td>${data.name}</td>
+                //                 <td>${data.address}</td>
+                //                 <td>${data.phone}</td>
+                //                 <td>${data.email}</td>
+                //                 <td>${data.birthDay}</td>
+                //                 <td>${data.position.name}</td>
+                //                 <td>
+                //                     <button class="btn btn-outline-warning editStaff"><i class="fa fa-pencil-alt"></i></button>
+                //                 </td>
+                //                 <td>
+                //                     <button class="btn btn-outline-danger deleteStaff"><i class="fa fa-trash"></i></button>
+                //                 </td>
+                //             </tr>
+                // `;
+                //     $("#tr_" + id).replaceWith(str);
+                //     $("#modalEdit").modal("hide");
+                //     $("#frmEditStaff")[0].reset();
+                //     swal("Thành công", "Nhân viên đã được cập nhật", "success");
+                //     handlerActionStaff();
                     swal("Thành công", "Nhân viên đã được cập nhật", "success").then(function() {
                         window.location = "/staffs";
                     });
-                    let str= `
-                        <tr id="tr_${data.id}">
-                                <td>${data.name}</td>
-                                <td>${data.address}</td>
-                                <td>${data.phone}</td>
-                                <td>${data.email}</td>
-                                <td>${data.birthDay}</td>
-                                <td>${data.position.name}</td>
-                                <td>
-                                    <button class="btn btn-outline-warning editStaff"><i class="fa fa-pencil-alt"></i></button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-outline-danger deleteStaff"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                `;
-                    $("#tr_" + id).replaceWith(str);
-                    $("#modalEdit").modal("hide");
-                    $("#frmEditStaff")[0].reset();
-                    swal("Thành công", "Nhân viên đã được cập nhật", "success");
-                    handlerActionStaff();
                 })
                 .fail(function (jqXHR){
                     let str = ``;

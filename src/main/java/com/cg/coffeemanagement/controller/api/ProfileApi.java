@@ -3,7 +3,6 @@ package com.cg.coffeemanagement.controller.api;
 import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.model.dto.AvatarDto;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.utils.AppUtil;

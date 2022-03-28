@@ -4,8 +4,6 @@ import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

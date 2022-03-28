@@ -1,6 +1,8 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.exception.DataInputException;
+
+import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.model.User;
@@ -11,8 +13,11 @@ import com.cg.coffeemanagement.repository.Users.UserRepository;
 import com.cg.coffeemanagement.services.Upload.UploadService;
 import com.cg.coffeemanagement.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +31,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AvataRepository avataRepository;
@@ -56,22 +64,32 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
-    public void remove(Long id) {
+    public void saveAvatar(Long id,  Avatar avatar) {
+        userRepository.saveAvatar(id, avatar);
+    }
 
+    @Override
+    public void remove(Long id) {
     }
 
     @Override
     public List<User> findByDeletedFalse() {
-        return userRepository.findByDeletedFalse();
+        return userRepository.findByDeletedFalse(Sort.by(Sort.Direction.DESC, "createAt"));
     }
 
     @Override
     public List<User> findByDeletedTrue() {
-        return userRepository.findByDeletedTrue();
+        return userRepository.findByDeletedTrue(Sort.by(Sort.Direction.DESC, "createAt"));
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Override
@@ -82,33 +100,26 @@ public class UserServiceImpl implements IUserService {
 
         if (userDto.getFile() == null) {
             user.setAvatar(null);
+            save(user);
             userRepository.save(user);
             return user;
         }
 
         Avatar avatar = avataRepository.save(userDto.toAvatar());
         user.setAvatar(avatar);
+        save(user);
         userRepository.save(user);
         uploadAndSaveAvatar(userDto, user, avatar);
         return user;
     }
 
     @Override
-    public User edit(User user ,UserDto userDto) {
-        if (userDto.getFile() == null) {
-            user.setAvatar(null);
-            user.setPassword(user.getPassword());
-            userRepository.save(user);
-            return user;
-        }
-        else {
-            Avatar avatar = avataRepository.save(userDto.toAvatar());
-            user.setAvatar(avatar);
-            user.setPassword(userDto.getPassword());
-            userRepository.save(user);
-            uploadAndSaveAvatar(userDto, user, avatar);
-            return user;
-        }
+    public User edit(User user, UserDto userDto) {
+        Avatar avatar = avataRepository.save(userDto.toAvatar());
+        user.setAvatar(avatar);
+        saveAvatar(user.getId(), avatar);
+        uploadAndSaveAvatar(userDto, user, avatar);
+        return user;
     }
 
     public void uploadAndSaveAvatar(UserDto userDto, User user, Avatar avatar) {
@@ -133,5 +144,30 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void restoreUser(Long id) {
         userRepository.restoreUser(id);
+    }
+
+    @Override
+    public Optional<User> getByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findUserDTOByUsername(String username) {
+        return userRepository.findUserDTOByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.getByUsername(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(userOptional.get());
+    }
+
+    @Override
+    public void changePass(Long id, String password){
+        String pass = passwordEncoder.encode(password);
+        userRepository.changePass(id, pass);
     }
 }

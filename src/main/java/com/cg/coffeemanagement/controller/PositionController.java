@@ -1,12 +1,8 @@
 package com.cg.coffeemanagement.controller;
 
 import com.cg.coffeemanagement.Static.Principal;
-import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.model.Permission;
-import com.cg.coffeemanagement.model.Position;
-import com.cg.coffeemanagement.services.Permission.IPermissionServices;
 import com.cg.coffeemanagement.services.Positions.IPositionServices;
 import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
