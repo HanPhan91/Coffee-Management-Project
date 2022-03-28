@@ -20,7 +20,6 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="passEdit" class="form-label fw-bold">Mật khẩu mới:</label>
-                                <label for="passEdit" class="form-label fw-bold">Mật khẩu:</label>
                                 <input type="password" class="form-control" id="passEdit" name="passEdit">
                             </div>
                         </div>
@@ -53,10 +52,14 @@
             let id = $("#idEdit").val();
             let formData = new FormData();
             formData.append("username", $("#usernameEdit").val().trim().toString());
-            if ($("#passEdit").val() == "") {
+            if ($("#passEdit").val() == ""){
                 formData.append("password", null);
-            } else {
+            }
+            else {
                 formData.append("password", $("#passEdit").val().trim().toString());
+            }
+            if ($("#uploadEdit")[0].files[0] != null) {
+                formData.append("file", $("#uploadEdit")[0].files[0]);
             }
             $.ajax({
                 type: "PUT",
@@ -96,7 +99,7 @@
                     // $("#frmEditUser")[0].reset();
                     // handlerActionUser();
                     // swal("Thành công", "User đã được cập nhật", "success");
-                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function() {
                         window.location = "/users";
                     });
                 })
@@ -114,7 +117,6 @@
                     $("#modalEdit .modal-body .modal-alert-danger").html(str);
                 })
         }
-
         $("#modalEdit").on('hidden.bs.modal', function () {
             $("#modalEdit .modal-body .modal-alert-danger").empty();
             $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
