@@ -1,5 +1,6 @@
 package com.cg.coffeemanagement.controller;
 
+import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private IUserService userServices;
 
     @GetMapping
     public ModelAndView showUser(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/list");
-        List<User> users = userService.findByDeletedFalse();
+        List<User> users = userServices.findByDeletedFalse();
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -30,7 +33,9 @@ public class UserController {
     public ModelAndView showUserDeleted(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/deleted");
-        List<User> users = userService.findByDeletedTrue();
+        List<User> users = userServices.findByDeletedTrue();
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("users", users);
         return modelAndView;
     }

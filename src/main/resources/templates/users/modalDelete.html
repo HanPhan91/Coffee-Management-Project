@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="modalDelete">
     <div class="modal" tabindex="-1" id="modalDelete">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Xóa user</h5>
@@ -14,20 +14,24 @@
                     <form id="frmDeleteUser">
                         <input type="text" id="idDelete" hidden>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col">
                                 <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameDelete" name="usernameDelete" readonly>
                             </div>
-                            <div class="col col-md-6">
-                                <label for="passDelete" class="form-label fw-bold">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="passDelete" name="passDelete" readonly>
-                            </div>
+<!--                            <div class="col col-md-6">-->
+<!--                                <label for="passDelete" class="form-label fw-bold">Mật khẩu:</label>-->
+<!--                                <input type="password" class="form-control" id="passDelete" name="passDelete" readonly>-->
+<!--                            </div>-->
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col">
                                 <label for="staffDelete" class="form-label fw-bold">Nhân viên được cấp:</label>
                                 <input type="text" class="form-control" id="staffDelete" name="staffDelete" readonly>
                             </div>
+<!--                            <div class="col col-md-6">-->
+<!--                                <label for="uploadDelete" class="form-label fw-bold">Ảnh đại diện:</label>-->
+<!--                                <input type="file" class="form-control" id="uploadDelete" accept="image/jpeg, image.png"/>-->
+<!--                            </div>-->
                         </div>
                     </form>
                 </div>
@@ -46,16 +50,12 @@
 
         function deleteUser() {
             let id = $("#idDelete").val();
-            let formData = new FormData();
-            formData.append("username", $("#usernameDelete").val().trim().toString());
-            formData.append("password", $("#passDelete").val().trim().toString());
             $.ajax({
                 type: "PUT",
                 contentType: false,
                 cache: false,
                 processData: false,
                 url: "/api/users/delete/" + id,
-                data: formData
             })
                 .done(function (data) {
                     // $("#tr_" + id).remove();
