@@ -55,10 +55,18 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> han
     <script>
         $("#btnRestore").on("click", function () {
             $("#frmRestoreStaff").trigger("submit");
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> han
         function restoreStaff() {
             let id = $("#idStaffRestore").val();
             let name = $("#nameStaffRestore").val().trim();
@@ -78,6 +86,7 @@
                 data: JSON.stringify(staff)
             })
                 .done(function (data) {
+<<<<<<< HEAD
                     // $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
                     // $("#modalRestore").modal("hide");
                     // $("#frmRestoreStaff")[0].reset();
@@ -85,6 +94,12 @@
                     swal("Thành công", "Nhân viên đã được khôi phục", "success").then(function() {
                         window.location = "deleted";
                     });
+=======
+                    $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
+                    $("#modalRestore").modal("hide");
+                    $("#frmRestoreStaff")[0].reset();
+                    swal("Thành công", "Nhân viên đã được khôi phục", "success");
+>>>>>>> han
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -100,6 +115,7 @@
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
                 })
         }
+<<<<<<< HEAD
 
         $("#modalRestore").on('hidden.bs.modal', function () {
             $("#modalRestore .modal-body .modal-alert-danger").empty();
@@ -108,5 +124,7 @@
             $("#positionStaffRestore option").remove();
             $("#frmRestoreStaff")[0].reset();
         });
+=======
+>>>>>>> han
     </script>
 </th:block>

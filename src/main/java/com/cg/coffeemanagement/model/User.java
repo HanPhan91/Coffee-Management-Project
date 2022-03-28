@@ -6,10 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+<<<<<<< HEAD
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+=======
+import org.hibernate.annotations.CreationTimestamp;
+import javax.persistence.*;
+>>>>>>> han
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;

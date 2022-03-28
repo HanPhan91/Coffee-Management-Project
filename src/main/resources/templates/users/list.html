@@ -38,7 +38,11 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+<<<<<<< HEAD
             <div class="row mb-2">
+=======
+            <div class="row">
+>>>>>>> han
                 <div class="col text-end">
                     <button class="btn btn-outline-primary" id="createUser"><i class="fa fa-plus-square"></i> Tạo
                         user mới
@@ -47,10 +51,18 @@
             </div>
             <div class="row">
                 <div class="col text-center">
+<<<<<<< HEAD
                     <table class="table table-striped" id="tblUser">
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
+=======
+                    <table class="table table-hover" id="tblUser">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
+                            <th scope="col" class="fw-bold fs-5">Mật khẩu</th>
+>>>>>>> han
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
                             <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
@@ -59,6 +71,7 @@
                         </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
                         <!--                        <th:block th:each="user: ${users}">-->
                         <!--                            <tr th:id="'tr_'+ ${user.id}">-->
                         <!--                                <td th:text="${user.username}"></td>-->
@@ -79,10 +92,32 @@
                         <!--                                </td>-->
                         <!--                            </tr>-->
                         <!--                        </th:block>-->
+=======
+                        <th:block th:each="user: ${users}">
+                            <tr th:id="'tr_'+ ${user.id}">
+                                <td th:text="${user.username}"></td>
+                                <td th:text="${user.password}"></td>
+                                <td th:text="${user.staff.name}"></td>
+                                <td th:text="${user.staff.position.name}"></td>
+                                <td th:text="${user.staff.createAt}"></td>
+                                <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/></td>
+                                <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg" width="50px"/></td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-warning editUser" th:data-id="${user.id}"><i
+                                            class="fa fa-pencil-alt"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-danger deleteUser" th:data-id="${user.id}"><i
+                                            class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </th:block>
+>>>>>>> han
                         </tbody>
                     </table>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="row mt-2">
                 <div class="col text-end">
                     <a class="btn btn-outline-danger" id="deletedUser" th:href="@{/users/deleted}"><i
@@ -90,6 +125,15 @@
                     </a>
                 </div>
             </div>
+=======
+            <div class="row">
+                <div class="col text-end">
+                    <a class="btn btn-outline-danger" id="deletedUser" th:href="@{/users/deleted}"><i class="fa fa-trash"></i> Danh sách user đã xóa
+                    </a>
+                </div>
+            </div>
+
+>>>>>>> han
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
@@ -109,6 +153,7 @@
 <th:block th:replace="users/modalDelete :: modalDelete"/>
 <script src="/assets/App/appUser.js"></script>
 <script src="/assets/App/validatedUser.js"></script>
+<<<<<<< HEAD
 <script th:inline="javascript">
     var listUser = [[${users}]];
     $("#tblUser").DataTable({
@@ -138,22 +183,33 @@
     });
 
 </script>
+=======
+>>>>>>> han
 <script>
     $("#createUser").on("click", function () {
         $.ajax({
             type: "GET",
             url: "/api/staffs"
         })
+<<<<<<< HEAD
             .done(function (data) {
                 let str = "";
                 for (let i = 0; i < data.length; i++) {
                     let staff = data[i];
                     str += `
+=======
+            .done(function (data){
+                let str="";
+                for (let i = 0; i < data.length; i++) {
+                    let staff = data[i];
+                    str+=`
+>>>>>>> han
                     <option value="${staff.id}">${staff.name}</option>
                 `;
                 }
                 $("#staffCre").prepend(str);
             })
+<<<<<<< HEAD
             .fail(function () {
                 window.location = "/errors";
             })
@@ -163,5 +219,16 @@
     handlerActionUser();
 
 </script>
+=======
+            .fail(function (){
+                window.location = "/errors";
+            })
+        
+        $("#modalCreate").modal("show");
+    });
+    handlerActionUser();
+</script>
+
+>>>>>>> han
 </body>
 </html>
