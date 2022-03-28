@@ -1,6 +1,5 @@
 package com.cg.coffeemanagement.controller;
 
-import com.cg.coffeemanagement.model.Cart;
 import com.cg.coffeemanagement.model.CoffeeTable;
 import com.cg.coffeemanagement.model.Drink;
 import com.cg.coffeemanagement.services.Cart.CartService;
@@ -31,7 +30,7 @@ public class CartController {
     public ModelAndView listCart(){
         ModelAndView modelAndView = new ModelAndView();
 //        List<Cart> carts = cartService.findAll();
-        modelAndView.setViewName("cart/list");
+        modelAndView.setViewName("cart/cartHome");
         List<Drink> drinks = drinkService.findAllNotDeleted();
         List<CoffeeTable> tables = coffeeTableService.findAllNotDeleted();
         modelAndView.addObject("tables", tables);
