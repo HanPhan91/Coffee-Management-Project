@@ -26,7 +26,7 @@ public class UserApi {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id){
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
         User user = userServices.findById(id).get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -52,43 +52,32 @@ public class UserApi {
             return appUtil.mapErrorToResponse(bindingResult);
         }
         Optional<User> opUser = userServices.findById(id);
-        if (opUser.isPresent()){
-            User editUser = userServices.edit(opUser.get() ,userDto);
+        if (opUser.isPresent()) {
+            User editUser = userServices.edit(opUser.get(), userDto);
             return new ResponseEntity<>(editUser, HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/delete/{id}")
-
-    public ResponseEntity<?> doDelete(@PathVariable Long id){
+    public ResponseEntity<?> doDelete(@PathVariable Long id) {
         Optional user = userServices.findById(id);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             userServices.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/restore/{id}")
-
-    public ResponseEntity<?> doRestore(@Validated UserDto userDto, @PathVariable Long id ,
-                                       BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return appUtil.mapErrorToResponse(bindingResult);
-        }
+    public ResponseEntity<?> doRestore(@PathVariable Long id) {
         Optional<User> opUser = userServices.findById(id);
-
-        if (opUser.isPresent()){
-            User editUser = userServices.edit(opUser.get() ,userDto);
+        if (opUser.isPresent()) {
             userServices.restoreUser(id);
-            return new ResponseEntity<>(editUser, HttpStatus.OK);
-        }
-        else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
