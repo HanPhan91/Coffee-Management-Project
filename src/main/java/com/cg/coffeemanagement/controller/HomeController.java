@@ -2,7 +2,7 @@ package com.cg.coffeemanagement.controller;
 
 import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
     @GetMapping()
     public ModelAndView showHome(){

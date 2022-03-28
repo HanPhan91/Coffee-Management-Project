@@ -5,7 +5,7 @@ import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Staffs.IStaffServices;
 import com.cg.coffeemanagement.services.Staffs.StaffServicesImpl;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class StaffController {
     private IStaffServices staffServices;
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
     @GetMapping
     public ModelAndView showStaff(){

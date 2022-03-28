@@ -1,6 +1,6 @@
 package com.cg.coffeemanagement.security;
 
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.services.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
 
     private String getBearerTokenRequest(HttpServletRequest request) {

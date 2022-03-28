@@ -5,7 +5,7 @@ import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.AvatarDto;
 import com.cg.coffeemanagement.model.dto.UserDto;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ProfileApi {
     private AppUtil appUtil;
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
     @PutMapping("/changepass")
     public ResponseEntity<?> doChangePass(@Validated @RequestBody UserDto userDto, BindingResult bindingResult){

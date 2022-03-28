@@ -8,7 +8,7 @@ import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
 import com.cg.coffeemanagement.services.Permission.IPermissionServices;
 import com.cg.coffeemanagement.services.Positions.IPositionServices;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ public class PositionController {
     private IPositionServices positionServices;
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
     @GetMapping
     public ModelAndView showPosition(){

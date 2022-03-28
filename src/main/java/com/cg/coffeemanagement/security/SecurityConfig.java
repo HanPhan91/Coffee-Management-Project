@@ -1,7 +1,7 @@
 package com.cg.coffeemanagement.security;
 
 
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private IUserServices userService;
+    private IUserService userService;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {

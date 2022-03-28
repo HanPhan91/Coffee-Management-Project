@@ -6,7 +6,7 @@ import com.cg.coffeemanagement.model.JwtResponse;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.UserDto;
 //import com.cg.coffeemanagement.services.Role.IRoleServices;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.services.jwt.JwtService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class AuthAPI {
     private JwtService jwtService;
 
     @Autowired
-    private IUserServices userService;
+    private IUserService userService;
 
 //    @Autowired
 //    private IRoleServices roleService;

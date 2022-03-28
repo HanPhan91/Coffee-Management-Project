@@ -1,11 +1,8 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.model.dto.TempDTO;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

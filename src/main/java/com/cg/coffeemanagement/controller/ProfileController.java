@@ -2,7 +2,7 @@ package com.cg.coffeemanagement.controller;
 
 import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.User;
-import com.cg.coffeemanagement.services.Users.IUserServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ProfileController {
 
     @Autowired
-    private IUserServices userServices;
+    private IUserService userServices;
 
     @GetMapping("/{username}")
     public ModelAndView getProfile(@PathVariable String username){
