@@ -60,6 +60,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <th:block th:each="staff: ${staffs}">
                             <tr th:id="'tr_'+ ${staff.id}">
                                 <td th:text="${staff.name}"></td>
@@ -97,26 +98,46 @@
 <script src="/assets/App/appStaff.js"></script>
 <script src="/assets/App/validatedStaff.js"></script>
 <script src="/assets/App/appPosition.js"></script>
+<script th:inline="javascript">
+    var listStaffs = [[${staffs}]];
+    $("#tblStaffDeleted").DataTable({
+        "ordering": false,
+        data: listStaffs,
+        columns: [
+            {data: 'name'},
+            {data: 'address'},
+            {data: 'phone'},
+            {data: 'email'},
+            {data: 'birthDay'},
+            {data: 'position.name'},
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning restoreStaff" data-id="${data}"><i class="fa fa-undo"></i></button>`;
+                }
+            },
+        ],
+    });
+</script>
 <script>
-    $("button.restoreStaff").on("click", function () {
-        let positons;
-        $.ajax({
-            type: "GET",
-            url: "/api/positions"
+    let posDisplay;
+    $.ajax({
+        type: "GET",
+        url: "/api/positions"
+    })
+        .done(function (data) {
+            posDisplay = data;
         })
-            .done(function (data) {
-                positons = data;
-            })
-            .fail(function () {
-                window.location = "/errors";
-            })
-
+        .fail(function () {
+            window.location = "/errors";
+        })
+    $("button.restoreStaff").on("click", function () {
         let id = $(this).data("id");
         $.ajax({
             type: "GET",
             url: "/api/staffs/" + id
         })
             .done(function (data) {
+                $("#idStaffRestore").val(data.id);
                 $("#idStaffRestore").val(id);
                 $("#nameStaffRestore").val(data.name);
                 $("#addressStaffRestore").val(data.address);
@@ -124,20 +145,18 @@
                 $("#emailStaffRestore").val(data.email);
                 let limitDay = "";
                 let today = new Date();
-                limitDay= `${today.getFullYear() - 16}-12-31`;
+                limitDay = `${today.getFullYear() - 16}-12-31`;
                 $("#bodStaffRestore").attr("max", limitDay);
                 $("#bodStaffRestore").val(data.birthDay);
-                let str="";
-                for (let i = 0; i < positons.length; i++) {
-                    let position = positons[i];
-                    if (positons[i].id == data.position.id){
-                        str+=`<option value="${position.id}" selected>${position.name}</option>`;
-                    }
-                    else {
-                        str+=`<option value="${position.id}">${position.name}</option>`;
+                let str = "";
+                for (let i = 0; i < posDisplay.length; i++) {
+                    let pos = posDisplay[i];
+                    if (pos.id == data.position.id) {
+                        str += `<option value="${pos.id}" selected>${pos.name}</option>`;
+                    } else {
+                        str += `<option value="${pos.id}">${pos.name}</option>`;
                     }
                 }
-                $("#positionStaffRestore").prepend(str);
                 $("#modalRestore").modal("show");
             })
             .fail(function (resp) {
@@ -145,7 +164,6 @@
             })
     });
     handlerActionStaff();
-
 
 </script>
 </body>

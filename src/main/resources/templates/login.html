@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/assets/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/custom-dropdown.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/blue.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/login.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/tooltip.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css-login/flying.css">
+</head>
+<body>
+
+<div class="hero">
+    <div class="form-box">
+        <div class="button-box">
+            <div id="btnBox"></div>
+            <button type="button" class="toggle-btn login-box-btn">Quản lý</button>
+            <button type="button" class="toggle-btn register-box-btn">Phục vụ</button>
+        </div>
+        <div class="social-icons tooltip">
+            <img src="/assets/images/fb.png" alt="Facebook">
+            <img src="/assets/images/tw.png" alt="Twitter">
+            <img src="/assets/images/gp.png" alt="Google">
+            <img src="/assets/images/fly.png" class="airplane" alt="Plane">
+            <span class="tooltiptext">
+                Airplane driving relax. Press the C key to change planes when on the runway. Press the BACKSPACE key to go back.
+            </span>
+        </div>
+        <form id="frmLogin" class="input-group">
+            <input type="text" id="usnLogin" class="input-field" placeholder="Tên đăng nhập">
+            <input type="password" id="pwdLogin" class="input-field" placeholder="Mật khẩu">
+<!--            <div class="checkbox icheck">-->
+<!--                <label>-->
+<!--                    <input type="checkbox" class="" value="remember"><span> Remember login</span>-->
+<!--                </label>-->
+<!--            </div>-->
+            <button type="button" id="btnLogin" class="btn submit-btn">Đăng nhập</button>
+        </form>
+
+        <form id="frmRegister" class="input-group">
+<!--            <div class="role">-->
+<!--                <div class="custom-select-wrapper" style="width: 100%">-->
+<!--                    <div class="custom-select">-->
+<!--                        <div class="custom-select__trigger">-->
+<!--                            <span>Role group</span>-->
+<!--                            <div class="arrow"></div>-->
+<!--                        </div>-->
+<!--                        <div class="custom-options">-->
+<!--                            <span class='custom-option' data-value='1'>Admin role</span>-->
+<!--                            <span class='custom-option' data-value='2'>User role</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <input type="text" id="usnReg" class="input-field" placeholder="Tên đăng nhập">
+            <input type="password" id="pwdReg" class="input-field" placeholder="Mật khẩu">
+<!--            <div class="checkbox icheck">-->
+<!--                <label>-->
+<!--                    <input type="checkbox" class="" value="remember"><span> I agree to the Terms & Conditions</span>-->
+<!--                </label>-->
+<!--            </div>-->
+            <button type="button" id="btnRegister" class="btn submit-btn">Đăng nhập</button>
+        </form>
+    </div>
+</div>
+
+<section>
+    <div class="clouds">
+        <img src="/assets/images/plane/cloudx.png" alt="" style="--i:1;">
+        <img src="/assets/images/plane/cloudx.png" alt="" style="--i:2;">
+    </div>
+    <div class="clouds clouds2">
+        <img src="/assets/images/plane/cloudx.png" alt="" style="--i:1;">
+        <img src="/assets/images/plane/cloudx.png" alt="" style="--i:2;">
+    </div>
+    <div class="runway"></div>
+    <img src="/assets/images/plane/airbus_a380.png" class="plane" alt="">
+    <div id="speed" style="top: -200px; width: 100px; position: relative; color: #ed8b8b;">
+        <span>250</span>
+        km/h
+    </div>
+</section>
+
+<script type="text/javascript" src="/assets/js-login/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/assets/js-login/notify-0.4.1.min.js"></script>
+<script type="text/javascript" src="/assets/js-login/icheck.min.js"></script>
+<script type="text/javascript" src="/assets/js-login/app.js"></script>
+
+<script type="text/javascript">
+    let page = {
+        urls: {
+            register: App.BASE_URL_AUTH + "/loginStaff",
+            login: App.BASE_URL_AUTH + "/loginManager",
+        },
+        element: {},
+        commands: {}
+    }
+
+    let arrPlane = [
+        {
+            "name": "Boeing 777",
+            "code": "boeing_777"
+        },
+        {
+            "name": "Antonov AN-148-201",
+            "code": "antonov_148"
+        },
+        {
+            "name": "Antonov AN-158-100",
+            "code": "antonov_158"
+        },
+        {
+            "name": "Antonov AN-178",
+            "code": "antonov_178"
+        },
+        {
+            "name": "Airbus A380",
+            "code": "airbus_a380"
+        }
+    ];
+
+    let curIdx = 0;
+    let speed,
+        speedUp,
+        speedDown;
+
+    page.element.section = $("section");
+    page.element.frmLogin = $("#frmLogin");
+    page.element.usnLogin = $("#usnLogin");
+    page.element.pwdLogin = $("#pwdLogin");
+
+    page.element.frmRegister = $("#frmRegister");
+    page.element.usnReg = $("#usnReg");
+    page.element.pwdReg = $("#pwdReg");
+
+    page.element.btnBox = $("#btnBox");
+    page.element.loginBoxBtn = $(".login-box-btn");
+    page.element.registerBoxBtn = $(".register-box-btn");
+    page.element.btnLogin = $("#btnLogin");
+    page.element.btnRegister = $("#btnRegister");
+    page.element.frmRegSelect = $("#frmRegister .role .custom-select");
+    page.element.frmRegSelectSpan = $("#frmRegister .role .custom-select__trigger span");
+    page.element.frmRegOpt = $("#frmRegister .role .custom-option");
+    page.element.frmRegOpts = $("#frmRegister .role .custom-options");
+    page.element.frmResOptWrapper = $("#frmRegister .role .custom-select-wrapper")
+
+    page.commands.switchLoginForm = () => {
+        page.element.frmLogin.css("left", "50px");
+        page.element.frmRegister.css("left", "450px");
+        page.element.btnBox.css("left", 0);
+
+        setTimeout(function () {
+            page.element.loginBoxBtn.css("color", "#fff");
+            page.element.registerBoxBtn.css("color", "#000");
+        }, 100);
+    }
+
+    page.commands.switchRegisterForm = () => {
+        page.element.frmLogin.css("left", "-400px");
+        page.element.frmRegister.css("left", "50px");
+        page.element.btnBox.css("left", "132px");
+
+        setTimeout(function () {
+            page.element.loginBoxBtn.css("color", "#000");
+            page.element.registerBoxBtn.css("color", "#fff");
+        }, 100);
+    }
+
+    page.commands.login = () => {
+        let user = {
+            username: page.element.usnLogin.val(),
+            password: page.element.pwdLogin.val()
+        }
+
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: page.urls.login,
+            data: JSON.stringify(user)
+        }).done((resp) => {
+            $.notify("Đăng nhập thành công !", "success");
+
+            setTimeout(function () {
+                window.location.href = "/home";
+            }, 1000);
+
+        }).fail(function (jqXHR) {
+            if (jqXHR.status === 403) {
+                $.notify("Access Denied! You are not authorized to perform this function.", "error");
+            } else {
+                $.notify("Tên đăng nhập hoặc mật khẩu không đúng", "error");
+            }
+
+        });
+    }
+
+    page.commands.register = () => {
+        let user = {
+            username: page.element.usnReg.val(),
+            password: page.element.pwdReg.val(),
+            role: {
+                id: page.element.frmRegOpts.find(".selected").data("value"),
+                code: page.element.frmRegOpts.find(".selected").text()
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: page.urls.register,
+            data: JSON.stringify(user)
+        }).done((resp) => {
+            $.notify("Successful account registration !", "success");
+
+            setTimeout(function () {
+                page.element.usnLogin.val(page.element.usnReg.val());
+                page.element.pwdLogin.val(page.element.pwdReg.val());
+                page.commands.switchLoginForm();
+            }, 1000);
+
+        }).fail(function (jqXHR) {
+            page.element.frmLogin[0].reset();
+
+            if (jqXHR.status === 403) {
+                $.notify("Access Denied! You are not authorized to perform this function.", "error");
+            } else {
+                if (jqXHR.responseJSON) {
+                    if (jqXHR.responseJSON.message) {
+                        $.notify(jqXHR.responseJSON.message, "error");
+                    } else {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            $.notify(value, "error");
+                        });
+                    }
+                } else {
+                    $.notify("Something went wrong, please try again", "error");
+                }
+            }
+        });
+    }
+
+    page.commands.planeHandle = () => {
+        $(document).on('keydown', function(e) {
+            if(e.keyCode === 8) {
+                $(".hero").removeClass("hide");
+                $("section").css("display", "none");
+            }
+
+            if(e.keyCode === 67) {
+                if ($("img.plane").width() === 250) {
+                    if (curIdx === arrPlane.length - 1) {
+                        $("section img.plane").attr("src","assets/images/plane/" + arrPlane[curIdx].code + ".png");
+                        $.notify(arrPlane[curIdx].name + " ready to take off", "success");
+                        curIdx = 0;
+                    } else {
+                        $("section img.plane").attr("src","assets/images/plane/" + arrPlane[curIdx].code + ".png");
+                        $.notify(arrPlane[curIdx].name + " ready to take off", "success");
+                        curIdx++;
+                    }
+                }
+            }
+        });
+    }
+
+    page.commands.speedHandle = () => {
+        page.element.section.on('mousedown touchstart', function(e) {
+
+            if (!speedUp) {
+                speedUp = setInterval(function(){
+                    speed = $("img.plane").width();
+
+                    $("#speed span").html(speed);
+
+                    if (speed === 250) {
+                        clearInterval(speedUp);
+                        speedUp = undefined;
+                    }
+
+                }, 100);
+            }
+
+        });
+
+        page.element.section.on('mouseup mouseleave touchend', function(e) {
+
+            if (!speedDown) {
+                speedDown = setInterval(function(){
+                    speed = $("img.plane").width();
+
+                    $("#speed span").html(speed);
+
+                    if (speed === 250) {
+                        clearInterval(speedDown);
+                        speedDown = undefined;
+                    }
+
+                }, 100);
+            }
+
+        });
+    }
+
+    page.initializeControlEvent = () => {
+
+        page.element.loginBoxBtn.on("click", function () {
+            page.commands.switchLoginForm();
+        });
+
+        page.element.registerBoxBtn.on("click", function () {
+            page.commands.switchRegisterForm();
+        });
+
+        page.element.frmRegOpt.on("click", function () {
+            let role_name = $(this).html();
+            page.element.frmRegSelectSpan.html(role_name);
+            page.element.frmRegOpts.find(".selected").removeClass("selected");
+            $(this).addClass("selected");
+        });
+
+        page.element.btnLogin.on("click", function () {
+            page.commands.login();
+        });
+
+        page.element.btnRegister.on("click", function () {
+            page.commands.register();
+        });
+
+        page.element.frmResOptWrapper.on("click", function (event) {
+            event.stopPropagation();
+            page.element.frmRegSelect.toggleClass("open");
+        });
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+
+        $(document).on("click", function () {
+            page.element.frmRegSelect.removeClass("open");
+        });
+
+        $(".tooltip .airplane").on("click", function () {
+            $(".hero").addClass("hide");
+            $("section").css("display", "flex");
+        });
+
+        page.commands.planeHandle();
+
+        page.commands.speedHandle();
+    }
+
+    $(function () {
+        page.initializeControlEvent();
+    });
+
+</script>
+
+
+</body>
+</html>

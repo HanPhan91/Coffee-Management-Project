@@ -28,10 +28,6 @@
                                 <label for="staffDelete" class="form-label fw-bold">Nhân viên được cấp:</label>
                                 <input type="text" class="form-control" id="staffDelete" name="staffDelete" readonly>
                             </div>
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="uploadDelete" class="form-label fw-bold">Ảnh đại diện:</label>-->
-<!--                                <input type="file" class="form-control" id="uploadDelete" accept="image/jpeg, image.png"/>-->
-<!--                            </div>-->
                         </div>
                     </form>
                 </div>
@@ -62,10 +58,13 @@
                 data: formData
             })
                 .done(function (data) {
-                    $("#tr_" + id).remove();
-                    $("#modalDelete").modal("hide");
-                    $("#frmDeleteUser")[0].reset();
-                    swal("Thành công", "User đã được xóa", "success");
+                    // $("#tr_" + id).remove();
+                    // $("#modalDelete").modal("hide");
+                    // $("#frmDeleteUser")[0].reset();
+                    // swal("Thành công", "User đã được xóa", "success");
+                    swal("Thành công", "User mới đã được xóa", "success").then(function() {
+                        window.location = "/users";
+                    });
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -81,6 +80,12 @@
                     $("#modalDelete .modal-body .modal-alert-danger").html(str);
                 })
         }
+        $("#modalDelete").on('hidden.bs.modal', function () {
+            $("#modalDelete .modal-body .modal-alert-danger").empty();
+            $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalDelete input.error").removeClass("error");
+            $("#frmDeleteUser")[0].reset();
+        });
     </script>
 
 </th:block>

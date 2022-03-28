@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin cá nhân</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý thông tin cá nhân</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <th:block>
+                <div class="row ">
+                    <div class="col">
+                        <table class="table table-borderless text-dark w-50 mx-auto">
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Họ và Tên: </label><label
+                                        class="label fs-5 text-dark fw-bold" th:text="${editUser.staff.name}"></label>
+                                </td>
+                                <td rowspan="5" class="text-center">
+                                    <img alt="user-img" th:if="${editUser.avatar == null}"
+                                         src="/assets/plugins/images/users/1.jpg" width="200" class="img-circle  changeAvatar">
+                                    <img alt="user-img" th:if="${editUser.avatar != null}"
+                                         th:src="${editUser.avatar.fileUrl}" width="200" class="img-circle  changeAvatar">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Ngày sinh :</label>
+                                    <label class="label fs-5 text-dark fw-bold" id="dob"></label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Địa chỉ :</label>
+                                    <label class="label fs-5 text-dark fw-bold" th:text="${editUser.staff.address}"></label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Số điện thoại :</label>
+                                    <label class="label fs-5 text-dark fw-bold" th:text="${editUser.staff.phone}"></label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Email :</label>
+                                    <label class="label fs-5 text-dark fw-bold" th:text="${editUser.staff.email}"></label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label fs-5 text-dark">Vị trí làm việc :</label>
+                                    <label class="label fs-5 text-dark fw-bold"
+                                           th:text="${editUser.staff.position.getName()}"></label>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-primary" id="changePass"><i class="fa fa-edit"></i> Đổi mật khẩu</button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="profile/modalChangeAvatar :: modalChangeAvatar"/>
+<th:block th:replace="profile/modalChangePass :: modalChangePass"/>
+<script src="/assets/App/validatedProfile.js"></script>
+<script th:inline="javascript">
+    let dob = [[${editUser.staff.birthDay}]];
+    dob = new Date(dob).toISOString().slice(0, 10);
+    $("#dob").text(dob);
+</script>
+<script>
+    $("img.changeAvatar").on('click',function (){
+        $("#modalChangeAvatar").modal('show');
+    });
+    $("#changePass").on('click', function (){
+        $("#modalChangePass").modal('show');
+    })
+</script>
+</body>
+</html>

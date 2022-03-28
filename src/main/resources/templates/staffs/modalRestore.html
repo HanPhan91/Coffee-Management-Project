@@ -55,7 +55,6 @@
             </div>
         </div>
     </div>
-
     <script>
         $("#btnRestore").on("click", function () {
             $("#frmRestoreStaff").trigger("submit");
@@ -76,10 +75,13 @@
                     "Content-type": "application/json"
                 },
                 type: "PUT",
-                url: "/api/staffs/restore/"+ id,
+                url: "/api/staffs/restore/" + id,
                 data: JSON.stringify(staff)
             })
                 .done(function (data) {
+                    swal("Thành công", "Nhân viên đã được khôi phục", "success").then(function () {
+                        window.location = "deleted";
+                    });
                     $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
                     $("#modalRestore").modal("hide");
                     $("#frmRestoreStaff")[0].reset();
@@ -99,5 +101,13 @@
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
                 })
         }
+
+        $("#modalRestore").on('hidden.bs.modal', function () {
+            $("#modalRestore .modal-body .modal-alert-danger").empty();
+            $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalRestore input.error").removeClass("error");
+            $("#positionStaffRestore option").remove();
+            $("#frmRestoreStaff")[0].reset();
+        });
     </script>
 </th:block>

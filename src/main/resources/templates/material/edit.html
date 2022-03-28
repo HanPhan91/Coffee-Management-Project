@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="editMaterial">
+    <div class="modal" tabindex="-1" id="editMaterial">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditMaterial">
+                        <input type="text" class="form-control" id="idMaterialEdit" hidden>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="nameMaterialEdit" class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" id="nameMaterialEdit" name="fullNameEdit">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="priceMaterialEdit" class="form-label fw-bold">Price</label>
+                                <input type="text" class="form-control" id="priceMaterialEdit" name="priceEdit">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="quantityMaterialEdit" class="form-label fw-bold">Quantity</label>
+                                <input type="text" class="form-control" id="quantityMaterialEdit" name="quantityEdit">
+                            </div>
+<!--                            <div class="col col-md-6">-->
+<!--                                <label for="userMaterialEdit" class="form-label fw-bold">User</label>-->
+<!--                                <input type="text" class="form-control" id="userMaterialEdit" name="userEdit">-->
+<!--                            </div>-->
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEditMaterial">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnEditMaterial").on("click", function (){
+            $("#frmEditMaterial").trigger("submit");
+        });
+
+        function editMaterial(){
+            let material = new Material($("#nameMaterialEdit").val().trim());
+            material.price = frmEditMaterial.priceEdit.value;
+            material.quantity = frmEditMaterial.quantityEdit.value;
+            let id = $("#idMaterialEdit").val();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/materials/edit/" + id,
+                data: JSON.stringify(material)
+            })
+                .done(function (data){
+                    let str= `
+                    <tr id="tr_${data.id}">
+                            <td>${data.name}</td>
+                            <td>${data.createdAt}</td>
+                            <td>${data.price}</td>
+                            <td>${data.quantity}</td>
+                            <td>${data.user.username}</td>
+
+                            <td><button class="btn btn-outline-warning editMaterial" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
+                            <td><button class="btn btn-outline-danger deleteMaterial" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                `;
+                    swal("Thành công", "Sửa nguyên liệu thành công", "success");
+                    $("#tr_"+id).replaceWith(str);
+                    $("#editMaterial").modal("hide");
+                    $("#frmEditMaterial")[0].reset();
+                    handlerActionMaterial();
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#editMaterial .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#editMaterial .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+    </script>
+
+</th:block>

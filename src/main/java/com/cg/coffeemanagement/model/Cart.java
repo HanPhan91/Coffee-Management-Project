@@ -19,6 +19,9 @@ public class Cart {
     private Long id = System.currentTimeMillis()/1000;
 
     @ManyToOne
+=======
+    @ManyToMany
+>>>>>>> quang
     @JoinColumn(name = "id_drink")
     private Drink drink;
 

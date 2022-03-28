@@ -19,6 +19,7 @@
                                 <input type="text" class="form-control" id="usernameEdit" name="usernameEdit" readonly>
                             </div>
                             <div class="col col-md-6">
+                                <label for="passEdit" class="form-label fw-bold">Mật khẩu mới:</label>
                                 <label for="passEdit" class="form-label fw-bold">Mật khẩu:</label>
                                 <input type="password" class="form-control" id="passEdit" name="passEdit">
                             </div>
@@ -52,9 +53,10 @@
             let id = $("#idEdit").val();
             let formData = new FormData();
             formData.append("username", $("#usernameEdit").val().trim().toString());
-            formData.append("password", $("#passEdit").val().trim().toString());
-            if ($("#uploadEdit")[0].files[0] != null) {
-                formData.append("file", $("#uploadEdit")[0].files[0]);
+            if ($("#passEdit").val() == "") {
+                formData.append("password", null);
+            } else {
+                formData.append("password", $("#passEdit").val().trim().toString());
             }
             $.ajax({
                 type: "PUT",
@@ -65,36 +67,38 @@
                 data: formData
             })
                 .done(function (data) {
-                    let img;
-                    if (data.avatar == null){
-                        img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
-                    }
-                    else {
-                        img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
-                    }
-                    let str = `<tr id="'tr_'+ ${data.id}">
-                        <td>${data.username}</td>
-                        <td>${data.password}</td>
-                        <td>${data.staff.name}</td>
-                        <td>${data.staff.position.name}</td>
-                        <td>${data.staff.createAt}</td>
-                        <td>${img}</td>
-                        <td class="text-center">
-                            <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
-                                class="fa fa-pencil-alt"></i></button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
-                                class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    `;
-
-                    $("#tr_" + id).replaceWith(str);
-                    $("#modalEdit").modal("hide");
-                    $("#frmEditUser")[0].reset();
-                    handlerActionUser();
-                    swal("Thành công", "User đã được cập nhật", "success");
+                    // let img;
+                    // if (data.avatar == null){
+                    //     img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
+                    // }
+                    // else {
+                    //     img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
+                    // }
+                    // let str = `<tr id="'tr_'+ ${data.id}">
+                    //     <td>${data.username}</td>
+                    //     <td>${data.staff.name}</td>
+                    //     <td>${data.staff.position.name}</td>
+                    //     <td>${data.staff.createAt}</td>
+                    //     <td>${img}</td>
+                    //     <td class="text-center">
+                    //         <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
+                    //             class="fa fa-pencil-alt"></i></button>
+                    //     </td>
+                    //     <td class="text-center">
+                    //         <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
+                    //             class="fa fa-trash"></i></button>
+                    //     </td>
+                    // </tr>
+                    // `;
+                    //
+                    // $("#tr_" + id).replaceWith(str);
+                    // $("#modalEdit").modal("hide");
+                    // $("#frmEditUser")[0].reset();
+                    // handlerActionUser();
+                    // swal("Thành công", "User đã được cập nhật", "success");
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
+                        window.location = "/users";
+                    });
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -110,6 +114,13 @@
                     $("#modalEdit .modal-body .modal-alert-danger").html(str);
                 })
         }
+
+        $("#modalEdit").on('hidden.bs.modal', function () {
+            $("#modalEdit .modal-body .modal-alert-danger").empty();
+            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalEdit input.error").removeClass("error");
+            $("#frmEditUser")[0].reset();
+        });
     </script>
 
 </th:block>

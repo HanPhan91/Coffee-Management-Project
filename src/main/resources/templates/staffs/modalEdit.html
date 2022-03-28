@@ -77,6 +77,9 @@
                 data: JSON.stringify(staff)
             })
                 .done(function (data){
+                    swal("Thành công", "Nhân viên đã được cập nhật", "success").then(function() {
+                        window.location = "/staffs";
+                    });
                     let str= `
                         <tr id="tr_${data.id}">
                                 <td>${data.name}</td>

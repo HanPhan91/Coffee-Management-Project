@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,7 +21,7 @@ import java.util.Date;
 @Table(name = "drinks")
 public class Drink {
     @Id
-    private Long id = System.currentTimeMillis()/1000;
+    private Long id = System.currentTimeMillis() / 1000;
 
     @NotNull(message = "Tên thức uống là bắt buộc")
     @Size(min = 5, max = 50, message = "Tên thức uống phải nằm trong khoảng 5-50 ký tự")
@@ -50,7 +47,19 @@ public class Drink {
     private Date createdAt;
 
 
-    private String imgUrl;
+    private String imgUrl = "1";
 
+    private boolean storage = true;
+
+    private int inventory;
+
+    @ManyToOne
+    @JoinColumn(name = "id_catalog")
+    private Catalog catalog;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cart")
+    private Cart cart;
+>>>>>>>quang
 
 }

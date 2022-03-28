@@ -24,3 +24,7 @@ label.error {
 input.error {
     border: solid 1px red !important;
 }
+div.dataTables_length {
+    /*Example*/
+    text-align: left;
+}

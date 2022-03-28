@@ -4,6 +4,11 @@ import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
@@ -11,10 +16,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 @Data
 public class UserDto {
 
     private Long id = System.currentTimeMillis() / 1000;
+
 
     @NotNull(message = "Tên đăng nhập không được để trống")
     @Size(min = 5, max = 30, message = "Tên đăng nhập phải nằm trong khoảng 5-30 ký tự")
@@ -39,6 +50,12 @@ public class UserDto {
     private Long id_staff;
 
     private MultipartFile file;
+
+    public UserDto(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
 
     public Avatar toAvatar() {
         return new Avatar()
