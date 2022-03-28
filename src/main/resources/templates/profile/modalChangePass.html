@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalChangePass">
+    <div class="modal" tabindex="-1" id="modalChangePass">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thay đổi mật khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmChangePass">
+                        <div class="col">
+                            <label for="changePass" class="form-label fw-bold">Mật khẩu:</label>
+                            <input type="password" class="form-control" id="changePass" name="changePass">
+                        </div>
+                        <div class="col">
+                            <label for="changePassAgain" class="form-label fw-bold">Nhập lại mật khẩu:</label>
+                            <input type="password" class="form-control" id="changePassAgain" name="changePassAgain">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnChangePass">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("button#btnChangePass").on('click',function (){
+            // $("#frmChangePass").trigger("submit");
+            changePass();
+        });
+        function changePass(){
+            let user = {
+                password : $("input#changePass").val().trim(),
+            };
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/profile/changepass",
+                data: JSON.stringify(user)
+            })
+            .done(function (data){
+                let img;
+                if (data.avatar == null){
+                    img= `/assets/plugins/images/users/1.jpg`;
+                }
+                else {
+                    img = data.avatar.fileUrl;
+                }
+                let str = `
+                    <div className="row ">
+                        <div className="col">
+                            <table className="table table-borderless text-dark w-50 mx-auto">
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Họ và Tên: </label><label
+                                        className="label fs-5 text-dark fw-bold">${data.staff.name}</label>
+                                    </td>
+                                    <td rowSpan="5" className="text-center">
+                                        <img alt="user-img" src="${img}" width="200" className="img-circle changeAvatar">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Ngày sinh :</label>
+                                        <label className="label fs-5 text-dark fw-bold" id="dob">${data.staff.birthDay.slice(0,10)}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Địa chỉ :</label>
+                                        <label className="label fs-5 text-dark fw-bold"> ${data.staff.address}</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Số điện thoại :</label>
+                                        <label className="label fs-5 text-dark fw-bold"> ${data.staff.phone}</label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Email :</label>
+                                        <label className="label fs-5 text-dark fw-bold"> ${data.staff.email}</label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label className="label fs-5 text-dark">Vị trí làm việc :</label>
+                                        <label className="label fs-5 text-dark fw-bold"> ${data.staff.position.getName()}</label>
+                                    </td>
+                                    <td className="text-center">
+                                        <button className="btn btn-primary" id="changePass"><i
+                                            className="fa fa-edit"></i> Đổi mật khẩu
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>`;
+            })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalChangePass .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalChangePass .modal-body .modal-alert-danger").html(str);
+                })
+        };
+        $("img.changeAvatar").on('click',function (){
+            $("#modalChangeAvatar").modal('show');
+        });
+        $("#changePass").on('click', function (){
+            $("#modalChangePass").modal('show');
+        });
+    </script>
+</th:block>

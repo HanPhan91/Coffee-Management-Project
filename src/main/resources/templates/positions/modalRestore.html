@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalRestore">
+    <div class="modal" tabindex="-1" id="modalRestore">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khôi phục chức vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestore">
+                        <div class="row">
+                            <input type="text" id="idPositionRestore" hidden >
+                            <div class="col">
+                                <label for="namePositionRestore" class="form-label fw-bold">Tên chức vụ:</label>
+                                <input type="text" class="form-control" id="namePositionRestore" name="fullNameRestore">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Khôi phục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnRestore").on("click", function (){
+            $("#frmRestore").trigger("submit");
+        });
+
+        function restorePosition(){
+            let postion = new Position($("#idPositionRestore").val(),$("#namePositionRestore").val().trim());
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/positions/restore",
+                data: JSON.stringify(postion)
+            })
+                .done(function (data){
+                    $("#tr_"+ $("#idPositionRestore").val()).remove();
+                    $("#modalRestore").modal("hide");
+                    $("#frmRestore")[0].reset();
+                    swal("Thành công", "Chức vụ mới đã được khôi phục", "success");
+                })
+                .fail(function (jqXHR){
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalRestore .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalRestore .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#modalRestore").on('hidden.bs.modal', function () {
+            $("#modalRestore .modal-body .modal-alert-danger").empty();
+            $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalRestore input.error").removeClass("error");
+            $("#frmRestore")[0].reset();
+        });
+    </script>
+
+</th:block>

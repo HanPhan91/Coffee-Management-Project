@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Upload</h1>
+    <div>
+        <input type="file" id="uploadFile" />
+        <input type="button" id="btnUpload" value="Upload" />
+
+    </div>
+
+    <script src="/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script>
+
+        $("#btnUpload").on('click', function () {
+            let formData = new FormData();
+            formData.append("file", $("#uploadFile")[0].files[0]);
+            $.ajax({
+                type: "POST",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "http://localhost:8080/api/temp/upload-image",
+                data: formData
+            }).done((data) => {
+                console.log(data)
+            }).fail((err) => {
+                console.log(err)
+                alert("Upload fail")
+            })
+        });
+
+
+    </script>
+</body>
+</html>

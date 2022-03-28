@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalRestore">
+    <div class="modal" tabindex="-1" id="modalRestore">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khôi phục nhân viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestoreStaff">
+                        <div class="row">
+                            <input type="text" class="form-control" id="idStaffRestore" hidden>
+                            <div class="col co4">
+                                <label for="nameStaffRestore" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffRestore" name="nameStaffRestore">
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffRestore" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffRestore"
+                                       name="addressStaffRestore">
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffRestore" class="form-label fw-bold">Số điện thoại nhân
+                                    viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffRestore" name="phoneStaffRestore">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffRestore" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffRestore" name="emailStaffRestore">
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffRestore" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="date" class="form-control" id="bodStaffRestore" name="bodStaffRestore">
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffRestore" class="form-label fw-bold">Chức vụ nhân
+                                    viên:</label>
+                                <select class="form-select" id="positionStaffRestore">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore">Khôi phục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#btnRestore").on("click", function () {
+            $("#frmRestoreStaff").trigger("submit");
+        });
+        function restoreStaff() {
+            let id = $("#idStaffRestore").val();
+            let name = $("#nameStaffRestore").val().trim();
+            let address = $("#addressStaffRestore").val().trim();
+            let phone = $("#phoneStaffRestore").val().trim();
+            let email = $("#emailStaffRestore").val().trim();
+            let birthDay = new Date($("#bodStaffRestore").val()).toISOString().slice(0, 10);
+            let position = $("#positionStaffRestore").val();
+            let staff = new Staff(id, name, address, phone, email, birthDay, position);
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/staffs/restore/"+ id,
+                data: JSON.stringify(staff)
+            })
+                .done(function (data) {
+                    // $("#tblStaffDeleted #tr_" + $("#idStaffRestore").val()).remove();
+                    // $("#modalRestore").modal("hide");
+                    // $("#frmRestoreStaff")[0].reset();
+                    // swal("Thành công", "Nhân viên đã được khôi phục", "success");
+                    swal("Thành công", "Nhân viên đã được khôi phục", "success").then(function() {
+                        window.location = "deleted";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalRestore .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalRestore .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+        $("#modalRestore").on('hidden.bs.modal', function () {
+            $("#modalRestore .modal-body .modal-alert-danger").empty();
+            $("#modalRestore .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalRestore input.error").removeClass("error");
+            $("#positionStaffRestore option").remove();
+            $("#frmRestoreStaff")[0].reset();
+        });
+    </script>
+</th:block>

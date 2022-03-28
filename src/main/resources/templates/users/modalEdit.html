@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalEdit">
+    <div class="modal" tabindex="-1" id="modalEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật user</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditUser">
+                        <input type="text" id="idEdit" hidden>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="usernameEdit" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit" readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passEdit" class="form-label fw-bold">Mật khẩu mới:</label>
+                                <input type="password" class="form-control" id="passEdit" name="passEdit">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="staffEdit" class="form-label fw-bold">Nhân viên được cấp:</label>
+                                <input type="text" class="form-control" id="staffEdit" name="staffEdit" readonly>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="uploadEdit" class="form-label fw-bold">Ảnh đại diện:</label>
+                                <input type="file" class="form-control" id="uploadEdit" accept="image/jpeg, image.png"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnEdit").on("click", function () {
+            $("#frmEditUser").trigger("submit");
+        });
+
+        function editUser() {
+            let id = $("#idEdit").val();
+            let formData = new FormData();
+            formData.append("username", $("#usernameEdit").val().trim().toString());
+            if ($("#passEdit").val() == ""){
+                formData.append("password", null);
+            }
+            else {
+                formData.append("password", $("#passEdit").val().trim().toString());
+            }
+            if ($("#uploadEdit")[0].files[0] != null) {
+                formData.append("file", $("#uploadEdit")[0].files[0]);
+            }
+            $.ajax({
+                type: "PUT",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/edit/" + id,
+                data: formData
+            })
+                .done(function (data) {
+                    // let img;
+                    // if (data.avatar == null){
+                    //     img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
+                    // }
+                    // else {
+                    //     img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
+                    // }
+                    // let str = `<tr id="'tr_'+ ${data.id}">
+                    //     <td>${data.username}</td>
+                    //     <td>${data.staff.name}</td>
+                    //     <td>${data.staff.position.name}</td>
+                    //     <td>${data.staff.createAt}</td>
+                    //     <td>${img}</td>
+                    //     <td class="text-center">
+                    //         <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
+                    //             class="fa fa-pencil-alt"></i></button>
+                    //     </td>
+                    //     <td class="text-center">
+                    //         <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
+                    //             class="fa fa-trash"></i></button>
+                    //     </td>
+                    // </tr>
+                    // `;
+                    //
+                    // $("#tr_" + id).replaceWith(str);
+                    // $("#modalEdit").modal("hide");
+                    // $("#frmEditUser")[0].reset();
+                    // handlerActionUser();
+                    // swal("Thành công", "User đã được cập nhật", "success");
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function() {
+                        window.location = "/users";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalEdit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalEdit .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#modalEdit").on('hidden.bs.modal', function () {
+            $("#modalEdit .modal-body .modal-alert-danger").empty();
+            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalEdit input.error").removeClass("error");
+            $("#frmEditUser")[0].reset();
+        });
+    </script>
+
+</th:block>

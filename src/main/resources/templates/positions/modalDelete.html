@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalDelete">
+    <div class="modal" tabindex="-1" id="modalDelete">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa chức vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmDelete">
+                        <div class="row">
+                            <input type="text" id="idPositionDelete" hidden>
+                            <div class="col">
+                                <label for="namePositionDelete" class="form-label fw-bold">Tên chức vụ:</label>
+                                <input type="text" class="form-control" id="namePositionDelete" name="fullNameDelete"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="perPositionDelete" class="form-label fw-bold">Phân quyền:</label>
+                                <input type="text" class="form-control" id="perPositionDelete" name="fullNameDelete"
+                                       readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnDelete").on("click", function () {
+            deletePosition();
+        });
+
+        function deletePosition() {
+            let postion = new Position($("#idPositionDelete").val(), $("#namePositionDelete").val().trim());
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/positions/delete",
+                data: JSON.stringify(postion)
+            })
+                .done(function (data) {
+                    $("#tr_" + $("#idPositionDelete").val()).remove();
+                    $("#modalDelete").modal("hide");
+                    $("#frmDelete")[0].reset();
+                    swal("Thành công", "Chức vụ đã được xóa", "success");
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalDelete .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalDelete .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#modalDelete").on('hidden.bs.modal', function () {
+            $("#modalDelete .modal-body .modal-alert-danger").empty();
+            $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalDelete input.error").removeClass("error");
+            $("#frmDelete")[0].reset();
+        });
+    </script>
+</th:block>

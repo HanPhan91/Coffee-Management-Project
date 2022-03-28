@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalChangeAvatar">
+    <div class="modal" tabindex="-1" id="modalChangeAvatar">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thay đổi ảnh đại diện</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmChangeAvatar">
+                        <div class="row">
+                            <label for="changeAva" class="form-label fw-bold">Ảnh đại diện:</label>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <img id="previewImg" width="100px" class="img-circle mb-2"/>
+                                <input type="file" class="form-control" id="changeAva" accept="image/jpeg, image/png"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnChangeAvatar">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#changeAva').change(function(){
+            const file = this.files[0];
+            if (file){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        $("#btnChangeAvatar").on('click', function (){
+            changeAvatar();
+        })
+
+        function changeAvatar() {
+            let formData = new FormData();
+                formData.append("file", $("#changeAva")[0].files[0]);
+            $.ajax({
+                type: "PUT",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/profile/changeavatar",
+                data: formData
+            })
+                .done(function (data) {
+                    swal("Thành công", "User mới đã được tạo", "success").then(function() {
+                        window.location = "";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreate .modal-body .modal-alert-danger").html(str);
+                })
+        }
+    </script>
+
+</th:block>

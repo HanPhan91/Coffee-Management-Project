@@ -3,14 +3,16 @@ package com.cg.coffeemanagement.services.Staffs;
 import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.repository.Staffs.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
-public class StaffServicesImpl implements IStaffServices{
+public class StaffServicesImpl implements IStaffServices {
 
     @Autowired
     private StaffRepository staffRepository;
@@ -42,6 +44,23 @@ public class StaffServicesImpl implements IStaffServices{
 
     @Override
     public List<Staff> findByDeletedFalse() {
-        return staffRepository.findByDeletedFalse();
+        return staffRepository.findByDeletedFalse(Sort.by(Sort.Direction.DESC,"createAt"));
+    }
+
+    @Override
+    public List<Staff> findByDeletedTrue() {
+        return staffRepository.findByDeletedTrue(Sort.by(Sort.Direction.DESC,"createAt"));
+    }
+
+
+    @Override
+    public void deleteStaff(Long id) {
+        staffRepository.deleteStaff(id);
+
+    }
+
+    @Override
+    public void restoreStaff(Long id) {
+        staffRepository.restoreStaff(id);
     }
 }

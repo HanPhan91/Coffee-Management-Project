@@ -38,35 +38,55 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên nhân viên</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Ngày sinh</th>
-                    <th scope="col">Nhiệm vụ</th>
-                    <th scope="col" colspan="2">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <th:block th:each= "staff, count: ${staffs}">
-                        <tr th:id="'tr_'+ ${staff.id}">
-                            <td th:text="${count.count}"></td>
-                            <td th:text="${staff.name}"></td>
-                            <td th:text="${staff.address}"></td>
-                            <td th:text="${staff.phone}"></td>
-                            <td th:text="${staff.email}"></td>
-                            <td th:text="${staff.birthDay}"></td>
-                            <td th:text="${staff.position.name}"></td>
-                            <td><button class="btn btn-outline-warning"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button></td>
+            <div class="row mb-2">
+                <div class="col text-end">
+                    <button class="btn btn-outline-primary" id="createStaff"><i class="fa fa-plus-square"></i> Tạo
+                        nhân viên mới
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <table class="table table-striped" id="tblStaff">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
+                            <th scope="col" class="fw-bold fs-5">Địa chỉ</th>
+                            <th scope="col" class="fw-bold fs-5">Số điện thoại</th>
+                            <th scope="col" class="fw-bold fs-5">Email</th>
+                            <th scope="col" class="fw-bold fs-5">Ngày sinh</th>
+                            <th scope="col" class="fw-bold fs-5">Nhiệm vụ</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
-                    </th:block>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        <!--                        <th:block th:each="staff: ${staffs}">-->
+                        <!--                            <tr th:id="'tr_'+ ${staff.id}">-->
+                        <!--                                <td th:text="${staff.name}"></td>-->
+                        <!--                                <td th:text="${staff.address}"></td>-->
+                        <!--                                <td th:text="${staff.phone}"></td>-->
+                        <!--                                <td th:text="${staff.email}"></td>-->
+                        <!--                                <td th:text="${staff.birthDay}"></td>-->
+                        <!--                                <td th:text="${staff.position.name}"></td>-->
+                        <!--                                <td>-->
+                        <!--                                    <button class="btn btn-outline-warning editStaff" th:data-id="${staff.id}"><i class="fa fa-pencil-alt"></i></button>-->
+                        <!--                                </td>-->
+                        <!--                                <td>-->
+                        <!--                                    <button class="btn btn-outline-danger deleteStaff" th:data-id="${staff.id}"><i class="fa fa-trash"></i></button>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-end">
+                    <a class="btn btn-outline-danger" id="deletedStaff" th:href="@{/staffs/deleted}"><i
+                            class="fa fa-trash"></i> Danh sách nhân viên đã xóa
+                    </a>
+                </div>
+            </div>
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
@@ -80,7 +100,70 @@
         <!-- ============================================================== -->
     </div>
 </div>
-
 <th:block th:replace="layout/script :: script"/>
+<th:block th:replace="staffs/modalCreate :: modalCreate"/>
+<th:block th:replace="staffs/modalEdit :: modalEdit"/>
+<th:block th:replace="staffs/modalDelete :: modalDelete"/>
+<script src="/assets/App/appStaff.js"></script>
+<script src="/assets/App/validatedStaff.js"></script>
+<script src="/assets/App/appPosition.js"></script>
+<script th:inline="javascript">
+    var listStaffs = [[${staffs}]];
+    $("#tblStaff").DataTable({
+        "ordering": false,
+        data: listStaffs,
+        columns: [
+            {data: 'name'},
+            {data: 'address'},
+            {data: 'phone'},
+            {data: 'email'},
+            {data: 'birthDay'},
+            {data: 'position.name'},
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning editStaff" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            <button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>
+                            `;
+                }
+            },
+            // {
+            //     data: 'id', render: function (data, type, row, meta) {
+            //         return `<button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>`;
+            //     }
+            // },
+        ],
+    });
+</script>
+<script>
+    $("#createStaff").on("click", function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/positions"
+        })
+            .done(function (data) {
+                let str = "";
+                for (let i = 0; i < data.length; i++) {
+                    let position = data[i];
+                    str += `
+                    <option value="${position.id}">${position.name}</option>
+                `;
+                }
+                let limitDay = "";
+                let today = new Date();
+                limitDay = `${today.getFullYear() - 16}-12-31`;
+                $("#bodStaffCre").attr("max", limitDay);
+                $("#modalCreate").modal("show");
+                $("#positionStaffCre").prepend(str);
+            })
+            .fail(function () {
+                window.location = "/errors";
+            })
+
+
+    });
+    handlerActionStaff();
+
+
+</script>
 </body>
 </html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách nhân viên đã xóa</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý nhân viên đã xóa</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col text-end">
+                    <a class="btn btn-outline-primary" id="createPosition" th:href="@{/staffs}"><i
+                            class="fa fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <table class="table table-hover" id="tblStaffDeleted">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
+                            <th scope="col" class="fw-bold fs-5">Địa chỉ</th>
+                            <th scope="col" class="fw-bold fs-5">Số điện thoại</th>
+                            <th scope="col" class="fw-bold fs-5">Email</th>
+                            <th scope="col" class="fw-bold fs-5">Ngày sinh</th>
+                            <th scope="col" class="fw-bold fs-5">Nhiệm vụ</th>
+                            <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--                        <th:block th:each="staff: ${staffs}">-->
+                        <!--                            <tr th:id="'tr_'+ ${staff.id}">-->
+                        <!--                                <td th:text="${staff.name}"></td>-->
+                        <!--                                <td th:text="${staff.address}"></td>-->
+                        <!--                                <td th:text="${staff.phone}"></td>-->
+                        <!--                                <td th:text="${staff.email}"></td>-->
+                        <!--                                <td th:text="${staff.birthDay}"></td>-->
+                        <!--                                <td th:text="${staff.position.name}"></td>-->
+                        <!--                                <td>-->
+                        <!--                                    <button class="btn btn-outline-warning restoreStaff" th:data-id="${staff.id}">-->
+                        <!--                                        <i class="fa fa-undo"></i></button>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="staffs/modalRestore :: modalRestore"/>
+<script src="/assets/App/appStaff.js"></script>
+<script src="/assets/App/validatedStaff.js"></script>
+<script src="/assets/App/appPosition.js"></script>
+<script th:inline="javascript">
+    var listStaffs = [[${staffs}]];
+    $("#tblStaffDeleted").DataTable({
+        "ordering": false,
+        data: listStaffs,
+        columns: [
+            {data: 'name'},
+            {data: 'address'},
+            {data: 'phone'},
+            {data: 'email'},
+            {data: 'birthDay'},
+            {data: 'position.name'},
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning restoreStaff" data-id="${data}"><i class="fa fa-undo"></i></button>`;
+                }
+            },
+        ],
+    });
+</script>
+<script>
+    let posDisplay;
+    $.ajax({
+        type: "GET",
+        url: "/api/positions"
+    })
+        .done(function (data) {
+            posDisplay = data;
+        })
+        .fail(function () {
+            window.location = "/errors";
+        })
+    $("button.restoreStaff").on("click", function () {
+
+        let id = $(this).data("id");
+        $.ajax({
+            type: "GET",
+            url: "/api/staffs/" + id
+        })
+            .done(function (data) {
+                $("#idStaffRestore").val(data.id);
+                $("#nameStaffRestore").val(data.name);
+                $("#addressStaffRestore").val(data.address);
+                $("#phoneStaffRestore").val(data.phone);
+                $("#emailStaffRestore").val(data.email);
+                let limitDay = "";
+                let today = new Date();
+                limitDay = `${today.getFullYear() - 16}-12-31`;
+                $("#bodStaffRestore").attr("max", limitDay);
+                $("#bodStaffRestore").val(data.birthDay);
+                let str = "";
+                for (let i = 0; i < posDisplay.length; i++) {
+                    let pos = posDisplay[i];
+                    if (pos.id == data.position.id) {
+                        str += `<option value="${pos.id}" selected>${pos.name}</option>`;
+                    } else {
+                        str += `<option value="${pos.id}">${pos.name}</option>`;
+                    }
+                }
+                $("#positionStaffRestore").prepend(str);
+                $("#modalRestore").modal("show");
+            })
+            .fail(function (resp) {
+                window.location = "/errors";
+            })
+    });
+    // handlerActionStaff();
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ public class Staff {
     private String name;
 
     @NotNull(message = "Địa chỉ nhân viên không được để trống")
-    @Size(min = 10, message = "Địa chỉ phải có ít nhất 10 ký tự")
+    @Size(min = 3, message = "Địa chỉ phải có ít nhất 3 ký tự")
     private String address;
 
     @NotBlank(message = "Số điện thoại không được để trống")
@@ -40,7 +41,7 @@ public class Staff {
 
     private String email;
 
-    @CreationTimestamp
+    @NotNull(message = "Ngày sinh không được để trống")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "birth_day")
     private Date birthDay;

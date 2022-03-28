@@ -16,11 +16,15 @@
 }
 
 label.error {
-    display: list-item !important;
+    display: list-item;
     margin-top: 5px !important;
     color: #842029 !important;
 }
 
 input.error {
     border: solid 1px red !important;
+}
+div.dataTables_length {
+    /*Example*/
+    text-align: left;
 }
