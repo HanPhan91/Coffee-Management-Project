@@ -21,7 +21,7 @@ import java.util.Date;
 @Table(name = "drinks")
 public class Drink {
     @Id
-    private Long id = System.currentTimeMillis()/1000;
+    private Long id = System.currentTimeMillis() / 1000;
 
     @NotNull(message = "Tên thức uống là bắt buộc")
     @Size(min = 5, max = 50, message = "Tên thức uống phải nằm trong khoảng 5-50 ký tự")
@@ -47,21 +47,19 @@ public class Drink {
     private Date createdAt;
 
 
-        private String imgUrl = "1";
+    private String imgUrl = "1";
 
-<<<<<<< HEAD
-=======
     private boolean storage = true;
 
     private int inventory;
 
     @ManyToOne
     @JoinColumn(name = "id_catalog")
-    private Catalog catalog ;
+    private Catalog catalog;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cart")
     private Cart cart;
->>>>>>> quang
+>>>>>>>quang
 
 }

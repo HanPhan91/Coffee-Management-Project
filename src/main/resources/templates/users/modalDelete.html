@@ -2,11 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="modalDelete">
     <div class="modal" tabindex="-1" id="modalDelete">
-<<<<<<< HEAD
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-=======
         <div class="modal-dialog modal-dialog-centered modal-lg">
->>>>>>> han
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Xóa user</h5>
@@ -18,19 +14,6 @@
                     <form id="frmDeleteUser">
                         <input type="text" id="idDelete" hidden>
                         <div class="row">
-<<<<<<< HEAD
-                            <div class="col">
-                                <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
-                                <input type="text" class="form-control" id="usernameDelete" name="usernameDelete" readonly>
-                            </div>
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="passDelete" class="form-label fw-bold">Mật khẩu:</label>-->
-<!--                                <input type="password" class="form-control" id="passDelete" name="passDelete" readonly>-->
-<!--                            </div>-->
-                        </div>
-                        <div class="row">
-                            <div class="col">
-=======
                             <div class="col col-md-6">
                                 <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameDelete" name="usernameDelete" readonly>
@@ -42,14 +25,9 @@
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
->>>>>>> han
                                 <label for="staffDelete" class="form-label fw-bold">Nhân viên được cấp:</label>
                                 <input type="text" class="form-control" id="staffDelete" name="staffDelete" readonly>
                             </div>
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="uploadDelete" class="form-label fw-bold">Ảnh đại diện:</label>-->
-<!--                                <input type="file" class="form-control" id="uploadDelete" accept="image/jpeg, image.png"/>-->
-<!--                            </div>-->
                         </div>
                     </form>
                 </div>
@@ -80,7 +58,6 @@
                 data: formData
             })
                 .done(function (data) {
-<<<<<<< HEAD
                     // $("#tr_" + id).remove();
                     // $("#modalDelete").modal("hide");
                     // $("#frmDeleteUser")[0].reset();
@@ -88,12 +65,6 @@
                     swal("Thành công", "User mới đã được xóa", "success").then(function() {
                         window.location = "/users";
                     });
-=======
-                    $("#tr_" + id).remove();
-                    $("#modalDelete").modal("hide");
-                    $("#frmDeleteUser")[0].reset();
-                    swal("Thành công", "User đã được xóa", "success");
->>>>>>> han
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -109,15 +80,12 @@
                     $("#modalDelete .modal-body .modal-alert-danger").html(str);
                 })
         }
-<<<<<<< HEAD
         $("#modalDelete").on('hidden.bs.modal', function () {
             $("#modalDelete .modal-body .modal-alert-danger").empty();
             $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
             $("#modalDelete input.error").removeClass("error");
             $("#frmDeleteUser")[0].reset();
         });
-=======
->>>>>>> han
     </script>
 
 </th:block>

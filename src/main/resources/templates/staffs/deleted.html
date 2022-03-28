@@ -98,7 +98,6 @@
 <script src="/assets/App/appStaff.js"></script>
 <script src="/assets/App/validatedStaff.js"></script>
 <script src="/assets/App/appPosition.js"></script>
-<<<<<<< HEAD
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
     $("#tblStaffDeleted").DataTable({
@@ -132,40 +131,20 @@
             window.location = "/errors";
         })
     $("button.restoreStaff").on("click", function () {
-=======
-<script>
-    $("button.restoreStaff").on("click", function () {
-        let positons;
-        $.ajax({
-            type: "GET",
-            url: "/api/positions"
-        })
-            .done(function (data) {
-                positons = data;
-            })
-            .fail(function () {
-                window.location = "/errors";
-            })
->>>>>>> han
-
         let id = $(this).data("id");
         $.ajax({
             type: "GET",
             url: "/api/staffs/" + id
         })
             .done(function (data) {
-<<<<<<< HEAD
                 $("#idStaffRestore").val(data.id);
-=======
                 $("#idStaffRestore").val(id);
->>>>>>> han
                 $("#nameStaffRestore").val(data.name);
                 $("#addressStaffRestore").val(data.address);
                 $("#phoneStaffRestore").val(data.phone);
                 $("#emailStaffRestore").val(data.email);
                 let limitDay = "";
                 let today = new Date();
-<<<<<<< HEAD
                 limitDay = `${today.getFullYear() - 16}-12-31`;
                 $("#bodStaffRestore").attr("max", limitDay);
                 $("#bodStaffRestore").val(data.birthDay);
@@ -176,35 +155,16 @@
                         str += `<option value="${pos.id}" selected>${pos.name}</option>`;
                     } else {
                         str += `<option value="${pos.id}">${pos.name}</option>`;
-=======
-                limitDay= `${today.getFullYear() - 16}-12-31`;
-                $("#bodStaffRestore").attr("max", limitDay);
-                $("#bodStaffRestore").val(data.birthDay);
-                let str="";
-                for (let i = 0; i < positons.length; i++) {
-                    let position = positons[i];
-                    if (positons[i].id == data.position.id){
-                        str+=`<option value="${position.id}" selected>${position.name}</option>`;
-                    }
-                    else {
-                        str+=`<option value="${position.id}">${position.name}</option>`;
->>>>>>> han
                     }
                 }
-                $("#positionStaffRestore").prepend(str);
                 $("#modalRestore").modal("show");
             })
             .fail(function (resp) {
                 window.location = "/errors";
             })
     });
-<<<<<<< HEAD
-    // handlerActionStaff();
-=======
     handlerActionStaff();
 
-
->>>>>>> han
 </script>
 </body>
 </html>

@@ -16,10 +16,7 @@ function handlerActionUser() {
             .done(function (data) {
                 $("#idEdit").val(data.id);
                 $("#usernameEdit").val(data.username);
-<<<<<<< HEAD
-=======
                 $("#passEdit").val(data.password);
->>>>>>> han
                 $("#staffEdit").val(data.staff.name);
                 $("#modalEdit").modal("show");
             })

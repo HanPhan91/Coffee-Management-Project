@@ -38,144 +38,142 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-<<<<<<< HEAD
+
             <div class="row mb-2">
-=======
-            <div class="row">
->>>>>>> han
-                <div class="col text-end">
-                    <a class="btn btn-outline-primary" th:href="@{/users}"><i
-                            class="fa fa-arrow-left"></i> Quay lại
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-<<<<<<< HEAD
-                    <table class="table table-striped" id="tblUserDelete">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
-=======
-                    <table class="table table-hover" id="tblUserDelete">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
-                            <th scope="col" class="fw-bold fs-5">Mật khẩu</th>
->>>>>>> han
-                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
-                            <th scope="col" class="fw-bold fs-5">Chức vụ</th>
-                            <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
-                            <th scope="col" class="fw-bold fs-5">Avatar</th>
-                            <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-<<<<<<< HEAD
-<!--                        <th:block th:each="user: ${users}">-->
-<!--                            <tr th:id="'tr_'+ ${user.id}">-->
-<!--                                <td th:text="${user.username}"></td>-->
-<!--                                <td th:text="${user.staff.name}"></td>-->
-<!--                                <td th:text="${user.staff.position.name}"></td>-->
-<!--                                <td th:text="${user.staff.createAt}"></td>-->
-<!--                                <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/></td>-->
-<!--                                <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg" width="50px"/></td>-->
-<!--                                <td class="text-center">-->
-<!--                                    <button class="btn btn-outline-warning restoreUser" th:data-id="${user.id}"><i-->
-<!--                                            class="fa fa-undo"></i></button>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-<!--                        </th:block>-->
-=======
-                        <th:block th:each="user: ${users}">
-                            <tr th:id="'tr_'+ ${user.id}">
-                                <td th:text="${user.username}"></td>
-                                <td th:text="${user.password}"></td>
-                                <td th:text="${user.staff.name}"></td>
-                                <td th:text="${user.staff.position.name}"></td>
-                                <td th:text="${user.staff.createAt}"></td>
-                                <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/></td>
-                                <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg" width="50px"/></td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-warning restoreUser" th:data-id="${user.id}"><i
-                                            class="fa fa-undo"></i></button>
-                                </td>
-                            </tr>
-                        </th:block>
->>>>>>> han
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
+                <div class="row">
+
+                    <div class="col text-end">
+                        <a class="btn btn-outline-primary" th:href="@{/users}"><i
+                                class="fa fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <table class="table table-striped" id="tblUserDelete">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
+
+                                <table class="table table-hover" id="tblUserDelete">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
+                                        <th scope="col" class="fw-bold fs-5">Mật khẩu</th>
+                                        <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
+                                        <th scope="col" class="fw-bold fs-5">Chức vụ</th>
+                                        <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
+                                        <th scope="col" class="fw-bold fs-5">Avatar</th>
+                                        <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <!--                        <th:block th:each="user: ${users}">-->
+                                    <!--                            <tr th:id="'tr_'+ ${user.id}">-->
+                                    <!--                                <td th:text="${user.username}"></td>-->
+                                    <!--                                <td th:text="${user.staff.name}"></td>-->
+                                    <!--                                <td th:text="${user.staff.position.name}"></td>-->
+                                    <!--                                <td th:text="${user.staff.createAt}"></td>-->
+                                    <!--                                <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/></td>-->
+                                    <!--                                <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg" width="50px"/></td>-->
+                                    <!--                                <td class="text-center">-->
+                                    <!--                                    <button class="btn btn-outline-warning restoreUser" th:data-id="${user.id}"><i-->
+                                    <!--                                            class="fa fa-undo"></i></button>-->
+                                    <!--                                </td>-->
+                                    <!--                            </tr>-->
+                                    <!--                        </th:block>-->
+                                    <th:block th:each="user: ${users}">
+                                        <tr th:id="'tr_'+ ${user.id}">
+                                            <td th:text="${user.username}"></td>
+                                            <td th:text="${user.password}"></td>
+                                            <td th:text="${user.staff.name}"></td>
+                                            <td th:text="${user.staff.position.name}"></td>
+                                            <td th:text="${user.staff.createAt}"></td>
+                                            <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}"
+                                                                                    width="50px"/></td>
+                                            <td th:if="${user.avatar} == null"><img
+                                                    src="/assets/plugins/images/users/1.jpg" width="50px"/></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-outline-warning restoreUser"
+                                                        th:data-id="${user.id}"><i
+                                                        class="fa fa-undo"></i></button>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+
+                                    </tbody>
+                                </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <th:block th:replace="layout/footer :: footer"/>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <th:block th:replace="layout/footer :: footer"/>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
     </div>
-</div>
-<th:block th:replace="layout/script :: script"/>
-<th:block th:replace="users/modalRestore :: modalRestore"/>
-<script src="/assets/App/appUser.js"></script>
-<script src="/assets/App/validatedUser.js"></script>
-<<<<<<< HEAD
-<script th:inline="javascript">
-    var listUser = [[${users}]];
-    $("#tblUserDelete").DataTable({
-        "ordering": false,
-        data: listUser,
-        columns: [
-            {data: 'username'},
-            {data: 'staff.name'},
-            {data: 'staff.position.name'},
-            {data: 'staff.createAt'},
-            {
-                data: 'avatar.fileUrl', render: function (data, type, row, meta) {
-                    // var img = data.fileUrl;
-                    if (data == null) {
-                        return '<img src="/assets/plugins/images/users/1.jpg" width="50px"/>';
-                    } else {
-                        return `<img src="${data}" width="50px"/>`;
-                    }
-                }
-            },
-            {
-                data: 'id', render: function (data, type, row, meta) {
-                    return `<button class="btn btn-outline-warning restoreUser" data-id="${data}"><i class="fa fa-undo"></i></button>`;
-                }
-            },
-        ],
-    });
+    <th:block th:replace="layout/script :: script"/>
+    <th:block th:replace="users/modalRestore :: modalRestore"/>
+    <script src="/assets/App/appUser.js"></script>
+    <script src="/assets/App/validatedUser.js"></script>
 
-</script>
-=======
->>>>>>> han
-<script>
-    $("button.restoreUser").on("click", function () {
-        let id = $(this).data("id");
-        $.ajax({
-            type: "GET",
-            url: "/api/users/" + id
-        })
-            .done(function (data) {
-                $("#idRestore").val(data.id);
-                $("#usernameRestore").val(data.username);
-                $("#passRestore").val(data.password);
-                $("#staffRestore").val(data.staff.name);
-                $("#modalRestore").modal("show");
+    <script th:inline="javascript">
+        var listUser = [[${users}]];
+        $("#tblUserDelete").DataTable({
+            "ordering": false,
+            data: listUser,
+            columns: [
+                {data: 'username'},
+                {data: 'staff.name'},
+                {data: 'staff.position.name'},
+                {data: 'staff.createAt'},
+                {
+                    data: 'avatar.fileUrl', render: function (data, type, row, meta) {
+                        // var img = data.fileUrl;
+                        if (data == null) {
+                            return '<img src="/assets/plugins/images/users/1.jpg" width="50px"/>';
+                        } else {
+                            return `<img src="${data}" width="50px"/>`;
+                        }
+                    }
+                },
+                {
+                    data: 'id', render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-warning restoreUser" data-id="${data}"><i class="fa fa-undo"></i></button>`;
+                    }
+                },
+            ],
+        });
+
+    </script>
+    <script>
+        $("button.restoreUser").on("click", function () {
+            let id = $(this).data("id");
+            $.ajax({
+                type: "GET",
+                url: "/api/users/" + id
             })
-            .fail(function (resp) {
-                window.location = "/errors";
-            })
-    });
-</script>
+                .done(function (data) {
+                    $("#idRestore").val(data.id);
+                    $("#usernameRestore").val(data.username);
+                    $("#passRestore").val(data.password);
+                    $("#staffRestore").val(data.staff.name);
+                    $("#modalRestore").modal("show");
+                })
+                .fail(function (resp) {
+                    window.location = "/errors";
+                })
+        });
+    </script>
 
 </body>
 </html>

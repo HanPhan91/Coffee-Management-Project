@@ -18,7 +18,6 @@ public class Cart {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-<<<<<<< HEAD
     @ManyToOne
 =======
     @ManyToMany

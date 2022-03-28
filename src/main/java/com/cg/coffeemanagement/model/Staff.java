@@ -1,11 +1,8 @@
 package com.cg.coffeemanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-<<<<<<< HEAD
 
-=======
 import jdk.jfr.Timestamp;
->>>>>>> han
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
