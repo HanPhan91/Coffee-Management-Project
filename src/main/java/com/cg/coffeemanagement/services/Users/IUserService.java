@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface IUserServices extends IGeneralServices<User> {
+public interface IUserService extends IGeneralServices<User> {
     @Override
     List<User> findAll();
 
