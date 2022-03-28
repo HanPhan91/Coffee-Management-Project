@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalDeleteCatalog">
+    <div class="modal" tabindex="-1" id="modalDeleteCatalog">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xoá danh mục thức uống</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmDeleteCatalog">
+                        <div class="row">
+                            <input type="text" id="idCatalogDelete" hidden>
+                            <div class="col">
+                                <label for="catalogNameDelete" class="form-label fw-bold">Tên danh mục</label>
+                                <input type="text" class="form-control" id="catalogNameDelete" name="catalogNameDelete" readonly>
+                                <p class="text-warning">Lưu ý: các thức uống trong danh mục cũng sẽ bị ẩn</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-danger" id="btnDeleteCatalog">Xoá danh mục</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script>
+
+    </script>
+</th:block>
