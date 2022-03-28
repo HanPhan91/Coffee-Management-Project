@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private IUserServices userService;
+    private IUserServices userServices;
 
 
     private String getBearerTokenRequest(HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authorizationValue != null && jwtService.validateJwtToken(authorizationValue)) {
 
             String username = jwtService.getUserNameFromJwtToken(authorizationValue);
-            UserDetails userDetails = userService.loadUserByUsername(username);
+            UserDetails userDetails = userServices.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());

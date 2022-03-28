@@ -13,15 +13,15 @@ import java.util.List;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
-<<<<<<< HEAD
+
     List<Staff> findByDeletedFalse(Sort createAt);
 
     List<Staff> findByDeletedTrue(Sort createAt);
-=======
+
     List<Staff> findByDeletedFalse();
 
     List<Staff> findByDeletedTrue();
->>>>>>> han
+
 
     @Modifying
     @Query("UPDATE Staff s SET s.deleted = true WHERE s.id = :id")

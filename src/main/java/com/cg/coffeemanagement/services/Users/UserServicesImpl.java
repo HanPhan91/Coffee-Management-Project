@@ -1,14 +1,11 @@
 package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.exception.DataInputException;
-<<<<<<< HEAD
+
 import com.cg.coffeemanagement.model.*;
-import com.cg.coffeemanagement.model.dto.AvatarDto;
-=======
 import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.model.User;
->>>>>>> han
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.repository.Staffs.StaffRepository;
 import com.cg.coffeemanagement.repository.Users.AvataRepository;
@@ -16,18 +13,11 @@ import com.cg.coffeemanagement.repository.Users.UserRepository;
 import com.cg.coffeemanagement.services.Upload.UploadService;
 import com.cg.coffeemanagement.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-=======
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
->>>>>>> han
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
@@ -43,12 +33,9 @@ public class UserServicesImpl implements IUserServices {
     private UserRepository userRepository;
 
     @Autowired
-<<<<<<< HEAD
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-=======
->>>>>>> han
     private AvataRepository avataRepository;
 
     @Autowired
@@ -77,47 +64,32 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public User save(User user) {
-<<<<<<< HEAD
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-=======
->>>>>>> han
         return userRepository.save(user);
     }
 
     @Override
-<<<<<<< HEAD
     public void saveAvatar(Long id,  Avatar avatar) {
         userRepository.saveAvatar(id, avatar);
     }
 
     @Override
-=======
->>>>>>> han
     public void remove(Long id) {
-
     }
 
     @Override
     public List<User> findByDeletedFalse() {
-<<<<<<< HEAD
         return userRepository.findByDeletedFalse(Sort.by(Sort.Direction.DESC, "createAt"));
-=======
-        return userRepository.findByDeletedFalse();
->>>>>>> han
     }
 
     @Override
     public List<User> findByDeletedTrue() {
-<<<<<<< HEAD
         return userRepository.findByDeletedTrue(Sort.by(Sort.Direction.DESC, "createAt"));
     }
 
     @Override
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
-=======
-        return userRepository.findByDeletedTrue();
->>>>>>> han
     }
 
     @Override
@@ -128,50 +100,26 @@ public class UserServicesImpl implements IUserServices {
 
         if (userDto.getFile() == null) {
             user.setAvatar(null);
-<<<<<<< HEAD
             save(user);
-=======
             userRepository.save(user);
->>>>>>> han
             return user;
         }
 
         Avatar avatar = avataRepository.save(userDto.toAvatar());
         user.setAvatar(avatar);
-<<<<<<< HEAD
         save(user);
-=======
         userRepository.save(user);
->>>>>>> han
         uploadAndSaveAvatar(userDto, user, avatar);
         return user;
     }
 
     @Override
-<<<<<<< HEAD
     public User edit(User user, UserDto userDto) {
         Avatar avatar = avataRepository.save(userDto.toAvatar());
         user.setAvatar(avatar);
         saveAvatar(user.getId(), avatar);
         uploadAndSaveAvatar(userDto, user, avatar);
         return user;
-=======
-    public User edit(User user ,UserDto userDto) {
-        if (userDto.getFile() == null) {
-            user.setAvatar(null);
-            user.setPassword(user.getPassword());
-            userRepository.save(user);
-            return user;
-        }
-        else {
-            Avatar avatar = avataRepository.save(userDto.toAvatar());
-            user.setAvatar(avatar);
-            user.setPassword(userDto.getPassword());
-            userRepository.save(user);
-            uploadAndSaveAvatar(userDto, user, avatar);
-            return user;
-        }
->>>>>>> han
     }
 
     public void uploadAndSaveAvatar(UserDto userDto, User user, Avatar avatar) {
@@ -197,7 +145,6 @@ public class UserServicesImpl implements IUserServices {
     public void restoreUser(Long id) {
         userRepository.restoreUser(id);
     }
-<<<<<<< HEAD
 
     @Override
     public Optional<User> getByUsername(String username) {
@@ -223,6 +170,4 @@ public class UserServicesImpl implements IUserServices {
         String pass = passwordEncoder.encode(password);
         userRepository.changePass(id, pass);
     }
-=======
->>>>>>> han
 }

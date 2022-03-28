@@ -5,6 +5,7 @@ import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,8 @@ public interface IUserServices extends IGeneralServices<User> {
     Optional<User> getByUsername(String username);
 
     Optional<User> findUserDTOByUsername(String username);
+
+    UserDetails loadUserByUsername(String username);
 
     boolean existsByUsername(String username);
 
