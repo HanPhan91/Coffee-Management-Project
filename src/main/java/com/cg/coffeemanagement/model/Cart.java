@@ -27,8 +27,6 @@ public class Cart {
     @JoinColumn(name = "id_table")
     private CoffeeTable coffeeTable;
 
-    private int quantity;
-
     private BigDecimal totalPrice;
 
 }

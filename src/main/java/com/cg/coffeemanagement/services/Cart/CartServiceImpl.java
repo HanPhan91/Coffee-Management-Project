@@ -46,4 +46,8 @@ public class CartServiceImpl implements CartService{
         cartRepository.deleteById(id);
     }
 
+    @Override
+    public Cart getByTableId(Long id) {
+        return cartRepository.getByCoffeeTableId(id);
+    }
 }

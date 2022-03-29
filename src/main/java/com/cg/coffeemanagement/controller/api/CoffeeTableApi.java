@@ -57,6 +57,8 @@ public class CoffeeTableApi {
         }
 //        Cart cart = new Cart();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
+        cart.setCoffeeTable(createTable);
+        cartService.save(cart);
         return new ResponseEntity<>(createTable, HttpStatus.CREATED);
     }
 
