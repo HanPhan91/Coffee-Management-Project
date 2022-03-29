@@ -38,4 +38,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_table")
     private CoffeeTable table ;
+
+
 }

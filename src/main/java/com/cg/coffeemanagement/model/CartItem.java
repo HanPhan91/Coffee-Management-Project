@@ -4,31 +4,31 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "carts")
-public class Cart {
+@Table(name = "cart_item")
+public class CartItem {
 
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @OneToMany
-    @JoinColumn(name = "id_cart")
-    private Set<CartItem> cartItem;
-
-    @OneToOne
-    @JoinColumn(name = "id_table")
-    private CoffeeTable coffeeTable;
-
     private int quantity;
 
-    private BigDecimal totalPrice;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cart")
+    private Cart cart;
+
+    private boolean status;
+
+    @OneToOne
+    @JoinColumn(name = "id_drink")
+    private Drink drink;
+
 
 }
