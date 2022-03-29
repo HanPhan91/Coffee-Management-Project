@@ -30,8 +30,12 @@
                                 </select>
                             </div>
                             <div class="col col-md-6">
-                                <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>
-                                <input type="file" class="form-control" id="uploadCre" accept="image/jpeg, image.png"/>
+                                <div class="col col-md-6">
+                                    <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>
+                                    <img id="previewImg" width="100px" class="img-circle mb-2"/>
+                                    <input id="uploadCre" type="file" accept="image/jpeg, image/png"/>
+                                </div>
+                                </section>
                             </div>
                         </div>
                     </form>
@@ -57,6 +61,7 @@
             if ($("#uploadCre")[0].files[0] != null) {
                 formData.append("file", $("#uploadCre")[0].files[0]);
             }
+            $("div.loader").removeClass("hide");
             $.ajax({
                 type: "POST",
                 contentType: false,
@@ -66,36 +71,7 @@
                 data: formData
             })
                 .done(function (data) {
-                //     let img;
-                //     if (data.avatar == null) {
-                //         img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
-                //     } else {
-                //         img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
-                //     }
-                //     let str = `
-                //     <tr id="'tr_'+ ${data.id}">
-                //                 <td>${data.username}</td>
-                //                 <td>${data.staff.name}</td>
-                //                 <td>${data.staff.position.name}</td>
-                //                 <td>${data.staff.createAt}</td>
-                //                 <td>${img}</td>
-                //                 <td class="text-center">
-                //                     <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
-                //                             class="fa fa-pencil-alt"></i></button>
-                //                 </td>
-                //                 <td class="text-center">
-                //                     <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
-                //                             class="fa fa-trash"></i></button>
-                //                 </td>
-                //             </tr>
-                // `;
-                //     $("#tblUser tbody").prepend(str);
-                //     $("#modalCreate").modal("hide");
-                //     $("#frmCreateUser")[0].reset();
-                //     $("#staffCre option").remove();
-                //     handlerActionUser();
-                //     swal("Thành công", "User đã được cập nhật", "success");
-                    swal("Thành công", "User mới đã được tạo", "success").then(function() {
+                    swal("Thành công", "User mới đã được tạo", "success").then(function () {
                         window.location = "/users";
                     });
                 })
@@ -112,6 +88,9 @@
                     $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalCreate .modal-body .modal-alert-danger").html(str);
                 })
+            .always(function () {
+                $("div.loader").addClass("hide");
+            })
         }
 
         $("#modalCreate").on('hidden.bs.modal', function () {
@@ -120,6 +99,17 @@
             $("#modalCreate input.error").removeClass("error");
             $("#staffCre option").remove();
             $("#frmCreateUser")[0].reset();
+        });
+
+        $('#uploadCre').change(function(){
+            const file = this.files[0];
+            if (file){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
         });
     </script>
 

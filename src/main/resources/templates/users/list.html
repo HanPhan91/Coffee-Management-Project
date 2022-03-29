@@ -103,6 +103,7 @@
         <!-- ============================================================== -->
     </div>
 </div>
+<div class="loader hide"></div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="users/modalCreate :: modalCreate"/>
 <th:block th:replace="users/modalEdit :: modalEdit"/>
@@ -118,7 +119,11 @@
             {data: 'username'},
             {data: 'staff.name'},
             {data: 'staff.position.name'},
-            {data: 'staff.createAt'},
+            {
+                data: 'staff.createAt', render: function (data, type, row, meta) {
+                    return data.slice(0, 10);
+                }
+            },
             {
                 data: 'avatar.fileUrl', render: function (data, type, row, meta) {
                     // var img = data.fileUrl;
@@ -140,6 +145,7 @@
 </script>
 <script>
     $("#createUser").on("click", function () {
+
         $.ajax({
             type: "GET",
             url: "/api/staffs"
@@ -156,6 +162,8 @@
             })
             .fail(function () {
                 window.location = "/errors";
+            })
+            .always(function () {
             })
 
         $("#modalCreate").modal("show");

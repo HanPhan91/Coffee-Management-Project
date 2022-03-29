@@ -6,12 +6,14 @@ import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.AvatarDto;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.repository.Staffs.StaffRepository;
 import com.cg.coffeemanagement.repository.Users.AvataRepository;
 import com.cg.coffeemanagement.repository.Users.UserRepository;
 import com.cg.coffeemanagement.services.Upload.UploadService;
 import com.cg.coffeemanagement.utils.UploadUtils;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +30,7 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements IUserService {
 
+    public static final String IMAGE_UPLOAD_FOLDER = "avatar";
 
     @Autowired
     private UserRepository userRepository;
@@ -69,8 +72,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void saveAvatar(Long id,  Avatar avatar) {
-        userRepository.saveAvatar(id, avatar);
+    public void saveAvatar(Long id,  Long idavatar) {
+        userRepository.saveAvatar(id, idavatar);
     }
 
     @Override
@@ -108,17 +111,32 @@ public class UserServiceImpl implements IUserService {
         Avatar avatar = avataRepository.save(userDto.toAvatar());
         user.setAvatar(avatar);
         save(user);
-        userRepository.save(user);
+        changePass(user.getId(), user.getPassword());
         uploadAndSaveAvatar(userDto, user, avatar);
         return user;
     }
 
     @Override
-    public User edit(User user, UserDto userDto) {
-        Avatar avatar = avataRepository.save(userDto.toAvatar());
-        user.setAvatar(avatar);
-        saveAvatar(user.getId(), avatar);
-        uploadAndSaveAvatar(userDto, user, avatar);
+    public User changeAvatar(User user, AvatarDto avatarDto) {
+       Avatar avatar = avataRepository.save(avatarDto.toAvatar());
+       user.setAvatar(avatar);
+       save(user);
+        try {
+            String publicId = String.format("%s/%s", IMAGE_UPLOAD_FOLDER, avatar.getId());
+            Map uploadResult = uploadService.uploadImage(avatarDto.getFile(), ObjectUtils.asMap(
+                    "public_id", publicId,
+                    "overwrite", true,
+                    "resource_type", "image"
+            ));
+            String fileUrl = (String) uploadResult.get("secure_url");
+            avatar.setFileUrl(fileUrl);
+            avatar.setFileFolder(UploadUtils.IMAGE_UPLOAD_FOLDER);
+            avatar.setCloudId(avatar.getFileFolder() + "/" + avatar.getId());
+            user.setAvatar(avatar);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataInputException("Upload thất bại");
+        }
         return user;
     }
 

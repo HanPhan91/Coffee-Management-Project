@@ -50,6 +50,7 @@
         function changeAvatar() {
             let formData = new FormData();
                 formData.append("file", $("#changeAva")[0].files[0]);
+                $("div.loader").removeClass("hide");
             $.ajax({
                 type: "PUT",
                 contentType: false,
@@ -59,8 +60,8 @@
                 data: formData
             })
                 .done(function (data) {
-                    swal("Thành công", "User mới đã được tạo", "success").then(function() {
-                        window.location = "";
+                    swal("Thành công", "Ảnh đại diện đã được thay đổi", "success").then(function() {
+                        location.reload();
                     });
                 })
                 .fail(function (jqXHR) {
@@ -76,6 +77,9 @@
                     $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalCreate .modal-body .modal-alert-danger").html(str);
                 })
+            .always(function () {
+                $("div.loader").addClass("hide");
+            })
         }
     </script>
 

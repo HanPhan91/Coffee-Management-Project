@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class AvatarDto {
 
-    private Long id = (System.currentTimeMillis() / 1000);
+    private Long id = System.currentTimeMillis() / 1000;
 
     private String fileName;
 
@@ -27,7 +28,7 @@ public class AvatarDto {
 
     private String cloudId;
 
-    @NotNull(message = "Vui lòng chọn ảnh đại diện")
+    @NotEmpty(message = "Vui lòng chọn ảnh đại diện")
     private MultipartFile file;
 
     public Avatar toAvatar() {

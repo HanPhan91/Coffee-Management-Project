@@ -2,6 +2,7 @@ package com.cg.coffeemanagement.services.Users;
 
 import com.cg.coffeemanagement.model.Avatar;
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.AvatarDto;
 import com.cg.coffeemanagement.model.dto.UserDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
@@ -35,7 +36,7 @@ public interface IUserService extends IGeneralServices<User>, UserDetailsService
     User create(UserDto userDto);
 
 
-    User edit(User user ,UserDto userDto);
+    User changeAvatar(User user , AvatarDto avatarDto);
 
     void deleteUser(@Param("id") Long id);
 
@@ -49,5 +50,6 @@ public interface IUserService extends IGeneralServices<User>, UserDetailsService
     boolean existsByUsername(String username);
 
     void changePass(@Param("id") Long id, String pass);
-    void saveAvatar( @Param("id")Long id, @Param("avatar") Avatar avatar);
+
+    void saveAvatar(@Param("id") Long id, Long idavatar);
 }

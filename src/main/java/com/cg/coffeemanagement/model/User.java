@@ -31,13 +31,9 @@ public class User {
     @Id
     private Long id = System.currentTimeMillis() / 1000;
 
-    @Size(min = 5, max = 30, message = "Tên đăng nhập phải nằm trong khoảng 5-30 ký tự")
-    @NotBlank(message = "Tên đăng nhập không được để trống")
-    @Column(unique = true)
+
     private String username;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, max = 30, message = "Mật khẩu phải lớn hơn 6 ký tự")
     @Column(updatable = false)
     private String password;
 

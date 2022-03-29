@@ -110,6 +110,7 @@
         <!-- ============================================================== -->
     </div>
 </div>
+<div class="loader hide"></div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="profile/modalChangeAvatar :: modalChangeAvatar"/>
 <th:block th:replace="profile/modalChangePass :: modalChangePass"/>
@@ -118,12 +119,12 @@
     let dob = [[${editUser.staff.birthDay}]];
     dob = new Date(dob).toISOString().slice(0, 10);
     $("#dob").text(dob);
-</script>
-<script>
+
     $("img.changeAvatar").on('click',function (){
         $("#modalChangeAvatar").modal('show');
     });
     $("#changePass").on('click', function (){
+        $("#usernamechangePass").val([[${editUser.username}]]);
         $("#modalChangePass").modal('show');
     })
 </script>
