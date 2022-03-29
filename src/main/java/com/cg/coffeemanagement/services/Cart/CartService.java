@@ -27,4 +27,6 @@ public interface CartService extends IGeneralServices<Cart> {
     void deleteCartById(@Param("id") Long id);
 
 //    void restoreCart(@Param("id") Long id);
+
+    Cart getByTableId(@Param("id") Long id );
 }
