@@ -15,12 +15,12 @@ import java.util.List;
 @RequestMapping("/tables")
 public class CoffeeTableController {
 
-        @Autowired
-        CoffeeTableService coffeeTableService;
+    @Autowired
+    CoffeeTableService coffeeTableService;
 
 
     @GetMapping
-    public ModelAndView showListTable(){
+    public ModelAndView showListTable() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("coffeeTable/list");
         List<CoffeeTable> table = coffeeTableService.findAllNotDeleted();

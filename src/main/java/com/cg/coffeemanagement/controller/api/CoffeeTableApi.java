@@ -26,8 +26,8 @@ public class CoffeeTableApi {
     @Autowired
     AppUtil appUtil;
 
-    @Autowired
-    CartService cartService;
+//    @Autowired
+//    CartService cartService;
 
 
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class CoffeeTableApi {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
-        Cart cart = new Cart();
+//        Cart cart = new Cart();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
         return new ResponseEntity<>(createTable, HttpStatus.CREATED);
     }

@@ -26,10 +26,7 @@ public class CoffeeTable {
     @Column(name = "name")
     private String name;
 
-    private String description;
-
+    @Column(columnDefinition = "boolean default false")
     private boolean deleted;
-
-
 
 }
