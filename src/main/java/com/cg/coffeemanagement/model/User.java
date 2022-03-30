@@ -37,7 +37,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, max = 30, message = "Mật khẩu phải lớn hơn 6 ký tự")
+    @Size(min = 6, max = 300, message = "Mật khẩu phải lớn hơn 6 ký tự")
     @Column(updatable = false)
     private String password;
 
