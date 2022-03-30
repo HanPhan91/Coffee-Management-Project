@@ -59,6 +59,6 @@ public class Drink {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cart")
-    private Cart cart;
+    private Order cart;
 
 }

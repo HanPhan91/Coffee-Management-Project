@@ -1,27 +1,26 @@
-package com.cg.coffeemanagement.services.CartItem;
+package com.cg.coffeemanagement.services.OrderItem;
 
 
-import com.cg.coffeemanagement.model.CartItem;
-import com.cg.coffeemanagement.model.Catalog;
+import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CartItemService extends IGeneralServices<CartItem> {
+public interface OrderItemService extends IGeneralServices<OrderItem> {
 
     @Override
-    List<CartItem> findAll();
+    List<OrderItem> findAll();
 
     @Override
-    Optional<CartItem> findById(Long id);
+    Optional<OrderItem> findById(Long id);
 
     @Override
-    CartItem getById(Long id);
+    OrderItem getById(Long id);
 
     @Override
-    CartItem save(CartItem cartItem);
+    OrderItem save(OrderItem cartItem);
 
     @Override
     void remove(Long id);
@@ -30,9 +29,9 @@ public interface CartItemService extends IGeneralServices<CartItem> {
 
     void restoreCartItem(@Param("id") Long id);
 
-    List<CartItem> findAllNotDeleted();
+    List<OrderItem> findAllNotDeleted();
 
-    List<CartItem> findAllDeleted();
+    List<OrderItem> findAllDeleted();
 
     void deletedCartItemByCatalog(@Param("idCatalog") Long idCatalog);
 
