@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,11 +25,13 @@ public class CartItem {
     @JoinColumn(name = "id_cart")
     private Cart cart;
 
-    private boolean status;
+//    private boolean status;
 
     @OneToOne
     @JoinColumn(name = "id_drink")
     private Drink drink;
+
+    private BigDecimal totalPrice;
 
 
 }
