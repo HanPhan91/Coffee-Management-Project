@@ -1,34 +1,34 @@
-package com.cg.coffeemanagement.services.CartItem;
+package com.cg.coffeemanagement.services.OrderItem;
 
-import com.cg.coffeemanagement.model.CartItem;
-import com.cg.coffeemanagement.repository.CartItemRepository;
+import com.cg.coffeemanagement.model.OrderItem;
+import com.cg.coffeemanagement.repository.OrderItem.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CartItemServiceImpl implements CartItemService{
+public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
-    CartItemRepository cartItemRepository;
+    OrderItemRepository cartItemRepository;
 
     @Override
-    public List<CartItem> findAll() {
+    public List<OrderItem> findAll() {
         return cartItemRepository.findAll();
     }
 
     @Override
-    public Optional<CartItem> findById(Long id) {
+    public Optional<OrderItem> findById(Long id) {
         return cartItemRepository.findById(id);
     }
 
     @Override
-    public CartItem getById(Long id) {
+    public OrderItem getById(Long id) {
         return cartItemRepository.getById(id);
     }
 
     @Override
-    public CartItem save(CartItem cartItem) {
+    public OrderItem save(OrderItem cartItem) {
         return cartItemRepository.save(cartItem);
     }
 
@@ -48,12 +48,12 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public List<CartItem> findAllNotDeleted() {
+    public List<OrderItem> findAllNotDeleted() {
         return null;
     }
 
     @Override
-    public List<CartItem> findAllDeleted() {
+    public List<OrderItem> findAllDeleted() {
         return null;
     }
 

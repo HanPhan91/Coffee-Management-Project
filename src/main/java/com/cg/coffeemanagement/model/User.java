@@ -34,11 +34,10 @@ public class User {
 
     private String username;
 
-<<<<<<< HEAD
-=======
+
     @NotBlank(message = "Mật khẩu không được để trống")
     @Size(min = 6, max = 300, message = "Mật khẩu phải lớn hơn 6 ký tự")
->>>>>>> na
+
     @Column(updatable = false)
     private String password;
 

@@ -1,25 +1,25 @@
-package com.cg.coffeemanagement.services.Cart;
+package com.cg.coffeemanagement.services.Order;
 
-import com.cg.coffeemanagement.model.Cart;
+import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CartService extends IGeneralServices<Cart> {
+public interface OrderService extends IGeneralServices<Order> {
 
     @Override
-    List<Cart> findAll();
+    List<Order> findAll();
 
     @Override
-    Optional<Cart> findById(Long id);
+    Optional<Order> findById(Long id);
 
     @Override
-    Cart getById(Long id);
+    Order getById(Long id);
 
     @Override
-    Cart save(Cart cart);
+    Order save(Order cart);
 
     @Override
     void remove(Long id);
@@ -28,5 +28,5 @@ public interface CartService extends IGeneralServices<Cart> {
 
 //    void restoreCart(@Param("id") Long id);
 
-    Cart getByTableId(@Param("id") Long id );
+    Order getByTableId(@Param("id") Long id );
 }

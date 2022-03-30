@@ -1,8 +1,8 @@
-package com.cg.coffeemanagement.services.Cart;
+package com.cg.coffeemanagement.services.Order;
 
 
-import com.cg.coffeemanagement.model.Cart;
-import com.cg.coffeemanagement.repository.Cart.CartRepository;
+import com.cg.coffeemanagement.model.Order;
+import com.cg.coffeemanagement.repository.Order.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,28 +12,28 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CartServiceImpl implements CartService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    CartRepository cartRepository;
+    OrderRepository cartRepository;
 
     @Override
-    public List<Cart> findAll() {
+    public List<Order> findAll() {
         return cartRepository.findAll();
     }
 
     @Override
-    public Optional<Cart> findById(Long id) {
+    public Optional<Order> findById(Long id) {
         return cartRepository.findById(id);
     }
 
     @Override
-    public Cart getById(Long id) {
+    public Order getById(Long id) {
         return null;
     }
 
     @Override
-    public Cart save(Cart cart) {
+    public Order save(Order cart) {
         return cartRepository.save(cart);
     }
 
@@ -47,7 +47,7 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public Cart getByTableId(Long id) {
+    public Order getByTableId(Long id) {
         return cartRepository.getByCoffeeTableId(id);
     }
 }

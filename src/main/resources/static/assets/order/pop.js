@@ -1,7 +1,7 @@
 let listTables = $("#showTable ul");
-var cartId = 0;
+var OrderId = 0;
 var listDrink;
-var cart=[];
+var order=[];
 
 function getAllDrink() {
     $.ajax({
@@ -34,11 +34,11 @@ function getAllDrink() {
                     </li>
                     `);
             });
-            handlerShowItemInCart();
+            handlerShowItemInOrder();
         })
 }
 
-class Cart {
+class Order {
     constructor(id, quantity, totalPrice, drink, table){
         this.id = id;
         this.quantity = quantity;
@@ -51,10 +51,10 @@ class Cart {
 
 
 
-function showCartItem() {
+function showOrderItem() {
 
-    let str = `<div className="product-cart-item" id="${cartId}">`;
-    for (let i = 0; i < cart.length; i++) {
+    let str = `<div className="product-cart-item" id="${OrderId}">`;
+    for (let i = 0; i < order.length; i++) {
         str += `
         <kv-cashier-cart-item class="row-list row-list-active">
                                                 <div class="cell-action"><a
@@ -66,7 +66,7 @@ function showCartItem() {
                                                 <div class="row-product">
                                                     <div class="cell-name full" title="">
                                                         <div class="wrap-name">
-                                                            <h4> ${cart[i].name}</h4><span class="wrap-icons"></span>
+                                                            <h4> ${order[i].name}</h4><span class="wrap-icons"></span>
                                                         </div>
                                                         <ul class="comboset-list-item"></ul>
                                                         <div class="list-topping">
@@ -88,7 +88,7 @@ function showCartItem() {
                                                     <div class="cell-change-price">
                                                         <div class="popup-anchor">
                                                             <button
-                                                                    class="form-control form-control-sm"> ${cart[i].price}
+                                                                    class="form-control form-control-sm"> ${order[i].price}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -109,19 +109,19 @@ function showCartItem() {
     str += `</div>`
 }
 
-function addCartItemToCart(cartId, drinkId) {
+function addOrderItemToOrder(cartId, drinkId) {
     for (let i = 0; i < listDrink.length; i++) {
         if (drinkId == listDrink[i].id) {
-            cart.push(listDrink[i]);
-            showCartItem();
+            order.push(listDrink[i]);
+            showOrderItem();
         }
     }
 }
 
-function handlerShowItemInCart() {
+function handlerShowItemInOrder() {
     $(".tableAndRoom").on("click", function () {
         let id = $(this).data("id");
-        addCartItemToCart(cartId, id);
+        addOrderItemToOrder(OrderId, id);
     });
 }
 
@@ -190,7 +190,7 @@ function handlerShowItemInCart() {
                         })
                             .done(function (data) {
 
-                                cartId = data.id;
+                                OrderId = data.id;
                                 if (data.cartItem.length == 0) {
                                     let emptyStr = `<div _ngcontent-aqe-c6="" class="page-empty"><i _ngcontent-aqe-c6="" class="mask mask-food"></i><div _ngcontent-aqe-c6="" class="empty-content" translate=""> Chưa có món nào <span _ngcontent-aqe-c6="" translate="">Vui lòng chọn món trong thực đơn</span></div></div>`
                                     $("#listCartItem").html(emptyStr);

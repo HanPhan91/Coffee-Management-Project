@@ -17,8 +17,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "bill_detail")
+public class BillDetail {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 

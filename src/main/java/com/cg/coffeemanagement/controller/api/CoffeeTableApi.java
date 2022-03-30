@@ -2,9 +2,9 @@ package com.cg.coffeemanagement.controller.api;
 
 
 import com.cg.coffeemanagement.exception.DataInputException;
-import com.cg.coffeemanagement.model.Cart;
+import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.CoffeeTable;
-import com.cg.coffeemanagement.services.Cart.CartService;
+import com.cg.coffeemanagement.services.Order.OrderService;
 import com.cg.coffeemanagement.services.CoffeeTable.CoffeeTableService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CoffeeTableApi {
     AppUtil appUtil;
 
     @Autowired
-    CartService cartService;
+    OrderService cartService;
 
 
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class CoffeeTableApi {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
-        Cart cart = new Cart();
+        Order cart = new Order();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
         cart.setCoffeeTable(createTable);
         cartService.save(cart);
