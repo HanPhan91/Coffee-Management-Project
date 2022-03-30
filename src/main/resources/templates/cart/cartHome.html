@@ -33,15 +33,10 @@
                 <button class="btn-del"><i
                         class="fas fa-times"></i></button>
                 <div class="banner-introduce-app">
-
-
                 </div>
             </div>
-
             <div class="wrapper has-download-app">
                 <kv-cashier-header>
-
-
                     <div class="header">
                         <div class="header-left">
                             <div class="kv-tabs">
@@ -57,7 +52,6 @@
                             <div class="search-wrapper">
                                 <div class="search-content">
                                     <kv-product-search class="kv-product-search">
-
 
                                         <div class="wrap-auto-complete not-electronic">
                                             <kv-auto-complete>
@@ -84,7 +78,6 @@
                         </div>
                         <div class="header-right">
                             <kv-cashier-cart-tabs>
-
                                 <kv-group-tabs>
 
                                     <div class="header-tab-wrap">
@@ -189,10 +182,7 @@
                 </kv-cashier-header>
                 <div class="wrap-content">
                     <div class="col-left col-table">
-
                         <kv-cashier-table-container class="cashier-table">
-
-
                             <div class="list-filter">
                                 <div class="swiper-category none-swiper-btn">
                                     <div
@@ -217,8 +207,6 @@
                                 </div>
                             </div>
                             <kv-cashier-table-list>
-
-
                                 <div class="table-actions">
                                     <div class="form-inline">
                                         <div class="form-group"><label
@@ -277,8 +265,9 @@
                                             class="swiper-container swiper-container-initialized swiper-container-horizontal">
                                         <div class="swiper-wrapper" style="transition-duration: 0ms;">
 
-                                            <div class="swiper-slide swiper-slide-active" id ="showTable" style="width: 624px;">
-                                                <ul tabindex="0">
+                                            <div class="swiper-slide swiper-slide-active" id="showTable"
+                                                 style="width: 624px;">
+                                                <ul tabindex="1">
                                                 </ul>
                                             </div>
                                         </div>
@@ -292,7 +281,7 @@
                                                                                         role="button"
                                                                                         aria-label="Go to slide 2"></span><span
                                                 class="swiper-pagination-bullet"
-                                                tabindex="0" role="button" aria-label="Go to slide 3"></span></div>
+                                                tabindex="2" role="button" aria-label="Go to slide 3"></span></div>
                                         <span
                                                 class="swiper-notification" aria-live="assertive"
                                                 aria-atomic="true"></span>
@@ -309,34 +298,22 @@
                                 </div>
                             </kv-cashier-table-list>
                         </kv-cashier-table-container>
-
                     </div>
                     <div class="col-right" id="showCart">
-                        <div class="col-right-content has-alert">
+                        <div class="col-right-content has-alert" style="background-color: white;">
                             <kv-cashier-payment-info-top>
-
-
                                 <div class="form-actions">
                                     <div class="form-actions-left">
-
-
                                         <div>
                                             <button class="btn btn-control"
                                                     title="Bàn 12 / Lầu 3">
-
                                                 <i class="fas fa-table"></i>
-
                                                 Bàn 12 / Lầu 3
                                             </button>
                                         </div>
-
                                         <div>
-
                                             <kv-customer-search>
-
-
                                                 <div class="customer-search-autocomplete">
-
                                                     <div class="not-current-customer">
                                                         <kv-auto-complete>
                                                             <div class="autocomplete"><i
@@ -347,36 +324,11 @@
                                                                     placeholder="Tìm khách hàng (F4)">
                                                                 <div class="output-complete" hidden="">
                                                                     <ul>
-
                                                                         <li>
                                                                             <span class="pull-right"></span>
                                                                             <div class="user-info"><span
                                                                                     class="name-info">Nguyễn Văn Hải</span><span
                                                                             >KH000001</span></div>
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="pull-right"></span>
-                                                                            <div class="user-info"><span
-                                                                                    class="name-info">Phạm Thu Hương</span><span
-                                                                            >KH000002</span></div>
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="pull-right"></span>
-                                                                            <div class="user-info"><span
-                                                                                    class="name-info">Tuấn - Hà Nội</span><span
-                                                                            >KH000003</span></div>
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="pull-right"></span>
-                                                                            <div class="user-info"><span
-                                                                                    class="name-info">Anh Hoàng - Sài Gòn</span><span
-                                                                            >KH000004</span></div>
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="pull-right"></span>
-                                                                            <div class="user-info"><span
-                                                                                    class="name-info">Anh Giang - Kim Mã</span><span
-                                                                            >KH000005</span></div>
                                                                         </li>
                                                                     </ul>
 
@@ -387,638 +339,263 @@
                                                                 skip-disable="" title="Thêm khách hàng"><i
                                                                 class="far fa-plus"></i></button>
                                                     </div>
-
                                                 </div>
                                             </kv-customer-search>
                                         </div>
                                     </div>
+                                    <!--                                    <div class="form-actions-right">-->
+                                    <!--                                        <kendo-dropdownlist-->
+                                    <!--                                                class="price-book form-control form-control-sm k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"-->
+                                    <!--                                                dir="ltr">-->
+                                    <!--                       <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+                                    <!--                             class="k-dropdown-wrap k-state-default" id="k-315c8525-9467-4724-b3b8-3e52cb9de9fa"-->
+                                    <!--                             dir="ltr"-->
+                                    <!--                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"-->
+                                    <!--                             aria-describedby="fe977d71-57a9-4757-acc4-9913be5d8ce3" aria-disabled="false"-->
+                                    <!--                             aria-activedescendant="728876a6-6f87-48b0-a35b-57cd7d3e0123&#45;&#45;1"><span class="k-input"-->
+                                    <!--                                                                                                   unselectable="on"-->
+                                    <!--                                                                                                   id="fe977d71-57a9-4757-acc4-9913be5d8ce3">-->
 
-                                    <div class="form-actions-right">
+                                    <!--                           Bảng giá chung</span><span class="k-select" unselectable="on"><span-->
+                                    <!--                               class="k-icon k-i-arrow-s"></span></span>-->
+                                    <!--                         </span>-->
+                                    <!--                                        </kendo-dropdownlist>-->
+                                    <!--                                        <kv-select-purchase-channel>-->
+                                    <!--                                            <div id="sale-channel-container" class="sale-channel-dropdown ">-->
+                                    <!--                                                <button-->
+                                    <!--                                                        id="dropdown-button-id"><i-->
+                                    <!--                                                        title="Khách đến trực tiếp"-->
+                                    <!--                                                        class="fa-fw fas fas fa-shopping-basket"></i></button>-->
+                                    <!--                                                <kv-search-sale-channel class="search-autocomplete">-->
+                                    <!--                                                    <div class="autocomplete" id="list-sale-channel-suggestion">-->
+                                    <!--                                                        <div class="output-complete">-->
+                                    <!--                                                            <div class="output-search-complete"><i-->
+                                    <!--                                                                    class="far fa-search"></i><input-->
+                                    <!--                                                                    class="form-control form-control-sm" kvselecttext=""-->
+                                    <!--                                                                    type="text"-->
+                                    <!--                                                                    id="searchSaleChannelId" placeholder=""></div>-->
+                                    <!--                                                            <ul>-->
 
+                                    <!--                                                                <li class="active-checked">-->
+                                    <!--                                                                    <i class="fa-fw fas fas fa-shopping-basket"></i>-->
+                                    <!--                                                                    Khách-->
+                                    <!--                                                                    đến trực tiếp-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas fab fa-facebook"></i> Facebook-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-foody"></i>-->
+                                    <!--                                                                    Foody-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-grab"></i>-->
+                                    <!--                                                                    GrabFood-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas fas fa-phone"></i> Khách đặt qua-->
+                                    <!--                                                                    điện thoại-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-now"></i>-->
+                                    <!--                                                                    Now-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-pasgo"></i>-->
+                                    <!--                                                                    Pasgo-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                                <li>-->
+                                    <!--                                                                    <i class="fa-fw fas fas fa-shopping-cart"></i> Khác-->
+                                    <!--                                                                </li>-->
+                                    <!--                                                            </ul>-->
 
-                                        <kendo-dropdownlist
-                                                class="price-book form-control form-control-sm k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"
-                                                dir="ltr">
-                       <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                             class="k-dropdown-wrap k-state-default" id="k-315c8525-9467-4724-b3b8-3e52cb9de9fa"
-                             dir="ltr"
-                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"
-                             aria-describedby="fe977d71-57a9-4757-acc4-9913be5d8ce3" aria-disabled="false"
-                             aria-activedescendant="728876a6-6f87-48b0-a35b-57cd7d3e0123--1"><span class="k-input"
-                                                                                                   unselectable="on"
-                                                                                                   id="fe977d71-57a9-4757-acc4-9913be5d8ce3">
-
-                           Bảng giá chung</span><span class="k-select" unselectable="on"><span
-                               class="k-icon k-i-arrow-s"></span></span>
-                         </span>
-
-
-                                        </kendo-dropdownlist>
-                                        <kv-select-purchase-channel>
-
-
-                                            <div id="sale-channel-container" class="sale-channel-dropdown ">
-                                                <button
-                                                        id="dropdown-button-id"><i
-                                                        title="Khách đến trực tiếp"
-                                                        class="fa-fw fas fas fa-shopping-basket"></i></button>
-                                                <kv-search-sale-channel class="search-autocomplete">
-                                                    <div class="autocomplete" id="list-sale-channel-suggestion">
-                                                        <div class="output-complete">
-                                                            <div class="output-search-complete"><i
-                                                                    class="far fa-search"></i><input
-                                                                    class="form-control form-control-sm" kvselecttext=""
-                                                                    type="text"
-                                                                    id="searchSaleChannelId" placeholder=""></div>
-                                                            <ul>
-
-                                                                <li class="active-checked">
-                                                                    <i class="fa-fw fas fas fa-shopping-basket"></i>
-                                                                    Khách
-                                                                    đến trực tiếp
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas fab fa-facebook"></i> Facebook
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas kvchannel kvchannel-foody"></i>
-                                                                    Foody
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas kvchannel kvchannel-grab"></i>
-                                                                    GrabFood
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas fas fa-phone"></i> Khách đặt qua
-                                                                    điện thoại
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas kvchannel kvchannel-now"></i>
-                                                                    Now
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas kvchannel kvchannel-pasgo"></i>
-                                                                    Pasgo
-                                                                </li>
-                                                                <li>
-                                                                    <i class="fa-fw fas fas fa-shopping-cart"></i> Khác
-                                                                </li>
-                                                            </ul>
-
-                                                            <ul class="ul-add-item">
-                                                                <li><a><i
-                                                                        class="far fa-plus"></i> Thêm kênh bán</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </kv-search-sale-channel>
-                                            </div>
-                                        </kv-select-purchase-channel>
-                                        <div class="btn-group" dropdown="">
-                                            <button
-                                                    class="btn-icon dropdown-toggle" dropdowntoggle="" type="button"
-                                                    aria-haspopup="true"><i
-                                                    class="far fa-ellipsis-v"></i></button>
-
-                                        </div>
-                                    </div>
+                                    <!--                                                            <ul class="ul-add-item">-->
+                                    <!--                                                                <li><a><i-->
+                                    <!--                                                                        class="far fa-plus"></i> Thêm kênh bán</a></li>-->
+                                    <!--                                                            </ul>-->
+                                    <!--                                                        </div>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </kv-search-sale-channel>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </kv-select-purchase-channel>-->
+                                    <!--                                        <div class="btn-group" dropdown="">-->
+                                    <!--                                            <button-->
+                                    <!--                                                    class="btn-icon dropdown-toggle" dropdowntoggle="" type="button"-->
+                                    <!--                                                    aria-haspopup="true"><i-->
+                                    <!--                                                    class="far fa-ellipsis-v"></i></button>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                 </div>
                             </kv-cashier-payment-info-top>
-                            <div class="col-right-container" id="cashier_cart_list_item_container">
-                                <kv-cashier-cart-list-item>
-
-
-                                    <div class="">
-                                        <div class="product-cart-list" id="listCartItem">
-
-<!--                                            <div class="product-cart-item" id="3238ddd4-9f88-451c-866a-6fb4ff2d381d">-->
-<!--                                                <kv-cashier-cart-item class="row-list row-list-active"-->
-<!--                                                >-->
-
-
-<!--                                                    <div class="cell-action"><a-->
-<!--                                                            class="btn-icon btn-trash" href="javascript:void(0);"-->
-<!--                                                            title="Xóa hàng hóa"><i-->
-<!--                                                            class="far fa-trash-alt"></i></a></div>-->
-<!--                                                    <div class="cell-order"> 1-->
-
-<!--                                                        <div>-->
-<!--                                                            <button class="btn-icon" type="button"><i-->
-<!--                                                                    class="fa fa-star-o"></i></button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row-product">-->
-<!--                                                        <div class="cell-name full" title="">-->
-<!--                                                            <div class="wrap-name">-->
-<!--                                                                <h4> GIN FIZZ-->
-
-
-<!--                                                                </h4><span class="wrap-icons">-->
-
-<!--                                   </span>-->
-<!--                                                            </div>-->
-
-<!--                                                            <ul class="comboset-list-item">-->
-
-<!--                                                            </ul>-->
-<!--                                                            <div class="wrap-note" href="javascript:void(0)"><label-->
-<!--                                                            >-->
-<!--                                                                <button class="btn-icon has-Update">-->
-
-<!--                                                                    <span class="note-hint">Ghi chú...</span>-->
-<!--                                                                    <i class="fa fa-pencil"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </label></div>-->
-<!--                                                            <div class="list-topping">-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-quatity">-->
-<!--                                                            <div class="cell-quantity-inner">-->
-<!--                                                                <button class="btn-icon down" type="button"><i-->
-<!--                                                                        class="fas fa-minus-circle"></i></button>-->
-
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm item-quantity">-->
-<!--                                                                    1-->
-<!--                                                                </button>-->
-<!--                                                                <button class="btn-icon up" type="button"><i-->
-<!--                                                                        class="fas fa-plus-circle"></i></button>-->
-
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-warning">-->
-
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-change-price">-->
-<!--                                                            <div class="popup-anchor">-->
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm"> 30,000-->
-<!--                                                                </button>-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-price"> 30,000</div>-->
-<!--                                                        <div class="cell-actions">-->
-<!--                                                            <div class="btn-group" dropdown="">-->
-<!--                                                                <button class="dropdown-toggle" type="button"-->
-<!--                                                                        title="Thêm dòng"><i class="far fa-plus"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-
-<!--                                                </kv-cashier-cart-item>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-cart-item" id="ceb3f1fc-5ba8-4cec-9eae-29a492bfd870">-->
-<!--                                                <kv-cashier-cart-item class="row-list row-list-active"-->
-<!--                                                >-->
-
-
-<!--                                                    <div class="cell-action"><a-->
-<!--                                                            class="btn-icon btn-trash" href="javascript:void(0);"-->
-<!--                                                            title="Xóa hàng hóa"><i-->
-<!--                                                            class="far fa-trash-alt"></i></a></div>-->
-<!--                                                    <div class="cell-order"> 2-->
-
-<!--                                                        <div>-->
-<!--                                                            <button class="btn-icon" type="button"><i-->
-<!--                                                                    class="fa fa-star-o"></i></button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row-product">-->
-<!--                                                        <div class="cell-name full" title="">-->
-<!--                                                            <div class="wrap-name">-->
-<!--                                                                <h4> Phomai dây Nga-->
-
-
-<!--                                                                </h4><span class="wrap-icons">-->
-
-<!--                                   </span>-->
-<!--                                                            </div>-->
-
-<!--                                                            <ul class="comboset-list-item">-->
-
-<!--                                                            </ul>-->
-<!--                                                            <div class="wrap-note" href="javascript:void(0)"><label-->
-<!--                                                            >-->
-<!--                                                                <button class="btn-icon has-Update">-->
-
-<!--                                                                    <span class="note-hint">Ghi chú...</span>-->
-<!--                                                                    <i class="fa fa-pencil"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </label></div>-->
-<!--                                                            <div class="list-topping">-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-quatity">-->
-<!--                                                            <div class="cell-quantity-inner">-->
-<!--                                                                <button class="btn-icon down" type="button"><i-->
-<!--                                                                        class="fas fa-minus-circle"></i></button>-->
-
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm item-quantity">-->
-<!--                                                                    3-->
-<!--                                                                </button>-->
-<!--                                                                <button class="btn-icon up" type="button"><i-->
-<!--                                                                        class="fas fa-plus-circle"></i></button>-->
-
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-warning">-->
-
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-change-price">-->
-<!--                                                            <div class="popup-anchor">-->
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm"> 125,000-->
-<!--                                                                </button>-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-price"> 375,000</div>-->
-<!--                                                        <div class="cell-actions">-->
-<!--                                                            <div class="btn-group" dropdown="">-->
-<!--                                                                <button class="dropdown-toggle" type="button"-->
-<!--                                                                        title="Thêm dòng"><i class="far fa-plus"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-
-<!--                                                </kv-cashier-cart-item>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-cart-item" id="27e368b0-fc70-4367-861c-53f3a2c72374">-->
-<!--                                                <kv-cashier-cart-item class="row-list row-list-active"-->
-<!--                                                >-->
-
-
-<!--                                                    <div class="cell-action"><a-->
-<!--                                                            class="btn-icon btn-trash" href="javascript:void(0);"-->
-<!--                                                            title="Xóa hàng hóa"><i-->
-<!--                                                            class="far fa-trash-alt"></i></a></div>-->
-<!--                                                    <div class="cell-order"> 3-->
-
-<!--                                                        <div>-->
-<!--                                                            <button class="btn-icon" type="button"><i-->
-<!--                                                                    class="fa fa-star-o"></i></button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row-product">-->
-<!--                                                        <div class="cell-name full" title="">-->
-<!--                                                            <div class="wrap-name">-->
-<!--                                                                <h4> Đĩa thịt nguội Tây Ba Nha hảo hạng-->
-
-
-<!--                                                                </h4><span class="wrap-icons">-->
-
-<!--                                   </span>-->
-<!--                                                            </div>-->
-
-<!--                                                            <ul class="comboset-list-item">-->
-
-<!--                                                            </ul>-->
-<!--                                                            <div class="wrap-note" href="javascript:void(0)"><label-->
-<!--                                                            >-->
-<!--                                                                <button class="btn-icon has-Update">-->
-
-<!--                                                                    <span class="note-hint">Ghi chú...</span>-->
-<!--                                                                    <i class="fa fa-pencil"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </label></div>-->
-<!--                                                            <div class="list-topping">-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-quatity">-->
-<!--                                                            <div class="cell-quantity-inner">-->
-<!--                                                                <button class="btn-icon down" type="button"><i-->
-<!--                                                                        class="fas fa-minus-circle"></i></button>-->
-
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm item-quantity">-->
-<!--                                                                    1-->
-<!--                                                                </button>-->
-<!--                                                                <button class="btn-icon up" type="button"><i-->
-<!--                                                                        class="fas fa-plus-circle"></i></button>-->
-
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-warning">-->
-
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-change-price">-->
-<!--                                                            <div class="popup-anchor">-->
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm"> 125,000-->
-<!--                                                                </button>-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-price"> 125,000</div>-->
-<!--                                                        <div class="cell-actions">-->
-<!--                                                            <div class="btn-group" dropdown="">-->
-<!--                                                                <button class="dropdown-toggle" type="button"-->
-<!--                                                                        title="Thêm dòng"><i class="far fa-plus"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-
-<!--                                                </kv-cashier-cart-item>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-cart-item" id="8a08ee04-d20f-4ce1-85e0-ec5195dcb20e">-->
-<!--                                                <kv-cashier-cart-item class="row-list row-list-active"-->
-<!--                                                >-->
-
-
-<!--                                                    <div class="cell-action"><a-->
-<!--                                                            class="btn-icon btn-trash" href="javascript:void(0);"-->
-<!--                                                            title="Xóa hàng hóa"><i-->
-<!--                                                            class="far fa-trash-alt"></i></a></div>-->
-<!--                                                    <div class="cell-order"> 4-->
-
-<!--                                                        <div>-->
-<!--                                                            <button class="btn-icon" type="button"><i-->
-<!--                                                                    class="fa fa-star-o"></i></button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row-product">-->
-<!--                                                        <div class="cell-name full" title="">-->
-<!--                                                            <div class="wrap-name">-->
-<!--                                                                <h4> CUBA LIBRE-->
-
-
-<!--                                                                </h4><span class="wrap-icons">-->
-
-<!--                                   </span>-->
-<!--                                                            </div>-->
-
-<!--                                                            <ul class="comboset-list-item">-->
-
-<!--                                                            </ul>-->
-<!--                                                            <div class="wrap-note" href="javascript:void(0)"><label-->
-<!--                                                            >-->
-<!--                                                                <button class="btn-icon has-Update">-->
-
-<!--                                                                    <span class="note-hint">Ghi chú...</span>-->
-<!--                                                                    <i class="fa fa-pencil"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </label></div>-->
-<!--                                                            <div class="list-topping">-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-quatity">-->
-<!--                                                            <div class="cell-quantity-inner">-->
-<!--                                                                <button class="btn-icon down" type="button"><i-->
-<!--                                                                        class="fas fa-minus-circle"></i></button>-->
-
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm item-quantity">-->
-<!--                                                                    1-->
-<!--                                                                </button>-->
-<!--                                                                <button class="btn-icon up" type="button"><i-->
-<!--                                                                        class="fas fa-plus-circle"></i></button>-->
-
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-warning">-->
-
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-change-price">-->
-<!--                                                            <div class="popup-anchor">-->
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm"> 30,000-->
-<!--                                                                </button>-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-price"> 30,000</div>-->
-<!--                                                        <div class="cell-actions">-->
-<!--                                                            <div class="btn-group" dropdown="">-->
-<!--                                                                <button class="dropdown-toggle" type="button"-->
-<!--                                                                        title="Thêm dòng"><i class="far fa-plus"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-
-<!--                                                </kv-cashier-cart-item>-->
-<!--                                            </div>-->
-<!--                                            <div class="product-cart-item" id="a058affa-d9f3-49ad-a840-f83884b0e034">-->
-<!--                                                <kv-cashier-cart-item class="row-list row-list-active"-->
-<!--                                                >-->
-
-
-<!--                                                    <div class="cell-action"><a-->
-<!--                                                            class="btn-icon btn-trash" href="javascript:void(0);"-->
-<!--                                                            title="Xóa hàng hóa"><i-->
-<!--                                                            class="far fa-trash-alt"></i></a></div>-->
-<!--                                                    <div class="cell-order"> 5-->
-
-<!--                                                        <div>-->
-<!--                                                            <button class="btn-icon" type="button"><i-->
-<!--                                                                    class="fa fa-star-o"></i></button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row-product">-->
-<!--                                                        <div class="cell-name full" title="">-->
-<!--                                                            <div class="wrap-name">-->
-<!--                                                                <h4> Thịt nguội &amp; phomai viên chiên kiểu Tây Ba Nha-->
-
-
-<!--                                                                </h4><span class="wrap-icons">-->
-
-<!--                                   </span>-->
-<!--                                                            </div>-->
-
-<!--                                                            <ul class="comboset-list-item">-->
-
-<!--                                                            </ul>-->
-<!--                                                            <div class="wrap-note" href="javascript:void(0)"><label-->
-<!--                                                            >-->
-<!--                                                                <button class="btn-icon has-Update">-->
-
-<!--                                                                    <span class="note-hint">Ghi chú...</span>-->
-<!--                                                                    <i class="fa fa-pencil"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </label></div>-->
-<!--                                                            <div class="list-topping">-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-quatity">-->
-<!--                                                            <div class="cell-quantity-inner">-->
-<!--                                                                <button class="btn-icon down" type="button"><i-->
-<!--                                                                        class="fas fa-minus-circle"></i></button>-->
-
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm item-quantity">-->
-<!--                                                                    1-->
-<!--                                                                </button>-->
-<!--                                                                <button class="btn-icon up" type="button"><i-->
-<!--                                                                        class="fas fa-plus-circle"></i></button>-->
-
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-warning">-->
-
-<!--                                                        </div>-->
-
-<!--                                                        <div class="cell-change-price">-->
-<!--                                                            <div class="popup-anchor">-->
-<!--                                                                <button-->
-<!--                                                                        class="form-control form-control-sm"> 125,000-->
-<!--                                                                </button>-->
-
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="cell-price"> 125,000</div>-->
-<!--                                                        <div class="cell-actions">-->
-<!--                                                            <div class="btn-group" dropdown="">-->
-<!--                                                                <button class="dropdown-toggle" type="button"-->
-<!--                                                                        title="Thêm dòng"><i class="far fa-plus"></i>-->
-<!--                                                                </button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-
-<!--                                                </kv-cashier-cart-item>-->
-<!--                                            </div>-->
-
-<!--                                        </div>-->
-<!--                                        <div class="page-empty" hidden=""><i-->
-<!--                                                class="mask mask-food"></i>-->
-<!--                                            <div class="empty-content" translate=""> Chưa có món nào <span-->
-<!--                                                    translate="">Vui lòng chọn món trong thực đơn</span></div>-->
-                                        </div>
-                                    </div>
-
-
-                                </kv-cashier-cart-list-item>
-                            </div>
-                            <div class="alert-messenger">
-                                <div class="alert-content"><i class="fa fa-bell"></i> Bạn
-                                    vừa cập nhật đơn hàng. Click <a class="show-alert" href="javascript:void(0);"
-                                                                    translate="">Thông báo</a> để gửi thông tin chế biến
-                                    đến bar bếp.
-                                </div>
-                            </div>
-
-
-                            <kv-cashier-payment-info-bottom>
-
-
-                                <div class="form-actions form-payment">
-                                    <div class="row-div">
-
-
-                                        <div class="col-auto form-actions-left">
-
-                                            <div class="form-group"><label
-                                                    class="form-label control-label" translate="">Số lượng khách</label>
-                                                <div class="form-output"><input
-                                                        class="form-control form-control-sm ng-untouched ng-pristine ng-valid"
-                                                        kvautonumeric="">
+                            <!--                            <div class="col-right-container" id="cashier_cart_list_item_container">-->
+                            <kv-cashier-cart-list-item>
+                                <div class="">
+                                    <div class="product-cart-list" id="listCartItem">
+                                        <div class="product-cart-item" id="3238ddd4-9f88-451c-866a-6fb4ff2d381d">
+         <!-- hien thi drink -->
+                                            <kv-cashier-cart-item class="row-list row-list-active">
+                                                <div class="cell-action"><a
+                                                        class="btn-icon btn-trash" href="javascript:void(0);"
+                                                        title="Xóa hàng hóa"><i
+                                                        class="far fa-trash-alt"></i></a></div>
+                                                <div class="cell-order"> 1
+                                                    <div>
+                                                        <button class="btn-icon" type="button"><i
+                                                                class="fa fa-star-o"></i></button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-actions-right">
-                                            <label class="control-label"><span
-                                                    translate="">Tổng tiền</span>
-                                                <span class="badge"> 7 </span></label><span
-                                                class="form-control-static total-price">685,000</span>
-
+                                                <div class="row-product">
+                                                    <div class="cell-name full" title="">
+                                                        <div class="wrap-name">
+                                                            <h4> GIN FIZZ</h4><span class="wrap-icons"></span>
+                                                        </div>
+                                                        <ul class="comboset-list-item"></ul>
+                                                        <div class="wrap-note" href="javascript:void(0)"><label>
+                                                            <button class="btn-icon has-Update">
+                                                                <span class="note-hint">Ghi chú...</span>
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+                                                        </label></div>
+                                                        <div class="list-topping">
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-quatity">
+                                                        <div class="cell-quantity-inner">
+                                                            <button class="btn-icon down" type="button"><i
+                                                                    class="fas fa-minus-circle"></i></button>
+                                                            <button class="form-control form-control-sm item-quantity">
+                                                                1
+                                                            </button>
+                                                            <button class="btn-icon up" type="button"><i
+                                                                    class="fas fa-plus-circle"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-warning">
+                                                    </div>
+                                                    <div class="cell-change-price">
+                                                        <div class="popup-anchor">
+                                                            <button
+                                                                    class="form-control form-control-sm"> 30,000
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-price"> 30,000</div>
+                                                    <div class="cell-actions">
+                                                        <div class="btn-group" dropdown="">
+                                                            <button class="dropdown-toggle" type="button"
+                                                                    title="Thêm dòng"><i class="far fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </kv-cashier-cart-item>
+         <!-- hien thi drink -->
                                         </div>
                                     </div>
-                                    <div class="row-div">
-                                        <div class="col-auto form-actions-left">
-                                            <ul>
-                                                <li class="li-dropdownlist">
-                                                    <kendo-dropdownlist
-                                                            class="sale-user form-control form-control-sm k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                            dir="ltr">
-                             <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                   class="k-dropdown-wrap k-state-default" id="k-3cec5699-c9ab-4214-adb7-dbd88906a2c8"
-                                   dir="ltr" readonly="false" aria-disabled="false" aria-readonly="false"
-                                   aria-expanded="false" aria-describedby="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6"
-                                   tabindex="0"
-                                   aria-activedescendant="7eb1caf4-11c6-48f8-b6e0-f3aebdf9a529-280827"><span
-                                     class="k-input" unselectable="on" id="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6">
-
-                                 Trần Văn Cử</span><span class="k-select" unselectable="on"><span
-                                     class="k-icon k-i-arrow-s"></span></span>
-                               </span>
-
-
-                                                    </kendo-dropdownlist>
-                                                </li>
-
-                                                <li class="note-invoice"><a
-                                                        href="javascript:void(0);" title="Ghi chú"><i
-                                                        class="fa fa-pencil"></i><span>Ghi chú</span></a></li>
-
-                                                <li class="li-history"><a href="javascript:void(0);"
-                                                                          title="Lịch sử"><i class="fas fa-history"></i><span
-                                                >Lịch sử</span></a></li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="form-actions-right">
-                                            <div class="reservation-search">
-
-                                                <kv-reservation-search>
-                                                    <kendo-dropdownlist
-                                                            class="dropdownlist-reservation k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                            dir="ltr">
-                             <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                   class="k-dropdown-wrap k-state-default" id="k-4bd278c9-da14-4da5-9eb0-d2b5b40c1566"
-                                   dir="ltr" readonly="false" tabindex="0" aria-disabled="false" aria-readonly="false"
-                                   aria-expanded="false" aria-describedby="e2a31f1e-dc4f-487b-a5bc-7acabffc024a"
-                                   aria-label="NO DATA FOUND"><span class="k-input" unselectable="on"
-                                                                    id="e2a31f1e-dc4f-487b-a5bc-7acabffc024a">
-
-
-                                 <span class="color-placehoder" translate="">Không đặt
-                                    trước</span>
-
-
-
-                                 </span><span class="k-select" unselectable="on"><span
-                                     class="k-icon k-i-arrow-s"></span></span>
-                               </span>
-
-
-                                                    </kendo-dropdownlist>
-                                                </kv-reservation-search>
-                                            </div>
-
-                                            <div>
-                                                <button class="btn btn-primary" translate=""
-                                                        type="button"> Tách ghép đơn
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="page-empty" hidden=""><i
+                                            class="mask mask-food"></i>
+                                        <div class="empty-content" translate=""> Chưa có món nào <span
+                                                translate="">Vui lòng chọn món trong thực đơn</span></div>
                                     </div>
                                 </div>
-                            </kv-cashier-payment-info-bottom>
+                            </kv-cashier-cart-list-item>
                         </div>
+                        <!-- hien thong bao -->
+                        <div class="alert-messenger" style="display:none;">
+                            <div class="alert-content"><i class="fa fa-bell"></i> Bạn
+                                vừa cập nhật đơn hàng. Click <a class="show-alert" href="javascript:void(0);"
+                                                                translate="">Thông báo</a> để gửi thông tin chế biến
+                                đến bar bếp.
+                            </div>
+                        </div>
+                        <!-- end -->
+
+                        <!--                            <kv-cashier-payment-info-bottom>-->
+                        <!--                                <div class="form-actions form-payment">-->
+                        <!--                                    <div class="row-div">-->
+                        <!--                                        <div class="col-auto form-actions-left">-->
+                        <!--                                            <div class="form-group"><label-->
+                        <!--                                                    class="form-label control-label" translate="">Số lượng khách</label>-->
+                        <!--                                                <div class="form-output"><input-->
+                        <!--                                                        class="form-control form-control-sm ng-untouched ng-pristine ng-valid"-->
+                        <!--                                                        kvautonumeric="">-->
+                        <!--                                                </div>-->
+                        <!--                                            </div>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="form-actions-right">-->
+                        <!--                                            <label class="control-label"><span-->
+                        <!--                                                    translate="">Tổng tiền</span>-->
+                        <!--                                                <span class="badge"> 7 </span></label><span-->
+                        <!--                                                class="form-control-static total-price">685,000</span>-->
+
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="row-div">-->
+                        <!--                                        <div class="col-auto form-actions-left">-->
+                        <!--                                            <ul>-->
+                        <!--                                                <li class="li-dropdownlist">-->
+                        <!--                                                    <kendo-dropdownlist-->
+                        <!--                                                            class="sale-user form-control form-control-sm k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+                        <!--                                                            dir="ltr">-->
+                        <!--&lt;!&ndash;                             <span aria-haspopup="listbox" role="listbox" unselectable="on"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                   class="k-dropdown-wrap k-state-default" id="k-3cec5699-c9ab-4214-adb7-dbd88906a2c8"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                   dir="ltr" readonly="false" aria-disabled="false" aria-readonly="false"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                   aria-expanded="false" aria-describedby="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                   tabindex="0"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                   aria-activedescendant="7eb1caf4-11c6-48f8-b6e0-f3aebdf9a529-280827"><span&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                     class="k-input" unselectable="on" id="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;                                 Trần Văn Cử</span><span class="k-select" unselectable="on"><span&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                     class="k-icon k-i-arrow-s"></span></span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                               </span>&ndash;&gt;-->
+
+
+                        <!--                                                    </kendo-dropdownlist>-->
+                        <!--                                                </li>-->
+
+                        <!--                                                <li class="note-invoice"><a-->
+                        <!--                                                        href="javascript:void(0);" title="Ghi chú"><i-->
+                        <!--                                                        class="fa fa-pencil"></i><span>Ghi chú</span></a></li>-->
+
+                        <!--                                                <li class="li-history"><a href="javascript:void(0);"-->
+                        <!--                                                                          title="Lịch sử"><i class="fas fa-history"></i><span-->
+                        <!--                                                >Lịch sử</span></a></li>-->
+                        <!--                                            </ul>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="form-actions-right">-->
+                        <!--                                            <div class="reservation-search">-->
+                        <!--                                                <kv-reservation-search>-->
+                        <!--                                                    <kendo-dropdownlist-->
+                        <!--                                                            class="dropdownlist-reservation k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+                        <!--                                                            dir="ltr">-->
+                        <!--                             <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+                        <!--                                   class="k-dropdown-wrap k-state-default" id="k-4bd278c9-da14-4da5-9eb0-d2b5b40c1566"-->
+                        <!--                                   dir="ltr" readonly="false" tabindex="0" aria-disabled="false" aria-readonly="false"-->
+                        <!--                                   aria-expanded="false" aria-describedby="e2a31f1e-dc4f-487b-a5bc-7acabffc024a"-->
+                        <!--                                   aria-label="NO DATA FOUND"><span class="k-input" unselectable="on"-->
+                        <!--                                                                    id="e2a31f1e-dc4f-487b-a5bc-7acabffc024a">-->
+
+
+                        <!--                                 <span class="color-placehoder" translate="">Không đặt-->
+                        <!--                                    trước</span>-->
+
+
+                        <!--                                 </span><span class="k-select" unselectable="on"><span-->
+                        <!--                                     class="k-icon k-i-arrow-s"></span></span>-->
+                        <!--                               </span>-->
+
+                        <!--                                                    </kendo-dropdownlist>-->
+                        <!--                                                </kv-reservation-search>-->
+                        <!--                                            </div>-->
+                        <!--                                            <div>-->
+                        <!--                                                <button class="btn btn-primary" translate=""-->
+                        <!--                                                        type="button"> Tách ghép đơn-->
+                        <!--                                                </button>-->
+                        <!--                                            </div>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </kv-cashier-payment-info-bottom>-->
 
                         <div class="wrap-button three-buttons">
                             <button class="btn btn-success" skip-disable="" type="button">
@@ -1029,65 +606,58 @@
                                     class="btn btn-alert" type="button"><i class="fas fa-bullhorn"></i>Thông báo
                                 <span>(F10)</span></button>
                         </div>
-
-
                     </div>
                 </div>
-                <kv-cashier-history-cart>
+            </div>
+            <kv-cashier-history-cart>
+                <kv-pull-over>
+                    <div class="float-nav right" skip-disable="" hidden="">
+                        <div class="float-nav-content">
+                            <button
+                                    class="float-nav-close"><i class="fal fa-times"></i></button>
+                            <h4 class="float-title">Lịch sử</h4>
 
+                            <div class="parse-history empty-area">
 
-                    <kv-pull-over>
-                        <div class="float-nav right" skip-disable="" hidden="">
-                            <div class="float-nav-content">
-                                <button
-                                        class="float-nav-close"><i class="fal fa-times"></i></button>
-                                <h4 class="float-title">Lịch sử</h4>
-
-                                <div class="parse-history empty-area">
-
-                                    <div class="page-empty"><i class="fal fa-inbox"></i>
-                                        <div class="empty-content" translate=""> Không có dữ liệu</div>
-                                    </div>
+                                <div class="page-empty"><i class="fal fa-inbox"></i>
+                                    <div class="empty-content" translate=""> Không có dữ liệu</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="float-overlay" hidden=""></div>
-                    </kv-pull-over>
-                </kv-cashier-history-cart>
+                    </div>
+                    <div class="float-overlay" hidden=""></div>
+                </kv-pull-over>
+            </kv-cashier-history-cart>
+            <!--                <div class="support">-->
+            <!--                    <ul>-->
+            <!--                        <li><i class="fa fa-phone"></i> Hỗ trợ khách hàng 1900 6522</li>-->
 
-                <div class="support">
-                    <ul>
-                        <li><i class="fa fa-phone"></i> Hỗ trợ khách hàng 1900 6522</li>
+            <!--                        <li><i class="fa fa-map-marker"></i> Chi nhánh trung tâm</li>-->
 
-                        <li><i class="fa fa-map-marker"></i> Chi nhánh trung tâm</li>
-
-                        <li class="sort-key"><a outsideclick="true" placement="top"
-                                                skip-disable="" title="Danh sách các phím tắt"><i
-                                class="fas fa-info-circle"></i>
-                            Phím tắt </a></li>
-                        <li class="app-version"><span>Phiên bản 1.39.0</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="download-app"><img class="app-logo"
-                                           src="./tatcat_files/app-logo.png">
-                <h1 class="title"> Sử dụng<span> màn hình ngang hoặc<br
-                ></span> App KiotViet Bán hàng </h1>
-                <p> Để thực hiện thao tác bán hàng linh hoạt<br> và dễ dàng hơn trên
-                    thiết bị này </p>
-
-
-            </div>
+            <!--                        <li class="sort-key"><a outsideclick="true" placement="top"-->
+            <!--                                                skip-disable="" title="Danh sách các phím tắt"><i-->
+            <!--                                class="fas fa-info-circle"></i>-->
+            <!--                            Phím tắt </a></li>-->
+            <!--                        <li class="app-version"><span>Phiên bản 1.39.0</span></li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            <div class="download-app"><img class="app-logo"-->
+            <!--                                           src="./tatcat_files/app-logo.png">-->
+            <!--                <h1 class="title"> Sử dụng<span> màn hình ngang hoặc<br-->
+            <!--                ></span> App KiotViet Bán hàng </h1>-->
+            <!--                <p> Để thực hiện thao tác bán hàng linh hoạt<br> và dễ dàng hơn trên-->
+            <!--                    thiết bị này </p>-->
+            <!--            </div>-->
 
             <kv-request-allow-notification>
                 <p><a class="show-alert" href="javascript:void(0);">Click để
                     bật</a> thông báo cho các yêu cầu thanh toán và cung ứng từ bếp. <a
                         class="hide-alert" href="javascript:void(0);" translate="">Ẩn</a></p>
             </kv-request-allow-notification>
-
         </kv-cashier-page>
     </div>
 </kv-root>
 </body>
 <script src="/assets/cart/pop.js"></script>
+
 </html>
