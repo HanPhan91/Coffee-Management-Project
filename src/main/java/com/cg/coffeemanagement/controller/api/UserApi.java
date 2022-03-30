@@ -45,20 +45,20 @@ public class UserApi {
         return new ResponseEntity<>(userServices.findById(userDto.getId()).get(), HttpStatus.CREATED);
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> doEdit(@Validated UserDto userDto, @PathVariable Long id,
-                                    BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return appUtil.mapErrorToResponse(bindingResult);
-        }
-        Optional<User> opUser = userServices.findById(id);
-        if (opUser.isPresent()) {
-            User editUser = userServices.edit(opUser.get(), userDto);
-            return new ResponseEntity<>(editUser, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PutMapping("/edit/{id}")
+//    public ResponseEntity<?> doEdit(@Validated UserDto userDto, @PathVariable Long id,
+//                                    BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return appUtil.mapErrorToResponse(bindingResult);
+//        }
+//        Optional<User> opUser = userServices.findById(id);
+//        if (opUser.isPresent()) {
+//            User editUser = userServices.edit(opUser.get(), userDto);
+//            return new ResponseEntity<>(editUser, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> doDelete(@PathVariable Long id) {

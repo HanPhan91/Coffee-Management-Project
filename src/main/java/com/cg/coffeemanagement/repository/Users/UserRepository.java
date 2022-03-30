@@ -50,6 +50,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void changePass(@Param("id") Long id, String pass);
 
     @Modifying
-    @Query("UPDATE User u SET u.avatar= :avatar WHERE u.id= :id")
-    void saveAvatar(@Param("id") Long id, @Param("avatar") Avatar avatar);
+    @Query("UPDATE User u SET u.avatar= :idavatar WHERE u.id= :id")
+    void saveAvatar(@Param("id") Long id, Long idavatar);
+
 }
