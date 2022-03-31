@@ -8,8 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -23,8 +21,6 @@ public class Position {
     @Id
     private Long id = System.currentTimeMillis() / 1000;
 
-    @NotNull(message = "Tên chức vụ không được để trống")
-    @Size(min = 5, max = 30, message = "Tên chức vụ phải nằm trong khoảng 5-30 ký tự")
     private String name;
 
     @Column(columnDefinition = "boolean default false")

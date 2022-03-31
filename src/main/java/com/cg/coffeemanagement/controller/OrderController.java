@@ -36,8 +36,4 @@ public class OrderController {
         modelAndView.addObject("drinks", drinks);
         return modelAndView;
     }
-
-
-
-
 }

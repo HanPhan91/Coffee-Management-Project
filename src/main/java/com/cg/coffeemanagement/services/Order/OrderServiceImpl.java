@@ -47,7 +47,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getByTableId(Long id) {
+    public Optional<Order> getByCoffeeTableId(Long id) {
         return cartRepository.getByCoffeeTableId(id);
+    }
+
+    @Override
+    public void deleteOrderById(Long id) {
+        cartRepository.deleteOrderById(id);
     }
 }

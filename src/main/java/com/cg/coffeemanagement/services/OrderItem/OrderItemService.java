@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.services.OrderItem;
 
 
+import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
@@ -36,4 +37,6 @@ public interface OrderItemService extends IGeneralServices<OrderItem> {
     void deletedCartItemByCatalog(@Param("idCatalog") Long idCatalog);
 
     void restoreCartItemByCatalog(@Param("idCatalog") Long idCatalog);
+
+    void deleteAllByOrder(Order order);
 }

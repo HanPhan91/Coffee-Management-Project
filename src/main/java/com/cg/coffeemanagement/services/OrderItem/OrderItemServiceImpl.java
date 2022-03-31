@@ -1,12 +1,17 @@
 package com.cg.coffeemanagement.services.OrderItem;
 
+import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.repository.OrderItem.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
+@Service
 public class OrderItemServiceImpl implements OrderItemService {
 
     @Autowired
@@ -65,5 +70,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public void restoreCartItemByCatalog(Long idCatalog) {
 
+    }
+
+    @Override
+    public void deleteAllByOrder(Order order) {
+        cartItemRepository.deleteAllByOrder(order);
     }
 }
