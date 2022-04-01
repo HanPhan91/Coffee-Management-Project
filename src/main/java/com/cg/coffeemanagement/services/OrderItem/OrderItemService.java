@@ -39,4 +39,6 @@ public interface OrderItemService extends IGeneralServices<OrderItem> {
     void restoreCartItemByCatalog(@Param("idCatalog") Long idCatalog);
 
     void deleteAllByOrder(Order order);
+
+    List<OrderItem> findAllByOrder(Order order);
 }

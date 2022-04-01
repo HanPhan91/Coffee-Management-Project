@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/discount")
+@RequestMapping("/discounts")
 public class DiscountController {
 
     @Autowired

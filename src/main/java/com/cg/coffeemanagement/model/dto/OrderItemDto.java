@@ -1,13 +1,17 @@
 package com.cg.coffeemanagement.model.dto;
 
 
+import com.cg.coffeemanagement.model.Drink;
 import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.repository.Drink.DrinkRepository;
 import com.cg.coffeemanagement.repository.Order.OrderRepository;
+import com.cg.coffeemanagement.services.Drink.DrinkService;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,15 +20,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderItemDto {
     @Autowired
-    DrinkRepository drinkRepository;
+    DrinkService drinkService;
     @Autowired
     OrderRepository orderRepository;
 
-    private Long id = System.currentTimeMillis() / 1000;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Long drink;
-
-    private Long order;
 
     private int quantity;
 
@@ -32,9 +35,6 @@ public class OrderItemDto {
 
     public OrderItem toOderItem() {
         return new OrderItem()
-                .setId(id)
-                .setDrink(drinkRepository.findById(drink).get())
-                .setQuantity(quantity)
-                .setTotalPrice(drinkRepository.findById(drink).get().getPrice().multiply(BigDecimal.valueOf(quantity)));
+                .setQuantity(quantity);
     }
 }

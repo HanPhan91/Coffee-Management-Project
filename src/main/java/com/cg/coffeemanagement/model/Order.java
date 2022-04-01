@@ -33,16 +33,17 @@ public class Order {
     @Column(name= "sub_amount")
     private BigDecimal subAmount;
 
+    @ManyToOne
+    @JoinColumn(name = "id_discount")
+    private Discount discount;
+
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
-    @ManyToOne
-    @JoinColumn(name = "id_table")
-    private CoffeeTable table ;
 
     public Order newOrder(){
         return new Order()
                 .setId(id)
-                .setTable(table);
+                .setCoffeeTable(coffeeTable);
     }
 }

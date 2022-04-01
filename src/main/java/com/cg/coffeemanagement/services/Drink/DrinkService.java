@@ -1,6 +1,8 @@
 package com.cg.coffeemanagement.services.Drink;
 
 import com.cg.coffeemanagement.model.Drink;
+import com.cg.coffeemanagement.model.OrderItem;
+import com.cg.coffeemanagement.model.dto.DrinkDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
@@ -17,5 +19,10 @@ public interface DrinkService extends IGeneralServices<Drink> {
     List<Drink> findAllDeleted();
 
     Integer countDrink();
+
+    boolean existsByName(String name);
+
+    Drink create(DrinkDto drinkDto);
+
 
 }

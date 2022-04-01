@@ -76,4 +76,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     public void deleteAllByOrder(Order order) {
         cartItemRepository.deleteAllByOrder(order);
     }
+
+    @Override
+    public List<OrderItem> findAllByOrder(Order order) {
+        return cartItemRepository.findAllByOrder(order);
+    }
 }

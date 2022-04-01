@@ -64,45 +64,41 @@
                 </div>
             </div>
             <div class="row">
-                <table class="table table-hover" id="tblDrink">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Tên thức uống</th>
-                        <th scope="col">Giá</th>
-                        <th scope="col">Danh mục</th>
-                        <th scope="col" colspan="2" class="text-center">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:each="drink: ${drinks}">
-                        <tr th:id="'tr_'+ ${drink.id}">
-                            <td th:text="${drink.id}"></td>
-                            <td th:text="${drink.name}"></td>
-                            <td th:text="${drink.price}"></td>
-                            <td th:text="${drink.getCatalog().getCatalogName()}"></td>
-
-                            <td class="text-center">
-                                <button type="button" class="btn btn-outline-primary edit" th:data-id="${drink.id}">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-outline-danger delete"
-                                        th:data-id="${drink.id}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
+                <div class="col text-center">
+                    <table class="table table-striped" id="tblDrink">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                            <th scope="col" class="fw-bold fs-5">Giá</th>
+                            <th scope="col" class="fw-bold fs-5">Danh mục</th>
+                            <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
-<!--                        <script th:inline="javascript">-->
-<!--                            var id = [[${drink.id}]];-->
-<!--                            var price = [[${drink.price}]];-->
-<!--                            $("#tr_" + id + " .drinkPrice").append(separator(price));-->
-<!--                        </script>-->
-                    </th:block>
+                        </thead>
+                        <tbody>
+                        <!--                    <th:block th:each="drink: ${drinks}">-->
+                        <!--                        <tr th:id="'tr_'+ ${drink.id}">-->
+                        <!--                            <td th:text="${drink.id}"></td>-->
+                        <!--                            <td th:text="${drink.name}"></td>-->
+                        <!--                            <td th:text="${drink.price}"></td>-->
+                        <!--                            <td th:text="${drink.getCatalog().getCatalogName()}"></td>-->
 
-                    </tbody>
-                </table>
+                        <!--                            <td class="text-center">-->
+                        <!--                                <button type="button" class="btn btn-outline-primary edit" th:data-id="${drink.id}">-->
+                        <!--                                    <i class="fa fa-edit"></i>-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                            <td class="text-center">-->
+                        <!--                                <button type="button" class="btn btn-outline-danger delete"-->
+                        <!--                                        th:data-id="${drink.id}">-->
+                        <!--                                    <i class="fa fa-trash"></i>-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                    </th:block>-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="row">
                 <div class="col mb-2">
@@ -117,26 +113,55 @@
         </div>
         <!-- End Main Page-->
     </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <th:block th:replace="layout/footer :: footer"/>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
 </div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>
 <th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>
 <th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>
-
 </body>
+<script th:inline="javascript">
+    var listDrink = [[${drinks}]];
+    $("#tblDrink").DataTable({
+        "ordering": false,
+        data: listDrink,
+        columns: [
+            {data: 'name'},
+            {data: 'price'},
+            {data: 'catalog.catalogName'},
+            {
+                data: 'imgUrl', render: function (data, type, row, meta) {
+                    // var img = data.fileUrl;
+                    if (data == null) {
+                        return `<img src="/assets/images/image_drink.png" width="50px"/>`;
+                    } else {
+                        return `<img src="${data}" width="50px"/>`;
+                    }
+                }
+            },
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            <button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-trash"></i></button>
+                            `;
+                }
+            },
+        ],
+    });
+
+</script>
 
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         //show modal create
         $("button.create").on("click", function () {
             $.ajax({
@@ -160,67 +185,6 @@
                 })
         });
 
-        function createDrink() {
-            let drink = {
-                name: $("#drinkNameCreate").val(),
-                price: ($("#priceDrinkCreate").val()),
-                description: $("#desDrinkCreate").val(),
-                catalog: $("#catalogsCreate").val(),
-                inventory: $("#inventoryDrinkCreate").val()
-            };
-
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "POST",
-                url: "/api/drinks/create",
-                data: JSON.stringify(drink)
-            })
-                .done(function (data) {
-                    let str = `
-                    <tr id="tr_${data.id}">
-                        <td>${data.id}</td>
-                        <td>${data.name}</td>
-                        <td>${data.price}</td>
-                        <td>${data.catalog.catalogName}</td>
-                        <td class="text-center">
-                                <button type="button" class="btn btn-outline-primary edit" data-id="${data.id}">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-outline-danger delete"
-                                        data-id="$data.id}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
-                    </tr>
-                    `;
-                    $("#tblDrink tbody").prepend(str);
-                    $("#modalCreateDrink").modal("hide");
-                    $("#catalogsCreate option").remove();
-                    $("#frmCreateDrink")[0].reset();
-                    swal("Cập nhật thành công", "Thức uống mới đã được thêm", "success");
-
-                    handlerShowModalEdit();
-                    handlerShowModalDelete();
-                })
-                .fail(function (jqXHR) {
-                    let str = ``;
-                    if (jqXHR.responseJSON) {
-                        $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                            $("#" + key).addClass("error");
-                        });
-                    } else {
-                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                    }
-                    $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                    $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
-                })
-        }
         function deleteDrink() {
             let drink = {
                 id: $("#idDrinkDelete").val(),
@@ -243,7 +207,7 @@
                     currentRow.remove();
                     $("#modalDeleteDrink").modal("hide");
                     $("#frmDeleteDrink")[0].reset();
-                    swal("Cập nhật thành công","Thức uống đã được xoá", "success");
+                    swal("Cập nhật thành công", "Thức uống đã được xoá", "success");
                 })
                 .fail(function (jqXHR) {
                     let str = ``;
@@ -259,7 +223,8 @@
                     $("#modalDeleteDrink .modal-body .modal-alert-danger").html(str);
                 })
         }
-        function updateDrink(){
+
+        function updateDrink() {
 
             let id = $("#idDrinkUpdate").val(),
                 drink = {
@@ -340,6 +305,7 @@
                     })
             });
         }
+
         function handlerShowModalDelete() {
             $("button.delete").on("click", function () {
                 let id = $(this).data("id");
@@ -367,7 +333,6 @@
         $("#btnUpdateDrink").on("click", function () {
             updateDrink();
         });
-
 
 
         //set event for button create
