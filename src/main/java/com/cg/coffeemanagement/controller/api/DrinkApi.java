@@ -55,20 +55,23 @@ public class DrinkApi {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> doCreate(@Validated @RequestBody DrinkDto drinkDto,
+    public ResponseEntity<?> doCreate(@Validated DrinkDto drinkDto,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
-        Drink drink = new Drink();
-        drink.setName(drinkDto.getName());
-        drink.setDescription(drinkDto.getDescription());
-        drink.setPrice(drinkDto.getPrice());
-        drink.setInventory(drinkDto.getInventory());
-        drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
-        Drink returnDrink = drinkService.save(drink);
+        if (drinkService.existsByName(drinkDto.getName())){
+            throw new DataInputException("Thức uống đã tồn tại");
+        }
+//        Drink drink = new Drink();
+//        drink.setName(drinkDto.getName());
+//        drink.setDescription(drinkDto.getDescription());
+//        drink.setPrice(drinkDto.getPrice());
+//        drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
+//        Drink returnDrink = drinkService.save(drink);
 //        returnDrink.setStorage(true);
-        return new ResponseEntity<>(returnDrink, HttpStatus.OK);
+        Drink drink = drinkService.create(drinkDto);
+        return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
@@ -83,7 +86,6 @@ public class DrinkApi {
             drinkUp.setName(drinkDto.getName());
             drinkUp.setDescription(drinkDto.getDescription());
             drinkUp.setPrice(drinkDto.getPrice());
-            drinkUp.setInventory(drinkDto.getInventory());
             drinkUp.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
             Drink returnDrink = drinkService.save(drinkUp);
 //            if(returnDrink.getInventory()>0){

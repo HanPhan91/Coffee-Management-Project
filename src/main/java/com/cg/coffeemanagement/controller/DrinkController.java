@@ -20,7 +20,6 @@ public class DrinkController {
     @Autowired
     private CatalogService catalogService;
 
-
     @GetMapping
     public ModelAndView showListPage() {
         ModelAndView modelAndView = new ModelAndView();

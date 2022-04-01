@@ -29,6 +29,7 @@ public class Discount {
 
     @NotNull(message = "Mã khuyến mãi không được để trống")
     @Size(min = 3, max = 50, message = "Mã khuyến mãi phải nằm trong khoảng 3-50 ký tự")
+    @Column(unique = true)
     private String code;
 
     private String description;
@@ -39,7 +40,6 @@ public class Discount {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "created_at")
     private Date createdAt;
-
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "ended_at")

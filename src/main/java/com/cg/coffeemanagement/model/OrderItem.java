@@ -19,7 +19,8 @@ import java.math.BigDecimal;
 public class OrderItem {
 
     @Id
-    private Long id = System.currentTimeMillis()/1000;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "id_drink")

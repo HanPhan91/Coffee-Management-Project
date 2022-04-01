@@ -24,16 +24,19 @@
                                 <input type="text" class="form-control number-separator inNumber" id="priceDrinkCreate"
                                        name="priceDrinkCreate">
                             </div>
-                            <div class="mb-3 col-6">
-                                <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
-                                <select class="custom-select" id="catalogsCreate">
-
-                                </select>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
+                                    <select class="form-select" id="catalogsCreate">
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-3 col-6">
-                                <label for="inventoryDrinkCreate" class="form-label fw-bold">Số lượng nhập</label>
-                                <input type="text" class="form-control number-separator inNumber" id="inventoryDrinkCreate"
-                                       name="priceDrinkCreate">
+                            <div class="row">
+                                <div class="mb-3 col mx-auto">
+                                    <label for="uploadCre" class="form-label fw-bold">Tải ảnh lên:</label>
+                                    <img id="previewImg" width="150px" class="img-circle mb-2"/>
+                                    <input id="uploadCre" type="file" accept="image/jpeg, image/png"/>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -52,5 +55,53 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#uploadCre').change(function(){
+            const file = this.files[0];
+            if (file){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
+        function createDrink() {
+            let formData = new FormData();
+            formData.append("name", $("#drinkNameCreate").val());
+            formData.append("price", $("#priceDrinkCreate").val());
+            formData.append("catalog", $("#catalogsCreate").val());
+            formData.append("description", $("#desDrinkCreate").val());
+            if ($("#uploadCre")[0].files[0] != null) {
+                formData.append("file", $("#uploadCre")[0].files[0]);
+            }
+            $.ajax({
+                type: "POST",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/drinks/create",
+                data: formData
+            })
+                .done(function (data) {
+                    swal("Thành công", "Thức uống mới đã được tạo", "success").then(function () {
+                        location.reload();
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
+                })
+        }
+    </script>
 </th:block>

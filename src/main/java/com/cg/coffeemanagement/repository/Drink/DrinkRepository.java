@@ -30,4 +30,6 @@ public interface DrinkRepository extends JpaRepository<Drink,Long> {
 
     @Query("SELECT COUNT(d.id) from Drink d WHERE d.deleted = false")
     Integer countDrink();
+
+    boolean existsByName(String name);
 }
