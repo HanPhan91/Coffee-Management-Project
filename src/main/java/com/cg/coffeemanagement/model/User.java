@@ -31,9 +31,6 @@ public class User {
     @Id
     private Long id = System.currentTimeMillis() / 1000;
 
-    @NotBlank(message = "Tên đăng nhập không được để trống")
-    @Size(min = 5, max = 30, message = "Tên đăng nhập phải có độ dài trong khoảng 5-30 ký tự")
-    @Column(unique = true)
     private String username;
 
     @NotBlank(message = "Mật khẩu không được để trống")

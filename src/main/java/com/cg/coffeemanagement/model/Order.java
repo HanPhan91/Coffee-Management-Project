@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -13,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "orders")
 public class Order {
 
@@ -20,13 +23,26 @@ public class Order {
     private Long id = System.currentTimeMillis()/1000;
 
     @OneToMany
-    @JoinColumn(name = "id_cart")
-    private Set<OrderItem> cartItem;
+    @JoinColumn(name = "id_orderitem")
+    private Set<OrderItem> orderItem;
 
     @OneToOne
     @JoinColumn(name = "id_table")
     private CoffeeTable coffeeTable;
 
-    private BigDecimal totalPrice;
+    @Column(name= "sub_amount")
+    private BigDecimal subAmount;
 
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "id_table")
+    private CoffeeTable table ;
+
+    public Order newOrder(){
+        return new Order()
+                .setId(id)
+                .setTable(table);
+    }
 }

@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @NoArgsConstructor
@@ -18,18 +16,21 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "bill_detail")
+@Accessors(chain = true)
 public class BillDetail {
+
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @Column(name = "percent_discount")
-    private int percentDiscount;
+    @OneToOne
+    @JoinColumn(name = "id_drink")
+    private Drink drink;
 
-    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "sub_total")
-    private BigDecimal subTotal;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_bill")
+    private Bill bill;
 
-
+    private BigDecimal totalPrice;
 }

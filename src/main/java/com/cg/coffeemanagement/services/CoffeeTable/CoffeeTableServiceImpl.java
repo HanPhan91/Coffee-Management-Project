@@ -15,6 +15,7 @@ public class CoffeeTableServiceImpl implements CoffeeTableService{
 
     @Autowired
     CoffeeTableRepository coffeeTableRepository;
+
     @Override
     public void deleteCoffeeTableById(Long id) {
         coffeeTableRepository.deleteCoffeeTableById(id);

@@ -55,10 +55,10 @@ public class CoffeeTableApi {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
-        Order cart = new Order();
+        Order order = new Order();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
-        cart.setCoffeeTable(createTable);
-        cartService.save(cart);
+        order.setCoffeeTable(createTable);
+        cartService.save(order);
         return new ResponseEntity<>(createTable, HttpStatus.CREATED);
     }
 
