@@ -38,6 +38,96 @@ function getAllDrink() {
         })
 }
 
+
+
+
+
+function Drink(id,name,quantity,price){
+    this.id = id;
+    this.name = name;
+    this.quantity = quantity;
+    this.price = price;
+}
+
+for (let i = 0; i < listDrink.length; i++) {
+    Drinks.push(new Drink(listDrink[i].id, listDrink[i].drinkName, 0, listDrink[i].price));
+}
+
+function showDrink() {
+    for (let i = 0; i < Drinks.length; i++) {
+        let str =
+            `    >
+         <!-- hien thi drink -->
+                                            <kv-cashier-cart-item class="row-list row-list-active">
+                                                <div class="cell-action"><a
+                                                        class="btn-icon btn-trash" href="javascript:void(0);"
+                                                        title="Xóa hàng hóa"><i
+                                                        class="far fa-trash-alt"></i></a></div>
+                                                <div class="cell-order"> 1
+                                                    <div>
+                                                        <button class="btn-icon" type="button"><i
+                                                                class="fa fa-star-o"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="row-product">
+                                                    <div class="cell-name full" title="">
+                                                        <div class="wrap-name">
+                                                            <h4> ${Drinks[i].name}</h4><span class="wrap-icons"></span>
+                                                        </div>
+                                                        <ul class="comboset-list-item"></ul>
+                                                        <div class="wrap-note" href="javascript:void(0)"></div>
+                                                        <div class="list-topping">
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-quatity">
+                                                        <div class="cell-quantity-inner">
+                                                            <button class="btn-icon down" type="button"><i
+                                                                    class="fas fa-minus-circle"></i></button>
+                                                            <button class="form-control form-control-sm item-quantity">
+                                                                1
+                                                            </button>
+                                                            <button class="btn-icon up" type="button"><i
+                                                                    class="fas fa-plus-circle"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-warning">
+                                                    </div>
+                                                    <div class="cell-change-price">
+                                                        <div class="popup-anchor">
+                                                            <button
+                                                                    class="form-control form-control-sm"> 30,000
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-price"> 30,000</div>
+                                                    <div class="cell-actions">
+                                                        <div class="btn-group" dropdown="">
+                                                            <button class="dropdown-toggle" type="button"
+                                                                    title="Thêm dòng"><i class="far fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </kv-cashier-cart-item>
+         <!-- hien thi drink -->
+                                        </div>
+                <tr id="tr_${Drinks[i].id}">
+                    <input value="${Drinks[i].id}" id="idDrinkPre" hidden>
+                    <td>${Drinks[i].name}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-primary addCart"
+                                data-id="${Drinks[i].id}">
+                            <i class="fa fa-plus-square"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        $("#tblDrink tbody").append(str);
+
+    }
+    handlerButtonAddCart();
+}
+
+
 class Order {
     constructor(id, quantity, totalPrice, drink, table){
         this.id = id;
@@ -48,7 +138,25 @@ class Order {
     }
 
 }
+function handlerButtonAddCart() {
+    $("button.addCart").on("click", function () {
+        let id = $(this).data("id");
+        addToCart(id);
+    });
+}
 
+function addToCart(id) {
+    let drink = Drinks.find(function (drink, index) {
+        return drink.drinkId == id;
+    });
+    let check = checkCart(drink);
+    if (check == true) {
+        drink.drinkQuantity = 1;
+        Carts.push(drink);
+        showCart(drink);
+        submitCart();
+    }
+}
 
 
 function showOrderItem() {
@@ -125,30 +233,6 @@ function handlerShowItemInOrder() {
     });
 }
 
-    //     let id = $(this).data("id");
-    //     let cartItemDto = {
-    //         drink: $(id).val(),
-    //         cart: $(cartId).val(),
-    //         quantity: $("#item-quantity").val(),
-    //         totalPrice: $("#product-price").val()
-    //
-    //     };
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/api/cartItems/" + id,
-    //         data: JSON.stringify(cartItemDto)
-    //
-    //     })
-    //         .done(function (data) {
-    //             $("#idCatalogUpdate").val(data.id);
-    //             $("#catalogNameUpdate").val(data.catalogName);
-    //             $("#modalUpdateCatalog").modal("show");
-    //         })
-    //         .fail(function (resp) {
-    //             alert("Show modal update catalog error");
-    //         })
-    // });
-// }
 
     function getAllTable() {
         $.ajax({
