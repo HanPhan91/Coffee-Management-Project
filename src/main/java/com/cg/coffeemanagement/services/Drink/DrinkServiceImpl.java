@@ -97,7 +97,6 @@ public class DrinkServiceImpl implements DrinkService{
             return drink;
         }
         drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
-
         try {
             Long nameImg = System.currentTimeMillis() / 1000;
             String publicId = String.format("%s/%s", IMAGE_UPLOAD_FOLDER, nameImg);
@@ -113,7 +112,39 @@ public class DrinkServiceImpl implements DrinkService{
             e.printStackTrace();
             throw new DataInputException("Upload thất bại");
         }
-
         return drink;
+    }
+
+    @Override
+    public Drink update(Drink drink, DrinkDto drinkDto) {
+        drink.setName(drinkDto.getName());
+        drink.setPrice(drinkDto.getPrice());
+        drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
+        drink.setDescription(drinkDto.getDescription());
+        if (drinkDto.getFile() == null) {
+            save(drink);
+            return drink;
+        }
+        try {
+            Long nameImg = System.currentTimeMillis() / 1000;
+            String publicId = String.format("%s/%s", IMAGE_UPLOAD_FOLDER, nameImg);
+            Map uploadResult = uploadService.uploadImage(drinkDto.getFile(), ObjectUtils.asMap(
+                    "public_id", publicId,
+                    "overwrite", true,
+                    "resource_type", "image"
+            ));
+            String fileUrl = (String) uploadResult.get("secure_url");
+            drink.setImgUrl(fileUrl);
+            save(drink);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataInputException("Upload thất bại");
+        }
+        return drink;
+    }
+
+    @Override
+    public List<Drink> findAllByCatalog(Catalog catalog) {
+        return drinkRepository.findAllByCatalog(catalog);
     }
 }

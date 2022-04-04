@@ -31,11 +31,18 @@ public class DrinkApi {
     @Autowired
     CatalogService catalogService;
 
+    @GetMapping("/catalogs/{id}")
+    public ResponseEntity<?> getDrinkByCatalog(@PathVariable Long id){
+        Catalog catalog = catalogService.findById(id).get();
+        List<Drink> drinkList = drinkService.findAllByCatalog(catalog);
+        return new ResponseEntity<>(drinkList, HttpStatus.OK);
+    }
+
 
     @GetMapping
-    public ResponseEntity<List<Drink>> showListDrink(){
-    List<Drink> drink = drinkService.findAllNotDeleted();
-    return new ResponseEntity<>(drink,HttpStatus.OK);
+    public ResponseEntity<List<Drink>> showListDrink() {
+        List<Drink> drink = drinkService.findAllNotDeleted();
+        return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
     @GetMapping("/create")
@@ -60,7 +67,7 @@ public class DrinkApi {
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
-        if (drinkService.existsByName(drinkDto.getName())){
+        if (drinkService.existsByName(drinkDto.getName())) {
             throw new DataInputException("Thức uống đã tồn tại");
         }
 //        Drink drink = new Drink();
@@ -75,24 +82,26 @@ public class DrinkApi {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> doUpdate(@PathVariable Long id,@Validated @RequestBody DrinkDto drinkDto, BindingResult bindingResult) {
+    public ResponseEntity<?> doUpdate(@PathVariable Long id, @Validated DrinkDto drinkDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
+        if (drinkService.existsByName(drinkDto.getName())) {
+            throw new DataInputException("Thức uống đã tồn tại");
+        }
         Optional<Drink> drink = drinkService.findById(id);
-        if(drink.isPresent()){
-            Drink drinkUp = drink.get();
-            drinkUp.setName(drinkDto.getName());
-            drinkUp.setDescription(drinkDto.getDescription());
-            drinkUp.setPrice(drinkDto.getPrice());
-            drinkUp.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
-            Drink returnDrink = drinkService.save(drinkUp);
+        if (drink.isPresent()) {
+//            drinkUp.setName(drinkDto.getName());
+//            drinkUp.setDescription(drinkDto.getDescription());
+//            drinkUp.setPrice(drinkDto.getPrice());
+//            drinkUp.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
+            Drink returnDrink = drinkService.update(drink.get(), drinkDto);
 //            if(returnDrink.getInventory()>0){
 //                returnDrink.setStorage(true);
 //            }
             return new ResponseEntity<>(returnDrink, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
