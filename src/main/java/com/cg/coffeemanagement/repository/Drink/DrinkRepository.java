@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.repository.Drink;
 
 
+import com.cg.coffeemanagement.model.Catalog;
 import com.cg.coffeemanagement.model.Drink;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,4 +33,6 @@ public interface DrinkRepository extends JpaRepository<Drink,Long> {
     Integer countDrink();
 
     boolean existsByName(String name);
+
+    List<Drink> findAllByCatalog(Catalog catalog);
 }

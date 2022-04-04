@@ -25,13 +25,22 @@
                                 <input type="text" class="form-control number-separator inNumber"
                                        id="priceDrinkUpdate" name="priceDrinkUpdate">
                             </div>
-                            <div class=" mb-3 col-6">
-                                <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
-                                <select class="custom-select" id="catalogsUpdate">
-                                    <th:block th:each="item : ${catalogs}">
-                                        <option th:value="${item.id}" th:text="${item.catalogName}"></option>
-                                    </th:block>
-                                </select>
+                            <div class="row">
+                                <div class=" mb-3 col">
+                                    <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
+                                    <select class="form-select" id="catalogsUpdate">
+<!--                                        <th:block th:each="item : ${catalogs}">-->
+<!--                                            <option th:value="${item.id}" th:text="${item.catalogName}"></option>-->
+<!--                                        </th:block>-->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col mx-auto">
+                                    <label for="uploadUpdate" class="form-label fw-bold">Tải ảnh lên:</label>
+                                    <img id="previewImgUpdate" width="150px" class="img-circle mb-2"/>
+                                    <input id="uploadUpdate" type="file" accept="image/jpeg, image/png"/>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -40,11 +49,6 @@
                                 <textarea class="form-control" id="desDrinkUpdate" name="desDrinkUpdate"
                                           rows="4" cols="100%"></textarea>
                             </div>
-                        </div>
-                        <div class="mb-3 col-6">
-                            <label for="inventoryDrinkUpdate" class="form-label fw-bold">Số lượng nhập</label>
-                            <input type="text" class="form-control number-separator inNumber" id="inventoryDrinkUpdate"
-                                   name="inventoryDrinkUpdate">
                         </div>
                     </form>
                 </div>
@@ -55,4 +59,57 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#uploadUpdate').change(function () {
+            const fileUpdate = this.files[0];
+            if (fileUpdate) {
+                let readerUpdate = new FileReader();
+                readerUpdate.onload = function (event) {
+                    $('#previewImgUpdate').attr('src', event.target.result);
+                }
+                readerUpdate.readAsDataURL(fileUpdate);
+            }
+        });
+
+
+
+        function updateDrink() {
+            let id = $("#idDrinkUpdate").val(),
+            form = new FormData();
+            form.append("id", id);
+            form.append("name", $("#drinkNameUpdate").val());
+            form.append("price", $("#priceDrinkUpdate").val());
+            form.append("catalog", $("#catalogsUpdate").val());
+            form.append("description", $("#desDrinkUpdate").val());
+            if ($("#uploadUpdate")[0].files[0] != null) {
+                form.append("file", $("#uploadUpdate")[0].files[0]);
+            }
+            $.ajax({
+                type: "PUT",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/drinks/update/" + id,
+                data: form
+            })
+                .done(function (data) {
+                    swal("Thành công", "Thức uống đã được cập nhật", "success").then(function () {
+                        location.reload();
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalUpdateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalUpdateDrink .modal-body .modal-alert-danger").html(str);
+                })
+        }
+    </script>
 </th:block>

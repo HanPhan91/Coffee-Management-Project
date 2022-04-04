@@ -1,5 +1,6 @@
 package com.cg.coffeemanagement.services.Drink;
 
+import com.cg.coffeemanagement.model.Catalog;
 import com.cg.coffeemanagement.model.Drink;
 import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.model.dto.DrinkDto;
@@ -24,5 +25,7 @@ public interface DrinkService extends IGeneralServices<Drink> {
 
     Drink create(DrinkDto drinkDto);
 
+    Drink update(Drink drink, DrinkDto drinkDto);
 
+    List<Drink> findAllByCatalog(Catalog catalog);
 }
