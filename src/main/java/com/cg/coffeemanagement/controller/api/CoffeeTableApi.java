@@ -27,7 +27,7 @@ public class CoffeeTableApi {
     AppUtil appUtil;
 
     @Autowired
-    OrderService cartService;
+    OrderService orderService;
 
 
     @GetMapping("/{id}")
@@ -58,7 +58,7 @@ public class CoffeeTableApi {
         Order order = new Order();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
         order.setCoffeeTable(createTable);
-        cartService.save(order);
+        orderService.save(order);
         return new ResponseEntity<>(createTable, HttpStatus.CREATED);
     }
 

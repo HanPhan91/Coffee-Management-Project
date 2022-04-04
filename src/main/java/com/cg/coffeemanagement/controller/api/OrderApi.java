@@ -53,11 +53,7 @@ public class OrderApi {
     AppUtil appUtil;
 
     @GetMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Order> showCart(@PathVariable Long id) {
-=======
     public ResponseEntity<Order> showOrder(@PathVariable Long id){
->>>>>>> quang
         Order order = orderService.getByCoffeeTableId(id).get();
         return new ResponseEntity<>(order, HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 let listTables = $("#showTable ul");
 var OrderId = 0;
-var listDrink;
+var history = {};
 var order=[];
 
 function getAllDrink() {
@@ -53,80 +53,6 @@ for (let i = 0; i < listDrink.length; i++) {
     Drinks.push(new Drink(listDrink[i].id, listDrink[i].drinkName, 0, listDrink[i].price));
 }
 
-function showDrink() {
-    for (let i = 0; i < Drinks.length; i++) {
-        let str =
-            `    >
-         <!-- hien thi drink -->
-                                            <kv-cashier-cart-item class="row-list row-list-active">
-                                                <div class="cell-action"><a
-                                                        class="btn-icon btn-trash" href="javascript:void(0);"
-                                                        title="Xóa hàng hóa"><i
-                                                        class="far fa-trash-alt"></i></a></div>
-                                                <div class="cell-order"> 1
-                                                    <div>
-                                                        <button class="btn-icon" type="button"><i
-                                                                class="fa fa-star-o"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div class="row-product">
-                                                    <div class="cell-name full" title="">
-                                                        <div class="wrap-name">
-                                                            <h4> ${Drinks[i].name}</h4><span class="wrap-icons"></span>
-                                                        </div>
-                                                        <ul class="comboset-list-item"></ul>
-                                                        <div class="wrap-note" href="javascript:void(0)"></div>
-                                                        <div class="list-topping">
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-quatity">
-                                                        <div class="cell-quantity-inner">
-                                                            <button class="btn-icon down" type="button"><i
-                                                                    class="fas fa-minus-circle"></i></button>
-                                                            <button class="form-control form-control-sm item-quantity">
-                                                                1
-                                                            </button>
-                                                            <button class="btn-icon up" type="button"><i
-                                                                    class="fas fa-plus-circle"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-warning">
-                                                    </div>
-                                                    <div class="cell-change-price">
-                                                        <div class="popup-anchor">
-                                                            <button
-                                                                    class="form-control form-control-sm"> 30,000
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-price"> 30,000</div>
-                                                    <div class="cell-actions">
-                                                        <div class="btn-group" dropdown="">
-                                                            <button class="dropdown-toggle" type="button"
-                                                                    title="Thêm dòng"><i class="far fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </kv-cashier-cart-item>
-         <!-- hien thi drink -->
-                                        </div>
-                <tr id="tr_${Drinks[i].id}">
-                    <input value="${Drinks[i].id}" id="idDrinkPre" hidden>
-                    <td>${Drinks[i].name}</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-outline-primary addCart"
-                                data-id="${Drinks[i].id}">
-                            <i class="fa fa-plus-square"></i>
-                        </button>
-                    </td>
-                </tr>`;
-        $("#tblDrink tbody").append(str);
-
-    }
-    handlerButtonAddCart();
-}
-
 
 class Order {
     constructor(id, quantity, totalPrice, drink, table){
@@ -147,81 +73,82 @@ function handlerButtonAddCart() {
 
 function addToCart(id) {
     let drink = Drinks.find(function (drink, index) {
-        return drink.drinkId == id;
+        return drink.id == id;
     });
     let check = checkCart(drink);
     if (check == true) {
         drink.drinkQuantity = 1;
-        Carts.push(drink);
+        Order.push(drink);
         showCart(drink);
         submitCart();
     }
 }
 
 
-function showOrderItem() {
-
-    let str = `<div className="product-cart-item" id="${OrderId}">`;
+function addOrderItem() {
+let str;
+let show =$(".product-cart-item");
+    // let show = `<div className="product-cart-item" id="${OrderId}">`;
+    show.empty();
     for (let i = 0; i < order.length; i++) {
+
         str += `
         <kv-cashier-cart-item class="row-list row-list-active">
-                                                <div class="cell-action"><a
-                                                        class="btn-icon btn-trash" href="javascript:void(0);"
-                                                        title="Xóa hàng hóa"><i
-                                                        class="far fa-trash-alt"></i></a></div>
-                                                <div class="cell-order"> ${i+1}
-                                                </div>
-                                                <div class="row-product">
-                                                    <div class="cell-name full" title="">
-                                                        <div class="wrap-name">
-                                                            <h4> ${order[i].name}</h4><span class="wrap-icons"></span>
-                                                        </div>
-                                                        <ul class="comboset-list-item"></ul>
-                                                        <div class="list-topping">
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-quatity">
-                                                        <div class="cell-quantity-inner">
-                                                            <button class="btn-icon down" type="button"><i
-                                                                    class="fas fa-minus-circle"></i></button>
-                                                            <button class="form-control form-control-sm item-quantity">
-                                                                1
-                                                            </button>
-                                                            <button class="btn-icon up" type="button"><i
-                                                                    class="fas fa-plus-circle"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-warning">
-                                                    </div>
-                                                    <div class="cell-change-price">
-                                                        <div class="popup-anchor">
-                                                            <button
-                                                                    class="form-control form-control-sm"> ${order[i].price}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-price"> total Amount</div>
-                                                    <div class="cell-actions">
-                                                        <div class="btn-group" dropdown="">
-                                                            <button class="dropdown-toggle" type="button"
-                                                                    title="Thêm dòng"><i class="far fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </kv-cashier-cart-item>
-                                               
-                                    
+            <div class="cell-action"><a
+                    class="btn-icon btn-trash" href="javascript:void(0);"
+                    title="Xóa hàng hóa"><i
+                    class="far fa-trash-alt"></i></a></div>
+            <div class="cell-order"> ${i+1}
+            </div>
+            <div class="row-product">
+                <div class="cell-name full" title="">
+                    <div class="wrap-name">
+                        <h4> ${order[i].name}</h4><span class="wrap-icons"></span>
+                    </div>
+                    <ul class="comboset-list-item"></ul>
+                    <div class="list-topping">
+                    </div>
+                </div>
+                <div class="cell-quatity">
+                    <div class="cell-quantity-inner">
+                        <button class="btn-icon down" type="button"><i
+                                class="fas fa-minus-circle"></i></button>
+                        <button class="form-control form-control-sm item-quantity">
+                            1
+                        </button>
+                        <button class="btn-icon up" type="button"><i
+                                class="fas fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <div class="cell-warning">
+                </div>
+                <div class="cell-change-price">
+                    <div class="popup-anchor">
+                        <button
+                                class="form-control form-control-sm"> ${order[i].price}
+                        </button>
+                    </div>
+                </div>
+                <div class="cell-price"> total Amount</div>
+                <div class="cell-actions">
+                    <div class="btn-group" dropdown="">
+                        <button class="dropdown-toggle" type="button"
+                                title="Thêm dòng"><i class="far fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </kv-cashier-cart-item>
         `
     }
-    str += `</div>`
+    show.append(str);
 }
 
-function addOrderItemToOrder(cartId, drinkId) {
+function addOrderItemToOrder(orderId, drinkId) {
     for (let i = 0; i < listDrink.length; i++) {
         if (drinkId == listDrink[i].id) {
             order.push(listDrink[i]);
-            showOrderItem();
+            addOrderItem();
         }
     }
 }
@@ -234,7 +161,7 @@ function handlerShowItemInOrder() {
 }
 
 
-    function getAllTable() {
+function getAllTable() {
         $.ajax({
             type: "GET",
             url: "/api/tables",
@@ -263,19 +190,21 @@ function handlerShowItemInOrder() {
                         </a>
                     </li>
                     `);
-                    let id = item.id;
-                    $("#" + id).on("click", function () {
+                    let idtable = item.id;
+                    $("#" + idtable).on("click", function () {
                         getAllDrink();
+                        OrderId = item.id;
+
 
                         $.ajax({
-                            type: "GET",
-                            url: "/api/carts/" + id,
+                            type: "POST",
+                            url: "/api/orders/" + idtable,
 
                         })
                             .done(function (data) {
 
                                 OrderId = data.id;
-                                if (data.cartItem.length == 0) {
+                                if (data.orderItem.length == 0) {
                                     let emptyStr = `<div _ngcontent-aqe-c6="" class="page-empty"><i _ngcontent-aqe-c6="" class="mask mask-food"></i><div _ngcontent-aqe-c6="" class="empty-content" translate=""> Chưa có món nào <span _ngcontent-aqe-c6="" translate="">Vui lòng chọn món trong thực đơn</span></div></div>`
                                     $("#listCartItem").html(emptyStr);
 
@@ -395,12 +324,12 @@ function handlerShowItemInOrder() {
     });
 
 
-    // $(document).ready(function () {
+    $(document).ready(function () {
         getAllTable();
         getAllDrink();
         document.getElementById("showCart").style.display = "none";
 
-    // });
+    });
 
 
 
