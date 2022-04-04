@@ -34,19 +34,19 @@ public class OrderItemApi {
     @Autowired
     OrderItemService orderItemService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> doCreate(@Validated @RequestBody OrderItemDto orderItemDto,
-                                      BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return appUtil.mapErrorToResponse(bindingResult);
-        }
-        OrderItem orderItem = new OrderItem();
-
-        orderItem.setCart(orderService.getById(orderItemDto.getCart()));
-        orderItem.setDrink(drinkService.getById(orderItemDto.getDrink()));
-        orderItem.setQuantity(orderItemDto.getQuantity());
-        orderItem.setTotalPrice(orderItemDto.getTotalPrice());
-        OrderItem returnCartItem = orderItemService.save(orderItem);
-        return new ResponseEntity<>(returnCartItem, HttpStatus.OK);
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<?> doCreate(@Validated @RequestBody OrderItemDto orderItemDto,
+//                                      BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return appUtil.mapErrorToResponse(bindingResult);
+//        }
+//        OrderItem orderItem = new OrderItem();
+//
+//        orderItem.setCart(orderService.getById(orderItemDto.getCart()));
+//        orderItem.setDrink(drinkService.getById(orderItemDto.getDrink()));
+//        orderItem.setQuantity(orderItemDto.getQuantity());
+//        orderItem.setTotalPrice(orderItemDto.getTotalPrice());
+//        OrderItem returnCartItem = orderItemService.save(orderItem);
+//        return new ResponseEntity<>(returnCartItem, HttpStatus.OK);
+//    }
 }
