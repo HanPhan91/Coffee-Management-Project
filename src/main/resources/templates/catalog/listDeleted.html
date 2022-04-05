@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 
-    <th:block th:replace="layout/head :: head"/>
+    <th:block th:fragment="listDeleted"
+            th:replace="layout/head :: head"/>
     <meta charset="UTF-8">
     <title>Quản lý danh mục đã xoá</title>
     <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
@@ -84,6 +85,7 @@
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>
+<th:block th:replace="catalog/modalRestoreCatalog :: modalRestoreCatalog"/>
 
 <script src="/assets/App/validatedTable.js"></script>
 <script>

@@ -83,7 +83,6 @@
                         <div class="col mb-2">
                             <div class="d-flex justify-content-end">
                                 <a type="button" class="btn btn-danger restoreCatalog" href="/catalogs/deleted">
-                                    <i class="fa fa-trash-restore"></i>
                                     Khôi phục danh mục
                                 </a>
                             </div>
@@ -109,7 +108,8 @@
 <th:block th:replace="catalog/modalCreateCatalog :: modalCreateCatalog"/>
 <th:block th:replace="catalog/modalUpdateCatalog :: modalUpdateCatalog"/>
 <th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
-<th:block th:replace="catalog/modalRestoreCatalog :: modalRestoreCatalog"/>
+<th:block th:replace="catalog/listDeleted :: listDeleted"/>
+
 <!--<script src="./assets/App/validatedCatalog.js"></script>-->
 
 <script>
@@ -121,7 +121,6 @@
 
     handlerShowModalDeleteCatalog();
     handlerShowModalEditCatalog();
-    handlerShowModalRestoreCatalog();
     function createCatalog() {
         let catalog = {
             catalogName: $("#catalogNameCreate").val()
@@ -340,24 +339,6 @@
         });
     }
 
-    function handlerShowModalRestoreCatalog() {
-        debugger
-        $("button.restoreCatalog").on("click", function () {
-            let id = $(this).data("id");
-            $.ajax({
-                type: "GET",
-                url: "/api/catalogs/" + id
-            })
-                .done(function (data) {
-                    $("#idCatalogRestore").val(data.id);
-                    $("#catalogNameRestore").val(data.catalogName);
-                    $("#modalRestoreCatalog").modal("show");
-                })
-                .fail(function (resp) {
-                    alert("Show modal restore catalog error");
-                })
-        });
-    }
 
     //set event for button Create
     $("#btnCreateCatalog").on("click", function () {
