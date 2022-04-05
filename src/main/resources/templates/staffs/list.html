@@ -110,7 +110,6 @@
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
     $("#tblStaff").DataTable({
-        "ordering": false,
         data: listStaffs,
         columns: [
             {data: 'name'},

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <th:block th:replace="layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Quản lý thức uống</title>
+    <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý thức uống</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!--Header-->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Quản lý thức uống</h1>
+            </div>
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-outline-primary" href="/drinks">
+                            <i class="fa fa-arrow-left"></i>
+                            Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="row_tbl">
+                <div class="col text-center">
+                    <table class="table table-striped" id="tblDrink">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                            <th scope="col" class="fw-bold fs-5">Giá</th>
+                            <th scope="col" class="fw-bold fs-5">Danh mục</th>
+                            <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page-->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="drink/modalRestoreDrink :: modalRestoreDrink"/>
+<script src="/assets/App/validatedDrink.js"></script>
+</body>
+<script th:inline="javascript">
+    var listDrink = [[${drinks}]];
+    $("#tblDrink").DataTable({
+        // "ordering": false,
+        data: listDrink,
+        columns: [
+            {data: 'name'},
+            {data: 'price'},
+            {data: 'catalog.catalogName'},
+            {
+                data: 'imgUrl',
+                render: function (data, type, row, meta) {
+                    // var img = data.fileUrl;
+                    if (data == null) {
+                        return '<img src="/assets/plugins/images/users/imagedrink.png" width="50px"/>';
+                    } else {
+                        return `<img src="${data}" width="50px"/>`;
+                    }
+                }
+            },
+            {
+                data: 'id',
+                render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning restore" data-id="${data}"><i class="fa fa-undo"></i></button>
+                                    `;
+                }
+            },
+        ],
+    });
+</script>
+<script>
+    function handlerShowModalRestore() {
+        let catalog;
+        $("button.restore").on("click", function () {
+            let id = $(this).data("id");
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "/api/drinks/create",
+            })
+                .done(function (data) {
+                    catalog = data;
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                });
+
+            $.ajax({
+                type: "GET",
+                url: "/api/drinks/" + id
+            })
+                .done(function (data) {
+                    $("#idDrinkRestore").val(data.id);
+                    $("#drinkNameRestore").val(data.name);
+                    $("#priceDrinkRestore").val((data.price));
+                    $("#desDrinkRestore").val(data.description);
+                    for (let i = 0; i < catalog.length; i++) {
+                        let id = catalog[i].id;
+                        let name = catalog[i].catalogName;
+                        if (catalog[i].id == data.catalog.id) {
+                            $("#catalogsRestore").append(
+                                `<option value="${id}" selected>${name}</option>`);
+                        } else {
+                            $("#catalogsRestore").append(
+                                `<option value="${id}">${name}</option>`);
+                        }
+                    }
+                    $("#modalRestoreDrink").modal("show");
+                })
+                .fail(function (resp) {
+                    alert("Show modal restore error");
+                })
+        });
+    };
+
+    handlerShowModalRestore();
+
+    $("#modalRestoreDrink").on('hidden.bs.modal', function () {
+        $("#modalRestoreDrink .modal-body .modal-alert-danger").empty();
+        $("#modalRestoreDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalRestoreDrink input.error").removeClass("error");
+        $("#catalogsRestore option").remove();
+        $("#frmRestoreDrink")[0].reset();
+    });
+
+    $("#btnRestoreDrink").on('click', function () {
+        $("#frmRestoreDrink").trigger('submit');
+    })
+</script>
+</html>

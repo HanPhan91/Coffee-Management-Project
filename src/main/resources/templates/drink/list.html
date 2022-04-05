@@ -104,11 +104,12 @@
 <th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>
 <th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>
 <th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>
+<script src="/assets/App/validatedDrink.js"></script>
 </body>
 <script th:inline="javascript">
     var listDrink = [[${drinks}]];
     $("#tblDrink").DataTable({
-        "ordering": false,
+        // "ordering": false,
         data: listDrink,
         columns: [
             {data: 'name'},
@@ -277,17 +278,18 @@
     handlerShowModalDelete();
 
     $("#btnUpdateDrink").on("click", function () {
-        updateDrink();
+        $("#frmUpdateDrink").trigger('submit');
     });
 
 
     //set event for button create
     $("#btnCreateDrink").on("click", function () {
-        createDrink()
+        $("#frmCreateDrink").trigger('submit');
     })
 
+
     //reset modal Create
-    $("#modalCreateDrink").one('hidden.bs.modal', function () {
+    $("#modalCreateDrink").on('hidden.bs.modal', function () {
         $("#modalCreateDrink .modal-body .modal-alert-danger").empty();
         $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
         $("#modalCreateDrink input.error").removeClass("error");
@@ -295,7 +297,7 @@
         $("#frmCreateDrink")[0].reset();
     });
 
-    $("#modalUpdateDrink").one('hidden.bs.modal', function () {
+    $("#modalUpdateDrink").on('hidden.bs.modal', function () {
         $("#modalUpdateDrink .modal-body .modal-alert-danger").empty();
         $("#modalUpdateDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
         $("#modalUpdateDrink input.error").removeClass("error");
@@ -309,7 +311,7 @@
         deleteDrink();
     });
 
-    $("#modalDeleteDrink").one('hidden.bs.modal', function () {
+    $("#modalDeleteDrink").on('hidden.bs.modal', function () {
         $("#modalDeleteDrink .modal-body .modal-alert-danger").empty();
         $("#modalDeleteDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
         $("#modalDeleteDrink input.error").removeClass("error");

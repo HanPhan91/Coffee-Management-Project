@@ -118,28 +118,26 @@ public class DrinkApi {
         }
     }
 
-//    @PutMapping("/restore")
-//    public ResponseEntity<?> doRestore(@Validated @RequestBody Drink drink, BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return appUtil.mapErrorToResponse(bindingResult);
-//        }
-//        Long id = drink.getId();
-//        Optional<Drink> optionalDrink = drinkService.findById(id);
-//        if (optionalDrink.isPresent()) {
-//            List<Catalog> catalogDrinks = catalogService.findAllDeleted();
-//            for (Catalog catalog : catalogDrinks) {
-//                if (catalog.getId().compareTo(optionalDrink.get().getIdCatalog()) == 0) {
-//                    throw new DataInputException("Vui lòng kích hoạt danh mục " + catalog.getCatalogName() + " trước khi mở lại thức uống");
-//                }
-//            }
-//            drinkService.save(drink);
-//            drinkService.restoreDrink(id);
-//            Optional<Drink> updateDrink = drinkService.findById(id);
-//            return new ResponseEntity<>(updateDrink.get(), HttpStatus.OK);
-//        } else {
-//            throw new DataInputException("Drink's not valid");
-//        }
-//
-//    }
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<?> doRestore(@PathVariable Long id , @Validated DrinkDto drinkDto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return appUtil.mapErrorToResponse(bindingResult);
+        }
+        Optional<Drink> optionalDrink = drinkService.findById(id);
+        if (optionalDrink.isPresent()) {
+            List<Catalog> catalogDrinks = catalogService.findAllDeleted();
+            for (Catalog catalog : catalogDrinks) {
+                if (catalog.getId().compareTo(optionalDrink.get().getCatalog().getId()) == 0) {
+                    throw new DataInputException("Vui lòng kích hoạt danh mục " + catalog.getCatalogName() + " trước khi mở lại thức uống");
+                }
+            }
+            drinkService.update(optionalDrink.get(), drinkDto);
+            drinkService.restoreDrink(id);
+            Optional<Drink> updateDrink = drinkService.findById(id);
+            return new ResponseEntity<>(updateDrink.get(), HttpStatus.OK);
+        } else {
+            throw new DataInputException("Drink's not valid");
+        }
+    }
 }
