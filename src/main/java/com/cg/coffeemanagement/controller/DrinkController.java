@@ -34,8 +34,10 @@ public class DrinkController {
     @GetMapping("/deleted")
     public ModelAndView showListDeleted() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("drink/listDeleted");
+        modelAndView.setViewName("drink/deleted");
         List<Drink> drinks = drinkService.findAllDeleted();
+        List<Catalog> catalogDrinks = catalogService.findAllNotDeleted();
+        modelAndView.addObject("catalogs", catalogDrinks);
         modelAndView.addObject("drinks", drinks);
         return modelAndView;
     }

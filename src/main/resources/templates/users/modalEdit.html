@@ -70,35 +70,6 @@
                 data: formData
             })
                 .done(function (data) {
-                    // let img;
-                    // if (data.avatar == null){
-                    //     img = `<img src="/assets/plugins/images/users/1.jpg" width="50px"/>`;
-                    // }
-                    // else {
-                    //     img = `<img src="${data.avatar.fileUrl}" width="50px"/>`;
-                    // }
-                    // let str = `<tr id="'tr_'+ ${data.id}">
-                    //     <td>${data.username}</td>
-                    //     <td>${data.staff.name}</td>
-                    //     <td>${data.staff.position.name}</td>
-                    //     <td>${data.staff.createAt}</td>
-                    //     <td>${img}</td>
-                    //     <td class="text-center">
-                    //         <button class="btn btn-outline-warning editUser" data-id="${data.id}"><i
-                    //             class="fa fa-pencil-alt"></i></button>
-                    //     </td>
-                    //     <td class="text-center">
-                    //         <button class="btn btn-outline-danger deleteUser" data-id="${data.id}"><i
-                    //             class="fa fa-trash"></i></button>
-                    //     </td>
-                    // </tr>
-                    // `;
-                    //
-                    // $("#tr_" + id).replaceWith(str);
-                    // $("#modalEdit").modal("hide");
-                    // $("#frmEditUser")[0].reset();
-                    // handlerActionUser();
-                    // swal("Thành công", "User đã được cập nhật", "success");
                     swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function() {
                         window.location = "/users";
                     });

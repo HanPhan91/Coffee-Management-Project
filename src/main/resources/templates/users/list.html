@@ -113,7 +113,6 @@
 <script th:inline="javascript">
     var listUser = [[${users}]];
     $("#tblUser").DataTable({
-        "ordering": false,
         data: listUser,
         columns: [
             {data: 'username'},
