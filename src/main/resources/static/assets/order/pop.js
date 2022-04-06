@@ -323,7 +323,7 @@ $("#createBill").on('click',function (){
             "Content-type": "application/json"
         },
         type:"PUT",
-        url: "api/orders/pay" + OrderId,
+        url: "/api/orders/pay/"+ OrderId,
     })
         .done(function (data) {
             swal("thành công","tạo hoá đơn thành công")
