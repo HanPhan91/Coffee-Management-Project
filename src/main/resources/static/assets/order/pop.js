@@ -120,6 +120,7 @@ function showOrderItem() {
     show.append(str);
     deleteItemInOrder();
 }
+
 // xoá đồ uống trong order
 function deleteItemInOrder(){
     $(".delete").on("click",function(){
