@@ -54,11 +54,16 @@ public class OrderApi {
     AppUtil appUtil;
 
     @GetMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<?> showOrderByIdTable(@PathVariable Long id) {
+=======
+    public ResponseEntity<Order> showOrder(@PathVariable Long id){
+>>>>>>> 7e319f23c311c63f725dfa743623c9f7c906f748
         Order order = orderService.getByCoffeeTableId(id).get();
         List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
         return new ResponseEntity<>(orderItems, HttpStatus.OK);
     }
+
 
     @PostMapping("/create/{idtable}")
     public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemDto> listOrders, @RequestParam String discount) {

@@ -83,7 +83,6 @@
                         <div class="col mb-2">
                             <div class="d-flex justify-content-end">
                                 <a type="button" class="btn btn-danger restoreCatalog" href="/catalogs/deleted">
-                                    <i class="fa fa-trash-restore"></i>
                                     Khôi phục danh mục
                                 </a>
                             </div>
@@ -109,6 +108,8 @@
 <th:block th:replace="catalog/modalCreateCatalog :: modalCreateCatalog"/>
 <th:block th:replace="catalog/modalUpdateCatalog :: modalUpdateCatalog"/>
 <th:block th:replace="catalog/modalDeleteCatalog :: modalDeleteCatalog"/>
+<th:block th:replace="catalog/listDeleted :: listDeleted"/>
+
 <!--<script src="./assets/App/validatedCatalog.js"></script>-->
 <script th:inline="javascript">
     var listCatalog = [[${catalogs}]];
@@ -140,7 +141,6 @@
 
     handlerShowModalDeleteCatalog();
     handlerShowModalEditCatalog();
-
     function createCatalog() {
         let catalog = {
             catalogName: $("#catalogNameCreate").val()
@@ -314,6 +314,7 @@
                 })
         });
     }
+
 
     //set event for button Create
     $("#btnCreateCatalog").on("click", function () {

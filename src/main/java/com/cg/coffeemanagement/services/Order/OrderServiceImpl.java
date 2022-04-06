@@ -15,16 +15,16 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderRepository cartRepository;
+    OrderRepository orderRepository;
 
     @Override
     public List<Order> findAll() {
-        return cartRepository.findAll();
+        return orderRepository.findAll();
     }
 
     @Override
     public Optional<Order> findById(Long id) {
-        return cartRepository.findById(id);
+        return orderRepository.findById(id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order save(Order cart) {
-        return cartRepository.save(cart);
+        return orderRepository.save(cart);
     }
 
     @Override
@@ -43,16 +43,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteCartById(Long id) {
-        cartRepository.deleteById(id);
+        orderRepository.deleteById(id);
     }
 
     @Override
     public Optional<Order> getByCoffeeTableId(Long id) {
-        return cartRepository.getByCoffeeTableId(id);
+        return orderRepository.getByCoffeeTableId(id);
     }
 
     @Override
     public void deleteOrderById(Long id) {
-        cartRepository.deleteOrderById(id);
+        orderRepository.deleteOrderById(id);
     }
 }

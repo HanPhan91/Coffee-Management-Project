@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+    <th:block th:fragment="listDeleted"
+            th:replace="layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Quản lý danh mục đã xoá</title>
+    <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý danh mục đã xoá</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!--Header-->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Danh mục thức uống đã ẩn</h1>
+            </div>
+            <div class="row justify-content-center">
+                <table class="table table-hover w-75" id="tblCatalog">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên danh mục</th>
+                        <th scope="col" class="text-center">Khôi phục</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="catalog: ${catalogs}">
+                        <tr th:id="'tr_'+ ${catalog.id}">
+                            <td th:text="${catalog.id}"></td>
+                            <td th:text="${catalog.catalogName}"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-danger restoreCatalog" th:data-id="${catalog.id}">
+                                    <i class="fas fa-trash-restore"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="catalog/modalRestoreCatalog :: modalRestoreCatalog"/>
+
+<script src="/assets/App/validatedTable.js"></script>
+<script>
+
+</script>
+</body>
+</html>
