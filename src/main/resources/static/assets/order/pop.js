@@ -316,5 +316,22 @@ function getAllTable() {
            })
     });
 
+    $("#createBill").on('click',function (){
+        $.ajax({
+            headers:{
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type:"PUT",
+            url: "api/orders/pay" + OrderId,
+        })
+            .done(function (data) {
+                swal("thành công","tạo hoá đơn thành công")
+            })
+            .fail(function (resp){
+                console.log(resp);
+            })
+    });
+
 
 
