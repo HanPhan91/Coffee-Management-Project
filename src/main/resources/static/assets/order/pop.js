@@ -40,7 +40,6 @@ function getAllDrink() {
 
 class OrderItem {
     constructor( quantity, totalPrice, drink,name){
-
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.drink = drink;
@@ -50,18 +49,29 @@ class OrderItem {
 }
 
 
-function addOrderItem() {
+// thêm đồ uống vào danh sách
+function addOrderItemToOrder(orderId, drinkId) {
+    for (let i = 0; i < listDrink.length; i++) {
+        if (drinkId == listDrink[i].id) {
+            let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
+            order.push(orderItem);
+            showOrderItem();
+        }
+    }
+}
+
+// hiển thị danh sách đồ uống trong order
+function showOrderItem() {
     let str = "";
     let show =$(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
     show.empty();
     for (let i = 0; i < order.length; i++) {
-
-
         str += `
         <kv-cashier-cart-item class="row-list row-list-active">
             <div class="cell-action"><a
-                    class="btn-icon btn-trash" href="javascript:void(0);"
+                    id = "${i}"
+                    class="btn-icon btn-trash delete"   href="javascript:void(0);"
                     title="Xóa hàng hóa"><i
                     class="far fa-trash-alt"></i></a></div>
             <div class="cell-order"> ${i+1}
@@ -108,24 +118,27 @@ function addOrderItem() {
         `
     }
     show.append(str);
+    deleteItemInOrder();
+}
+// xoá đồ uống trong order
+function deleteItemInOrder(){
+    $(".delete").on("click",function(){
+        let id = $(this).data("id");
+        let index = order.indexOf((id));
+        order.splice(index-1,1);
+        showOrderItem();
+    })
 }
 
-function addOrderItemToOrder(orderId, drinkId) {
-    for (let i = 0; i < listDrink.length; i++) {
-        if (drinkId == listDrink[i].id) {
-            let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
-            order.push(orderItem);
-            addOrderItem();
-        }
-    }
-}
-
+// sự kiện khi click vào bàn
 function handlerShowItemInOrder() {
     $(".tableAndRoom").on("click", function () {
         let id = $(this).data("id");
         addOrderItemToOrder(OrderId, id);
+        showOrderItem();
     });
 }
+
 
 
 function getAllTable() {
@@ -283,7 +296,6 @@ $(".kv-tabs a").click(function () {
     $(".kv-tabs a").removeClass("active");
     $(this).addClass("active");
     let tabIndex = parseInt($(this).attr("data-tab-index"))
-
     switch (tabIndex) {
         case 1:
             getAllTable();
@@ -329,7 +341,7 @@ $("#createBill").on('click',function (){
             "Content-type": "application/json"
         },
         type:"PUT",
-        url: "api/orders/pay" + OrderId,
+        url: "/api/orders/pay/"+ OrderId,
     })
         .done(function (data) {
             swal("thành công","tạo hoá đơn thành công")
