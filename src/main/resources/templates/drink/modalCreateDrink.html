@@ -30,14 +30,41 @@
                                     <select class="form-select" id="catalogsCreate">
                                     </select>
                                 </div>
+<!--                                <div class="mb-3 col-6">-->
+<!--                                    <section>-->
+<!--                                        <div class="wrapper">-->
+<!--                                            <div class="image-preview">-->
+<!--                                                <canvas id="canvas"></canvas>-->
+<!--                                            </div>-->
+<!--                                            <div class="content">-->
+<!--                                                <div class="icon">-->
+<!--                                                    <i class="fas fa-cloud-upload-alt"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="text">-->
+<!--                                                    No file chosen, yet!-->
+<!--                                                </div>-->
+<!--                                                <div class="text">-->
+<!--                                                    Max file size = 2MB-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="clear-image-preview">-->
+<!--                                                <i class="fas fa-times"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="file-name">-->
+<!--                                                Change image-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <input type="file" id="imageFile" accept="image/jpeg, image/png" hidden/>-->
+<!--                                    </section>-->
+<!--                                </div>-->
                             </div>
-                            <div class="row">
-                                <div class="mb-3 col mx-auto">
-                                    <label for="uploadCre" class="form-label fw-bold">Tải ảnh lên:</label>
-                                    <img id="previewImg" width="150px" class="img-circle mb-2"/>
-                                    <input id="uploadCre" type="file" accept="image/jpeg, image/png"/>
-                                </div>
-                            </div>
+                                                        <div class="row">
+                                                            <div class="mb-3 col mx-auto">
+                                                                <label for="uploadCre" class="form-label fw-bold">Tải ảnh lên:</label>
+                                                                <img id="previewImg" width="150px" class="img-circle mb-2"/>
+                                                                <input id="uploadCre" type="file" accept="image/*"/>
+                                                            </div>
+                                                        </div>
                         </div>
                         <div class="row">
                             <div class="mb-3 col">
@@ -56,11 +83,11 @@
         </div>
     </div>
     <script>
-        $('#uploadCre').change(function(){
+        $('#uploadCre').change(function () {
             const file = this.files[0];
-            if (file){
+            if (file) {
                 let reader = new FileReader();
-                reader.onload = function(event){
+                reader.onload = function (event) {
                     $('#previewImg').attr('src', event.target.result);
                 }
                 reader.readAsDataURL(file);
@@ -102,6 +129,46 @@
                     $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
                 })
+        }
+
+        $("div.image-preview, div.file-name").on('click',function (){
+            $("#imageFile").trigger('click');
+        });
+        $("#imageFile").on('change',function (){
+            changeImagePreview();
+        });
+        function loadImageToCanvas(imageFile){
+            $("section .image-preview canvas").css("display", "");
+            $("section .wrapper").addClass("active");
+            $("section .wrapper .content").css("opacity", 0);
+            let imageObj = new Image();
+            imageObj.onload = function () {
+                $("#canvas")[0].getContext('2d').width = imageObj.width;
+                $("#canvas")[0].getContext('2d').height = imageObj.height;
+                $("#canvas")[0].getContext('2d').drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+            };
+            imageObj.src = URL.createObjectURL(imageFile)
+        }
+
+        function changeImagePreview(){
+            let imageFile = $("#imageFile")[0].files[0];
+            if (imageFile) {
+                let reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function (e) {
+                    if (e.target.readyState === FileReader.DONE) {
+                        loadImageToCanvas(imageFile);
+                    }
+                }
+            } else {
+                clearImagePreview();
+            }
+        }
+        function clearImagePreview(){
+            $("#imageFile")[0].files[0].val("");
+            $("section .image-preview canvas").css("display", "none");
+            $("section .wrapper").removeClass("active");
+            $("section .wrapper .content").css("opacity", 1);
         }
     </script>
 </th:block>
