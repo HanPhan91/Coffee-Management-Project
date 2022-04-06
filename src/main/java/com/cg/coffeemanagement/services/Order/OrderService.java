@@ -4,6 +4,7 @@ import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,6 @@ public interface OrderService extends IGeneralServices<Order> {
     Optional<Order> getByCoffeeTableId(Long id);
 
     void deleteOrderById(Long id);
+
+
 }

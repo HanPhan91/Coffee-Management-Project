@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,9 +54,10 @@ public class OrderApi {
     AppUtil appUtil;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> showOrder(@PathVariable Long id){
+    public ResponseEntity<?> showOrderByIdTable(@PathVariable Long id) {
         Order order = orderService.getByCoffeeTableId(id).get();
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
+        return new ResponseEntity<>(orderItems, HttpStatus.OK);
     }
 
 
@@ -75,7 +77,6 @@ public class OrderApi {
             }
         }
         Optional<Order> opOrder = orderService.getByCoffeeTableId(idtable);
-        BigDecimal subPrice = BigDecimal.valueOf(0);
         if (opOrder.isPresent()) {
             Order order = opOrder.get();
             for (OrderItemDto orderItemDto : listOrders) {
@@ -86,8 +87,8 @@ public class OrderApi {
                 orderItem.setTotalPrice(totalPrice);
                 orderItem.setOrder(order);
                 orderItemService.save(orderItem);
-                subPrice = subPrice.add(totalPrice);
             }
+            BigDecimal subPrice = orderItemService.calcSubAmount(order.getId());
             order.setSubAmount(subPrice);
             order.setDiscount(activeDiscount);
             double valueDiscount = (double) percentDiscount / 100;
@@ -97,6 +98,9 @@ public class OrderApi {
             if (activeDiscount != null) {
                 discountService.reduceQuantity(activeDiscount);
             }
+            CoffeeTable coffeeTable = coffeeTableService.findById(idtable).get();
+            coffeeTable.setUsed(true);
+            coffeeTableService.save(coffeeTable);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -124,6 +128,91 @@ public class OrderApi {
             Order newOrder = order.newOrder();
             orderService.deleteOrderById(order.getId());
             orderService.save(newOrder);
+            CoffeeTable coffeeTable = coffeeTableService.findById(idtable).get();
+            coffeeTable.setUsed(false);
+            coffeeTableService.save(coffeeTable);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/split/{oldTable}/{newTable}")
+    public ResponseEntity<?> splitTable(@PathVariable Long oldTable, @PathVariable Long newTable, @RequestBody List<OrderItemDto> listOrders) {
+        Optional<Order> opOldOrder = orderService.getByCoffeeTableId(oldTable);
+        if (opOldOrder.isPresent()) {
+            Order oldOrder = opOldOrder.get();
+            Optional<Order> opNewOrder = orderService.getByCoffeeTableId(newTable);
+            List<OrderItem> listOldOrder = orderItemService.findAllByOrder(oldOrder);
+            if (opNewOrder.isPresent()) {
+                Order newOrder = opNewOrder.get();
+                for (OrderItemDto orderItemDto : listOrders) {
+                    for (OrderItem orderItem : listOldOrder) {
+                        if (orderItem.getDrink().getId().compareTo(orderItemDto.getDrink()) == 0) {
+                            int quantity = orderItem.getQuantity() - orderItemDto.getQuantity();
+                            if (quantity == 0) {
+                                listOldOrder.remove(orderItem);
+                            } else {
+                                orderItem.setQuantity(quantity);
+                            }
+                            break;
+                        }
+                    }
+                    OrderItem orderItem = orderItemDto.toOderItem();
+                    Drink drink = drinkService.findById(orderItemDto.getDrink()).get();
+                    orderItem.setDrink(drink);
+                    BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItemDto.getQuantity()));
+                    orderItem.setTotalPrice(totalPrice);
+                    orderItem.setOrder(newOrder);
+                    orderItemService.save(orderItem);
+                }
+                BigDecimal subPrice = orderItemService.calcSubAmount(newTable);
+                Discount discount = null;
+                int percentDiscount = 0;
+                if (oldOrder.getDiscount() != null) {
+                    discount = oldOrder.getDiscount();
+                    percentDiscount = oldOrder.getDiscount().getPercentDiscount();
+                    newOrder.setDiscount(oldOrder.getDiscount());
+                } else {
+                    newOrder.setDiscount(null);
+                }
+                newOrder.setSubAmount(subPrice);
+                double valueDiscount = (double) percentDiscount / 100;
+                BigDecimal totalAmount = subPrice.subtract(subPrice.multiply(BigDecimal.valueOf(valueDiscount)));
+                newOrder.setTotalAmount(totalAmount);
+                orderService.save(newOrder);
+                orderItemService.deleteAllByOrder(oldOrder);
+                Order newOldOrder = oldOrder.newOrder();
+                orderService.deleteOrderById(oldOrder.getId());
+                orderService.save(newOldOrder);
+                for (OrderItem orderItem : listOldOrder) {
+                    Drink drink = drinkService.findById(orderItem.getDrink().getId()).get();
+                    BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity()));
+                    orderItem.setTotalPrice(totalPrice);
+                    orderItem.setOrder(newOldOrder);
+                    orderItemService.save(orderItem);
+                }
+                if (discount == null) {
+                    newOldOrder.setDiscount(null);
+                } else {
+                    newOldOrder.setDiscount(discount);
+                }
+                BigDecimal subPriceOld = orderItemService.calcSubAmount(newOldOrder.getId());
+                newOldOrder.setSubAmount(subPriceOld);
+                double valueDiscountOld = (double) percentDiscount / 100;
+                BigDecimal totalAmountOld = subPriceOld.subtract(subPriceOld.multiply(BigDecimal.valueOf(valueDiscountOld)));
+                newOldOrder.setTotalAmount(totalAmountOld);
+                orderService.save(newOldOrder);
+
+                CoffeeTable oldTableGet = coffeeTableService.findById(oldTable).get();
+                oldTableGet.setUsed(true);
+                coffeeTableService.save(oldTableGet);
+                CoffeeTable newTableGet = coffeeTableService.findById(newTable).get();
+                newTableGet.setUsed(true);
+                coffeeTableService.save(newTableGet);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

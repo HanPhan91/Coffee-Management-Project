@@ -6,6 +6,7 @@ import com.cg.coffeemanagement.model.OrderItem;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,4 +42,6 @@ public interface OrderItemService extends IGeneralServices<OrderItem> {
     void deleteAllByOrder(Order order);
 
     List<OrderItem> findAllByOrder(Order order);
+
+    BigDecimal calcSubAmount(@Param("order") Long id);
 }
