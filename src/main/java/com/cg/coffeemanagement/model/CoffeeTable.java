@@ -29,4 +29,6 @@ public class CoffeeTable {
     @Column(columnDefinition = "boolean default false")
     private boolean deleted;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean used;
 }

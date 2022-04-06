@@ -136,13 +136,20 @@ function getAllTable() {
     })
         .done(function (data) {
             listTables.empty();
+            let statusTable = '';
             data.forEach(function (item) {
+                if (item.used == true){
+                    statusTable = `<span style="background: blue"></span>`;
+                }
+                else {
+                    statusTable = `<span></span>`;
+                }
                 listTables.append(`
                     <li class="table" style="text-align: center;" tabindex="1" id="${item.id}">
                         <div class="tableroom-actions"></div>
                         <a container="body" placement="right top" skip-disable=""
                            triggers="mouseenter:mouseleave" class="">
-                            <div class="table-room"><span></span></div>
+                            <div class="table-room">${statusTable}</div>
                             <div class="product-info">
                             <span class="product-name">${item.name}</span>
                                 <div class="wrap-note" href="javascript:void(0)">
@@ -280,7 +287,6 @@ $(".kv-tabs a").click(function () {
     switch (tabIndex) {
         case 1:
             getAllTable();
-
             break;
         case 2:
             getAllDrink();
