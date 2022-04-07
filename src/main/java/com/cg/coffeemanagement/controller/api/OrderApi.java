@@ -5,9 +5,7 @@ import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.dto.OrderItemDto;
 import com.cg.coffeemanagement.model.dto.OrderItemMenuDto;
-import com.cg.coffeemanagement.repository.Bill.BillRepository;
-import com.cg.coffeemanagement.repository.BillDetail.BillDetailRepository;
-import com.cg.coffeemanagement.repository.OrderItem.OrderItemRepository;
+
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.BillDetailService.BillDetailService;
 import com.cg.coffeemanagement.services.Drink.DrinkService;
@@ -85,7 +83,7 @@ public class OrderApi {
             Order order = opOrder.get();
             for (OrderItemDto orderItemDto : listOrders) {
                 OrderItem orderItem = orderItemDto.toOderItem();
-                Drink drink = drinkService.findById(orderItemDto.getDrink().getId()).get();
+                Drink drink = drinkService.findById(orderItemDto.getId()).get();
                 orderItem.setDrink(drink);
                 BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItemDto.getQuantity()));
                 orderItem.setTotalPrice(totalPrice);
@@ -152,7 +150,7 @@ public class OrderApi {
                 Order newOrder = opNewOrder.get();
                 for (OrderItemDto orderItemDto : listOrders) {
                     for (OrderItem orderItem : listOldOrder) {
-                        if (orderItem.getDrink().getId().compareTo(orderItemDto.getDrink().getId()) == 0) {
+                        if (orderItem.getDrink().getId().compareTo(orderItemDto.getId()) == 0) {
                             int quantity = orderItem.getQuantity() - orderItemDto.getQuantity();
                             if (quantity == 0) {
                                 listOldOrder.remove(orderItem);
@@ -163,7 +161,7 @@ public class OrderApi {
                         }
                     }
                     OrderItem orderItem = orderItemDto.toOderItem();
-                    Drink drink = drinkService.findById(orderItemDto.getDrink().getId()).get();
+                    Drink drink = drinkService.findById(orderItemDto.getId()).get();
                     orderItem.setDrink(drink);
                     BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItemDto.getQuantity()));
                     orderItem.setTotalPrice(totalPrice);
