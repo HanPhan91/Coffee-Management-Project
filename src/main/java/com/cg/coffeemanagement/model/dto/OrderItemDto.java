@@ -28,14 +28,17 @@ public class OrderItemDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private Drink drink;
 
     private int quantity;
 
     private BigDecimal totalPrice;
 
-//    public OrderItem toOderItem() {
-//        return new OrderItem()
-//                .setQuantity(quantity);
-//    }
+    public OrderItem toOderItem() {
+        return new OrderItem()
+                .setId(id)
+                .setDrink(drink)
+                .setQuantity(quantity)
+                .setTotalPrice(totalPrice);
+    }
 }

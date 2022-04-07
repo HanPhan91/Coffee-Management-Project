@@ -27,13 +27,9 @@ public interface OrderItemRepository extends JpaRepository<OrderItem,Long> {
 //            "WHERE od.order.id =:idOrder ")
 //    List<OrderItemMenuDto> findAllOrderItemMenuDTOByOrder(@Param("idOrder") String idOrder);
 
-    @Query("SELECT NEW com.cg.coffeemanagement.model.dto.OrderItemMenuDto (od.id, od.drink.name, od.quantity, od.totalPrice) " +
+    @Query("SELECT NEW com.cg.coffeemanagement.model.dto.OrderItemMenuDto (od.drink.id, od.drink.name, od.quantity, od.totalPrice) " +
             "FROM OrderItem od " +
-<<<<<<< HEAD
-            "WHERE od.order =:objOrder ")
-=======
             "WHERE od.order =:objOrder "
     )
->>>>>>> c7015b7bac490e679998c2e3ef926c60c0b325ce
     List<OrderItemMenuDto> findAllOrderItemMenuDTOByOrder(@Param("objOrder") Order objOrder);
 }

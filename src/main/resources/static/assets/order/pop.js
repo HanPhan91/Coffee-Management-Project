@@ -87,6 +87,8 @@ function addOrderItemToOrder(orderId, drinkId) {
 
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
+    console.log('order:')
+    console.log(order)
     let str = "";
     let show =$(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
@@ -341,12 +343,13 @@ function handlerDownQuantity () {
 
         for (let j = 0; j < order.length; j++) {
             if (id == order[j].id) {
+                console.log('index = ' + index)
                 index = j;
             }
         }
 
         if (order[index].quantity == 1) {
-            order.splice(index - 1,1);
+            order.splice(index,1);
         }
         else {
             order[index].quantity -= 1;

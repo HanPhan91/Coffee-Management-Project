@@ -50,4 +50,5 @@ public interface OrderItemService extends IGeneralServices<OrderItem> {
     List<OrderItemMenuDto> findAllOrderItemMenuDTOByOrder(Order objOrder);
 
     BigDecimal calcSubAmount(@Param("order") Long id);
+
 }

@@ -5,10 +5,7 @@ import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.dto.OrderItemDto;
 import com.cg.coffeemanagement.model.dto.OrderItemMenuDto;
-<<<<<<< HEAD
-=======
 
->>>>>>> c7015b7bac490e679998c2e3ef926c60c0b325ce
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.BillDetailService.BillDetailService;
 import com.cg.coffeemanagement.services.Drink.DrinkService;
@@ -67,7 +64,7 @@ public class OrderApi {
 
 
     @PostMapping("/create/{idtable}")
-    public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemDto> listOrders, @RequestParam String discount) {
+    public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemMenuDto> listMenuOrders, @RequestParam String discount) {
         int percentDiscount;
         Discount activeDiscount = null;
         if (discount.isEmpty()) {
@@ -81,10 +78,21 @@ public class OrderApi {
                 throw new DataInputException("Voucher không tồn tại hoặc đã hết hạn sử dụng");
             }
         }
+
         Optional<Order> opOrder = orderService.getByCoffeeTableId(idtable);
         if (opOrder.isPresent()) {
             Order order = opOrder.get();
-            for (OrderItemDto orderItemDto : listOrders) {
+            List<OrderItemDto> orderItemDtoList = new ArrayList<>();
+
+            for (OrderItemMenuDto orderItemMenuDto : listMenuOrders) {
+                Drink drink = drinkService.findById(orderItemMenuDto.getId()).get();
+
+                orderItemDtoList.add(orderItemMenuDto.toOrderItemDto(drink));
+            }
+
+            orderItemService.deleteAllByOrder(order);
+
+            for (OrderItemDto orderItemDto : orderItemDtoList) {
                 OrderItem orderItem = orderItemDto.toOderItem();
                 Drink drink = drinkService.findById(orderItemDto.getId()).get();
                 orderItem.setDrink(drink);
@@ -93,6 +101,7 @@ public class OrderApi {
                 orderItem.setOrder(order);
                 orderItemService.save(orderItem);
             }
+
             BigDecimal subPrice = orderItemService.calcSubAmount(order.getId());
             order.setSubAmount(subPrice);
             order.setDiscount(activeDiscount);
