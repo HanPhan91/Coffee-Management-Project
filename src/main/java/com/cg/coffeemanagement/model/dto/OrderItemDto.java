@@ -34,8 +34,8 @@ public class OrderItemDto {
 
     private BigDecimal totalPrice;
 
-    public OrderItem toOderItem() {
-        return new OrderItem()
-                .setQuantity(quantity);
-    }
+//    public OrderItem toOderItem() {
+//        return new OrderItem()
+//                .setQuantity(quantity);
+//    }
 }
