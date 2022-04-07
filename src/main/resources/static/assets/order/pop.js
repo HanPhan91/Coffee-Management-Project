@@ -1,7 +1,8 @@
 let listTables = $("#showTable ul");
-var OrderId = 0;
-var history = {};
-var order=[];
+let OrderId = 0;
+let history = {};
+let order=[];
+
 
 function getAllDrink() {
     $.ajax({
@@ -34,33 +35,57 @@ function getAllDrink() {
                     </li>
                     `);
             });
-            handlerShowItemInOrder();
+            // handlerShowAvailableInOrder();
+            handlerAddItemInOrder();
         })
 }
 
 class OrderItem {
-    constructor( quantity, totalPrice, drink,name){
+    constructor( quantity, totalPrice, id,name){
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.drink = drink;
+        this.id = id;
         this.name = name;
     }
 
 }
 
-
 // thêm đồ uống vào danh sách
 function addOrderItemToOrder(orderId, drinkId) {
     for (let i = 0; i < listDrink.length; i++) {
         if (drinkId == listDrink[i].id) {
-            let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
-            order.push(orderItem);
+            if (order.length > 0) {
+                let drinkExist = false;
+                let index = 0;
+
+                for (let j = 0; j < order.length; j++) {
+                    if (drinkId == order[j].id) {
+                        drinkExist = true;
+                        index = j;
+                    }
+                }
+
+                if (drinkExist) {
+                    order[index].quantity += 1;
+                }
+                else {
+                    let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
+
+                    order.push(orderItem);
+                }
+            }
+            else {
+                let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
+
+                order.push(orderItem);
+            }
+
             showOrderItem();
         }
     }
 }
 
-// hiển thị danh sách đồ uống trong order
+// hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
     let str = "";
     let show =$(".product-cart-item");
@@ -79,7 +104,8 @@ function showOrderItem() {
             <div class="row-product">
                 <div class="cell-name full" title="">
                     <div class="wrap-name">
-                        <h4> ${order[i].name}</h4><span class="wrap-icons"></span>
+                        <h4> ${order[i].name}</h4>
+                        <span class="wrap-icons"></span>
                     </div>
                     <ul class="comboset-list-item"></ul>
                     <div class="list-topping">
@@ -87,21 +113,23 @@ function showOrderItem() {
                 </div>
                 <div class="cell-quatity">
                     <div class="cell-quantity-inner">
-                        <button class="btn-icon down" type="button"><i
-                                class="fas fa-minus-circle"></i></button>
-                        <button class="form-control form-control-sm item-quantity">
-                            1
+                        <button class="btn-icon down" type="button" data-id="${order[i].id}">
+                            <i class="fas fa-minus-circle"></i>
                         </button>
-                        <button class="btn-icon up" type="button"><i
-                                class="fas fa-plus-circle"></i></button>
+                        <button class="form-control form-control-sm item-quantity">
+                            ${order[i].quantity}
+                        </button>
+                        <button class="btn-icon up" type="button" data-id="${order[i].id}">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="cell-warning">
                 </div>
                 <div class="cell-change-price">
                     <div class="popup-anchor">
-                        <button
-                                class="form-control form-control-sm"> ${order[i].totalPrice}
+                        <button class="form-control form-control-sm">
+                            ${order[i].totalPrice}
                         </button>
                     </div>
                 </div>
@@ -119,6 +147,9 @@ function showOrderItem() {
     }
     show.append(str);
     deleteItemInOrder();
+
+    handlerUpQuantity();
+    handlerDownQuantity();
 }
 
 // xoá đồ uống trong order
@@ -132,13 +163,64 @@ function deleteItemInOrder(){
 }
 
 // sự kiện khi click vào bàn
-function handlerShowItemInOrder() {
+function handlerAddItemInOrder() {
     $(".tableAndRoom").on("click", function () {
         let id = $(this).data("id");
+        console.log(id);
+        console.log(OrderId)
         addOrderItemToOrder(OrderId, id);
-        showOrderItem();
+        // showOrderItem();
     });
 }
+
+// hiển thị form tách ghép đơn
+function handlerShowSplitOrder(){
+    $("button.split").on("click", function () {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "/api/orders/" + OrderId,
+        })
+            .done(function (data) {
+
+
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
+    });
+
+}
+
+
+//hiển thị đồ uống đang có trong order
+function handlerShowAvailableInOrder() {
+    $(".table").on("click", function () {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "/api/orders/" + OrderId,
+        })
+            .done(function (data) {
+                console.log(data);
+                order = data;
+                showOrderItem();
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
+    });
+
+}
+
 
 
 
@@ -178,111 +260,32 @@ function getAllTable() {
                         </a>
                     </li>
                     `);
+
                 let idtable = item.id;
+
                 $("#" + idtable).on("click", function () {
                     getAllDrink();
                     OrderId = item.id;
 
+                    // handlerShowAvailableInOrder();
 
-                    // $.ajax({
-                    //     type: "POST",
-                    //     url: "/api/orders/" + idtable,
-                    //
-                    // })
-                    //     .done(function (data) {
-                    //
-                    //         OrderId = data.id;
-                    //         if (data.orderItem.length == 0) {
-                    //             let emptyStr = `<div _ngcontent-aqe-c6="" class="page-empty"><i _ngcontent-aqe-c6="" class="mask mask-food"></i><div _ngcontent-aqe-c6="" class="empty-content" translate=""> Chưa có món nào <span _ngcontent-aqe-c6="" translate="">Vui lòng chọn món trong thực đơn</span></div></div>`
-                    //             $("#listCartItem").html(emptyStr);
-                    //
-                    //         } else {
-                    //            //  //Vòng lặp Cart Item
-                    //            //  data.forEach(function (item) {
-                    //            //
-                    //            //      listCartItem.append(`
-                    //            //  <div class="cell-action"><a
-                    //            //                          class="btn-icon btn-trash" href="javascript:void(0);"
-                    //            //                          title="Xóa hàng hóa"><i
-                    //            //                          class="far fa-trash-alt"></i></a></div>
-                    //            //                  <div class="cell-order"> 1
-                    //            //
-                    //            //                      <div>
-                    //            //                          <button class="btn-icon" type="button"><i
-                    //            //                                  class="fa fa-star-o"></i></button>
-                    //            //                      </div>
-                    //            //                  </div>
-                    //            //                  <div class="row-product">
-                    //            //                      <div class="cell-name full" title="">
-                    //            //                          <div class="wrap-name">
-                    //            //                              <h4> ${item.name}
-                    //            //
-                    //            //
-                    //            //                              </h4><span class="wrap-icons">
-                    //            //
-                    //            // </span>
-                    //            //                          </div>
-                    //            //
-                    //            //                          <ul class="comboset-list-item">
-                    //            //
-                    //            //                          </ul>
-                    //            //                          <div class="wrap-note" href="javascript:void(0)"><label
-                    //            //                          >
-                    //            //                              <button class="btn-icon has-Update">
-                    //            //
-                    //            //                                  <span class="note-hint">Ghi chú...</span>
-                    //            //                                  <i class="fa fa-pencil"></i>
-                    //            //                              </button>
-                    //            //                          </label></div>
-                    //            //                          <div class="list-topping">
-                    //            //
-                    //            //                          </div>
-                    //            //                      </div>
-                    //            //
-                    //            //                      <div class="cell-quatity">
-                    //            //                          <div class="cell-quantity-inner">
-                    //            //                              <button class="btn-icon down" type="button"><i
-                    //            //                                      class="fas fa-minus-circle"></i></button>
-                    //            //
-                    //            //                              <button
-                    //            //                                      class="form-control form-control-sm item-quantity">
-                    //            //                                  1
-                    //            //                              </button>
-                    //            //                              <button class="btn-icon up" type="button"><i
-                    //            //                                      class="fas fa-plus-circle"></i></button>
-                    //            //
-                    //            //
-                    //            //                          </div>
-                    //            //                      </div>
-                    //            //                      <div class="cell-warning">
-                    //            //
-                    //            //                      </div>
-                    //            //
-                    //            //                      <div class="cell-change-price">
-                    //            //                          <div class="popup-anchor">
-                    //            //                              <button
-                    //            //                                      class="form-control form-control-sm"> ${item.price}
-                    //            //                              </button>
-                    //            //
-                    //            //                          </div>
-                    //            //                      </div>
-                    //            //                      <div class="cell-price">
-                    //            //                      <label for="cartItemPrice" class="form-label fw-bold">Tổng tiền</label>
-                    //            //                      <input type="text" class="form-control" id="cartItemPrice" name="cartItemPrice">
-                    //            //                       </div>
-                    //            //                      <div class="cell-actions">
-                    //            //                          <div class="btn-group" dropdown="">
-                    //            //                              <button class="dropdown-toggle" type="button"
-                    //            //                                      title="Thêm dòng"><i class="far fa-plus"></i>
-                    //            //                              </button>
-                    //            //                          </div>
-                    //            //                      </div>
-                    //            //                  </div>
-                    //            //  `)
-                    //            //  });
-                    //             //Hết vòng lặp cart item
-                    //         }
-                    //     })
+                    $.ajax({
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: "/api/orders/" + OrderId,
+                    })
+                    .done(function (data) {
+                        console.log(data);
+                        order = data;
+                        showOrderItem();
+
+                    })
+                    .fail(function (jqXHR) {
+                        console.log("get drinks fails");
+                    })
 
                     document.getElementById("showCart").style.display = "block";
 
@@ -310,11 +313,55 @@ $(".kv-tabs a").click(function () {
 });
 
 
+
+function handlerUpQuantity () {
+    $("button.up").on("click", function () {
+        let id = $(this).data('id');
+
+        let index = 0;
+
+        for (let j = 0; j < order.length; j++) {
+            if (id == order[j].id) {
+                index = j;
+            }
+        }
+
+        order[index].quantity += 1;
+
+        showOrderItem();
+
+    })
+}
+
+function handlerDownQuantity () {
+    $("button.down").on("click", function () {
+        let id = $(this).data('id');
+
+        let index = 0;
+
+        for (let j = 0; j < order.length; j++) {
+            if (id == order[j].id) {
+                index = j;
+            }
+        }
+
+        if (order[index].quantity == 1) {
+            order.splice(index - 1,1);
+        }
+        else {
+            order[index].quantity -= 1;
+        }
+
+        showOrderItem();
+    })
+}
+
+
 $(document).ready(function () {
     getAllTable();
     getAllDrink();
     document.getElementById("showCart").style.display = "none";
-
+    handlerShowSplitOrder();
 });
 
 $("#createOrder").on('click', function () {
