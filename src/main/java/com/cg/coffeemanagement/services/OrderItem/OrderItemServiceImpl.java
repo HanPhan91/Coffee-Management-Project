@@ -2,6 +2,7 @@ package com.cg.coffeemanagement.services.OrderItem;
 
 import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.OrderItem;
+import com.cg.coffeemanagement.model.dto.OrderItemDto;
 import com.cg.coffeemanagement.repository.OrderItem.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> findAllByOrder(Order order) {
         return cartItemRepository.findAllByOrder(order);
+    }
+
+    @Override
+    public List<OrderItemDto> findAllOrderItemDTOByOrder(String idOrder) {
+        return cartItemRepository.findAllOrderItemDTOByOrder(idOrder);
     }
 
     @Override

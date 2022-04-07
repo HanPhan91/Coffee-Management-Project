@@ -1,5 +1,7 @@
 package com.cg.coffeemanagement.model;
 
+import com.cg.coffeemanagement.model.dto.OrderItemDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,7 @@ public class OrderItem {
 
     private int quantity;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cart")
     private Order order;
@@ -41,4 +44,6 @@ public class OrderItem {
                 .setQuantity(quantity)
                 .setTotalPrice(totalPrice);
     }
+
+
 }

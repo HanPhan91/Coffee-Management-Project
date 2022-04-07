@@ -587,7 +587,7 @@
                                                                         </kv-reservation-search>
                                                                     </div>
                                                                     <div>
-                                                                        <button class="btn btn-primary" translate=""
+                                                                        <button class="btn btn-primary split" id="btnSplitOrder" translate=""
                                                                                 type="button"> Tách ghép đơn
                                                                         </button>
                                                                     </div>
@@ -658,6 +658,7 @@
 </kv-root>
 </body>
 <th:block th:replace="layout/script :: script"/>
+<th:block th:replace="order/modalSplitOrder :: modalSplitOrder"/>
 <script th:inline="javascript">
     let listDrink = [[${drinks}]];
     let Drinks = [];
