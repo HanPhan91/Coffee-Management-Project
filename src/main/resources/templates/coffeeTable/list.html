@@ -56,30 +56,30 @@
                     <table class="table table-hover" id="tblTable">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Tên bàn</th>
-                            <th scope="col" colspan="2" class="text-center">Thao tác</th>
+                            <th scope="col" class="fw-bold fs-5">ID</th>
+                            <th scope="col" class="fw-bold fs-5">Tên bàn</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="table: ${tables}">
-                            <tr th:id="'tr_'+ ${table.id}">
-                                <td th:text="${table.id}"></td>
-                                <td th:text="${table.name}"></td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-outline-primary edit"
-                                            th:data-id="${table.id}">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-outline-danger delete"
-                                            th:data-id="${table.id}">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </th:block>
+                        <!--                        <th:block th:each="table: ${tables}">-->
+                        <!--                            <tr th:id="'tr_'+ ${table.id}">-->
+                        <!--                                <td th:text="${table.id}"></td>-->
+                        <!--                                <td th:text="${table.name}"></td>-->
+                        <!--                                <td class="text-center">-->
+                        <!--                                    <button type="button" class="btn btn-outline-primary edit"-->
+                        <!--                                            th:data-id="${table.id}">-->
+                        <!--                                        <i class="fa fa-edit"></i>-->
+                        <!--                                    </button>-->
+                        <!--                                </td>-->
+                        <!--                                <td class="text-center">-->
+                        <!--                                    <button type="button" class="btn btn-outline-danger delete"-->
+                        <!--                                            th:data-id="${table.id}">-->
+                        <!--                                        <i class="fa fa-trash"></i>-->
+                        <!--                                    </button>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                     <div class="row">
@@ -114,6 +114,22 @@
 <th:block th:replace="coffeeTable/modalDeleteTable :: modalDeleteTable"/>
 <script src="/assets/App/validatedTable.js"></script>
 </body>
+<script th:inline="javascript">
+    let table = [[${tables}]];
+    $("#tblTable").DataTable({
+        data: table,
+        columns: [
+            {data: 'id'},
+            {data: 'name'},
+            {data: 'id',
+                render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            <button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-archive"></i></button>
+                            `;
+                }
+            }]
+    });
+</script>
 <script>
     $("#createTable").on("click", function () {
         $("#modalCreateTable").modal("show");

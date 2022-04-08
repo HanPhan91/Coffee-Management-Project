@@ -53,32 +53,11 @@
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
-                            <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
                             <th scope="col" class="fw-bold fs-5">Avatar</th>
                             <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <!--                        <th:block th:each="user: ${users}">-->
-                        <!--                            <tr th:id="'tr_'+ ${user.id}">-->
-                        <!--                                <td th:text="${user.username}"></td>-->
-                        <!--                                <td th:text="${user.staff.name}"></td>-->
-                        <!--                                <td th:text="${user.staff.position.name}"></td>-->
-                        <!--                                <td th:text="${user.staff.createAt}"></td>-->
-                        <!--                                <td th:if="${user.avatar} != null"><img th:src="${user.avatar.fileUrl}" width="50px"/>-->
-                        <!--                                </td>-->
-                        <!--                                <td th:if="${user.avatar} == null"><img src="/assets/plugins/images/users/1.jpg"-->
-                        <!--                                                                        width="50px"/></td>-->
-                        <!--                                <td class="text-center">-->
-                        <!--                                    <button class="btn btn-outline-warning editUser" th:data-id="${user.id}"><i-->
-                        <!--                                            class="fa fa-pencil-alt"></i></button>-->
-                        <!--                                </td>-->
-                        <!--                                <td class="text-center">-->
-                        <!--                                    <button class="btn btn-outline-danger deleteUser" th:data-id="${user.id}"><i-->
-                        <!--                                            class="fa fa-trash"></i></button>-->
-                        <!--                                </td>-->
-                        <!--                            </tr>-->
-                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                 </div>
@@ -117,12 +96,7 @@
         columns: [
             {data: 'username'},
             {data: 'staff.name'},
-            {data: 'staff.position.name'},
-            {
-                data: 'staff.createAt', render: function (data, type, row, meta) {
-                    return data.slice(0, 10);
-                }
-            },
+            {data: 'staff.position.name', searchable: false},
             {
                 data: 'avatar.fileUrl', render: function (data, type, row, meta) {
                     // var img = data.fileUrl;
@@ -131,7 +105,7 @@
                     } else {
                         return `<img src="${data}" width="50px"/>`;
                     }
-                }
+                }, orderable: false, searchable: false
             },
             {
                 data: 'id', render: function (data, type, row, meta) {

@@ -78,7 +78,7 @@
                             <th scope="col" class="fw-bold fs-5 ">Giá (VNĐ)</th>
                             <th scope="col" class="fw-bold fs-5 ">Danh mục</th>
                             <th scope="col" class="fw-bold fs-5 ">Hình ảnh</th>
-                            <th scope="col" colspan="2" class=" fw-bold fs-5">Thao tác</th>
+                            <th scope="col" colspan="2" class=" fw-bold fs-5">Sửa / Lưu trữ</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -136,13 +136,13 @@
                     } else {
                         return `<img src="${data}" width="50px"/>`;
                     }
-                }
+                }, orderable: false
             },
             {
                 data: 'id',
                 render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
-                                    <button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-archive"></i></button>
                                     `;
                 }
             },

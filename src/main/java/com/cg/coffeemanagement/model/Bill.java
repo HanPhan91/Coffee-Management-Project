@@ -32,9 +32,8 @@ public class Bill {
     @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
-    @OneToOne
-    @JoinColumn(name = "id_table")
-    private CoffeeTable table;
+    @Column(name = "table_name")
+    private String coffeeTable;
 
     @OneToMany
     @JoinColumn(name = "id_billitem")
@@ -50,8 +49,7 @@ public class Bill {
     @Column(name = "sub_amount")
     private BigDecimal subAmount;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @Column(name = "staff_name")
+    private String staffName;
 
 }

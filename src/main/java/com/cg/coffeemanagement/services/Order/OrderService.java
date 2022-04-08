@@ -29,7 +29,7 @@ public interface OrderService extends IGeneralServices<Order> {
 
 //    void restoreCart(@Param("id") Long id);
 
-    Optional<Order> getByCoffeeTableId(Long id);
+    Optional<Order> getByCoffeeTable(Long id);
 
     void deleteOrderById(Long id);
 

@@ -57,7 +57,7 @@ public class CoffeeTableApi {
         }
         Order order = new Order();
         CoffeeTable createTable = coffeeTableService.save(coffeetable);
-        order.setCoffeeTable(createTable);
+        order.setCoffeeTable(createTable.getId());
         orderService.save(order);
         return new ResponseEntity<>(createTable, HttpStatus.CREATED);
     }

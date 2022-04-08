@@ -1,9 +1,5 @@
 package com.cg.coffeemanagement.model;
 
-<<<<<<< HEAD
-=======
-import com.cg.coffeemanagement.model.dto.OrderItemDto;
->>>>>>> main
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +23,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "id_drink")
+    @ManyToOne
     private Drink drink;
 
     private int quantity;
@@ -43,8 +38,9 @@ public class OrderItem {
     public BillDetail toBillDetail() {
         return new BillDetail()
                 .setId(id)
-                .setDrink(drink)
+                .setDrink(drink.getName())
                 .setQuantity(quantity)
+                .setDrinkPrice(drink.getPrice())
                 .setTotalPrice(totalPrice);
     }
 

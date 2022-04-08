@@ -26,9 +26,8 @@ public class Order {
     @JoinColumn(name = "id_orderitem")
     private Set<OrderItem> orderItem;
 
-    @OneToOne
-    @JoinColumn(name = "id_table")
-    private CoffeeTable coffeeTable;
+    @Column(name = "table_id")
+    private Long coffeeTable;
 
     @Column(name= "sub_amount")
     private BigDecimal subAmount;
@@ -40,9 +39,8 @@ public class Order {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @Column(name = "staff_name")
+    private String staffName;
 
     public Order newOrder(){
         return new Order()

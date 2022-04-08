@@ -4,7 +4,6 @@ import com.cg.coffeemanagement.model.Bill;
 import com.cg.coffeemanagement.model.BillDetail;
 import com.cg.coffeemanagement.repository.BillDetail.BillDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

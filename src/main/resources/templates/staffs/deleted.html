@@ -38,7 +38,7 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col text-end">
                     <a class="btn btn-outline-primary" id="createPosition" th:href="@{/staffs}"><i
                             class="fa fa-arrow-left"></i> Quay lại
@@ -60,20 +60,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--                        <th:block th:each="staff: ${staffs}">-->
-                        <!--                            <tr th:id="'tr_'+ ${staff.id}">-->
-                        <!--                                <td th:text="${staff.name}"></td>-->
-                        <!--                                <td th:text="${staff.address}"></td>-->
-                        <!--                                <td th:text="${staff.phone}"></td>-->
-                        <!--                                <td th:text="${staff.email}"></td>-->
-                        <!--                                <td th:text="${staff.birthDay}"></td>-->
-                        <!--                                <td th:text="${staff.position.name}"></td>-->
-                        <!--                                <td>-->
-                        <!--                                    <button class="btn btn-outline-warning restoreStaff" th:data-id="${staff.id}">-->
-                        <!--                                        <i class="fa fa-undo"></i></button>-->
-                        <!--                                </td>-->
-                        <!--                            </tr>-->
-                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                 </div>
@@ -100,19 +86,18 @@
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
     $("#tblStaffDeleted").DataTable({
-        "ordering": false,
         data: listStaffs,
         columns: [
             {data: 'name'},
-            {data: 'address'},
-            {data: 'phone'},
-            {data: 'email'},
-            {data: 'birthDay'},
-            {data: 'position.name'},
+            {data: 'address', orderable: false, searchable: false},
+            {data: 'phone', orderable: false},
+            {data: 'email', orderable: false},
+            {data: 'birthDay', searchable: false},
+            {data: 'position.name', searchable: false},
             {
                 data: 'id', render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-warning restoreStaff" data-id="${data}"><i class="fa fa-undo"></i></button>`;
-                }
+                }, orderable: false
             },
         ],
     });

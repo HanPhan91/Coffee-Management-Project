@@ -23,9 +23,11 @@ public class BillDetail {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @OneToOne
-    @JoinColumn(name = "id_drink")
-    private Drink drink;
+    @Column(name = "drink_name")
+    private String drink;
+
+    @Column(name = "drink_price")
+    private BigDecimal drinkPrice;
 
     private int quantity;
 

@@ -76,105 +76,102 @@
                             </div>
                         </div>
                         <div class="header-right">
-                            <kv-cashier-cart-tabs>
-                                <kv-group-tabs>
+<!--                            <kv-cashier-cart-tabs>-->
+<!--                                <kv-group-tabs>-->
 
-                                    <div class="header-tab-wrap">
-                                        <ul>
+<!--                                    <div class="header-tab-wrap">-->
+<!--                                        <ul>-->
 
-                                            <li class="active largest"><a class="active"
-                                                                          title="Lầu 3 /  Bàn 12 -  1-9">
+<!--                                            <li class="active largest"><a class="active"-->
+<!--                                                                          title="Lầu 3 /  Bàn 12 -  1-9">-->
 
 
-                                                <span> 1-9&nbsp; </span></a>
-                                                <span class="close-tab" title="Đóng"><i
-                                                        class="far fa-times"></i></span></li>
+<!--                                                <span> 1-9&nbsp; </span></a>-->
+<!--                                                <span class="close-tab" title="Đóng"><i-->
+<!--                                                        class="far fa-times"></i></span></li>-->
 
-                                            <li class="list-invoice">
+<!--                                            <li class="list-invoice">-->
 
-                                                <a href="javascript:void(0);"> 1-71 </a></li>
+<!--                                                <a href="javascript:void(0);"> 1-71 </a></li>-->
 
-                                            <li class="add-btn"><a href="javascript:void(0);"
-                                                                   skip-disable="" title="Thêm mới"><i
-                                                    class="fal fa-plus"></i></a></li>
-                                        </ul>
-                                    </div>
+<!--                                            <li class="add-btn"><a href="javascript:void(0);"-->
+<!--                                                                   skip-disable="" title="Thêm mới"><i-->
+<!--                                                    class="fal fa-plus"></i></a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
 
-                                </kv-group-tabs>
-                            </kv-cashier-cart-tabs>
+<!--                                </kv-group-tabs>-->
+<!--                            </kv-cashier-cart-tabs>-->
                             <kv-cashier-menu>
-
-
                                 <ul class="header-right-ul pull-right">
 
-                                    <li class="bell-button"><a id="volumeControlCashier"
-                                                               title="Tắt chuông" class="belloff"><i
-                                            class="fas fa-bullhorn"></i></a>
-                                    </li>
+<!--                                    <li class="bell-button"><a id="volumeControlCashier"-->
+<!--                                                               title="Tắt chuông" class="belloff"><i-->
+<!--                                            class="fas fa-bullhorn"></i></a>-->
+<!--                                    </li>-->
 
-                                    <li><a href="javascript:void(0);" outsideclick="true"
-                                           placement="bottom" skip-disable="">
-                                        <i aria-hidden="true" class="fa fa-globe-americas"></i></a></li>
-                                    <li><a href="javascript:void(0);" skip-disable="">
-                                        <i aria-hidden="true" class="fa fa-refresh"></i></a></li>
-                                    <li class="bell-button print-button"><a
-                                            href="javascript:void(0);" outsideclick="true" placement="bottom"
-                                            skip-disable="" class=""><i
-                                            aria-hidden="true" class="fa fa-print"></i></a></li>
-                                    <li class="user-name"><a skip-disable=""><span
-                                    > 0983808444 </span></a></li>
+<!--                                    <li><a href="javascript:void(0);" outsideclick="true"-->
+<!--                                           placement="bottom" skip-disable="">-->
+<!--                                        <i aria-hidden="true" class="fa fa-globe-americas"></i></a></li>-->
+<!--                                    <li><a href="javascript:void(0);" skip-disable="">-->
+<!--                                        <i aria-hidden="true" class="fa fa-refresh"></i></a></li>-->
+<!--                                    <li class="bell-button print-button"><a-->
+<!--                                            href="javascript:void(0);" outsideclick="true" placement="bottom"-->
+<!--                                            skip-disable="" class=""><i-->
+<!--                                            aria-hidden="true" class="fa fa-print"></i></a></li>-->
+                                    <li class="user-name"><a skip-disable="">
+                                        <th:block>
+                                        <span th:text="${user.staff.name}"></span>
+                                        </th:block></a></li>
                                     <li class="menu-bar"><a class="list-bar"
                                                             skip-disable=""><i class="fa fa-navicon"></i></a>
-                                        <ul>
+<!--                                        <ul>-->
 
-                                            <li><a skip-disable=""
-                                                   href="https://fnb.kiotviet.vn/0983808444/pos/#/kitchen"><i
-                                                    class="fas fa-concierge-bell fa-fw"></i><span translate="">Nhà
-                              bếp</span></a></li>
+<!--                                            <li><a skip-disable=""-->
+<!--                                                   href="https://fnb.kiotviet.vn/0983808444/pos/#/kitchen"><i-->
+<!--                                                    class="fas fa-concierge-bell fa-fw"></i><span translate="">Nhà bếp</span></a></li>-->
 
-                                            <li><a skip-disable=""
-                                                   href="https://fnb.kiotviet.vn/0983808444/pos/#/reception"><i
-                                                    class="fa-fw fas fa-calendar-check"></i><span translate="">Lễ
-                              tân</span></a></li>
-                                            <li>
-                                                <a href="javascript:;" skip-disable=""><i
-                                                        class="fa-fw fas fa-list"></i><span translate="">Xem danh sách đặt
-                              bàn</span></a></li>
+<!--                                            <li><a skip-disable=""-->
+<!--                                                   href="https://fnb.kiotviet.vn/0983808444/pos/#/reception"><i-->
+<!--                                                    class="fa-fw fas fa-calendar-check"></i><span translate="">Lễ-->
+<!--                              tân</span></a></li>-->
+<!--                                            <li>-->
+<!--                                                <a href="javascript:;" skip-disable=""><i-->
+<!--                                                        class="fa-fw fas fa-list"></i><span translate="">Xem danh sách đặt-->
+<!--                              bàn</span></a></li>-->
 
-                                            <li><a skip-disable=""><i
-                                                    class="fa fa-align-left fa-fw"></i><span translate="">Xem báo cáo
-                              cuối ngày</span></a></li>
+<!--                                            <li><a skip-disable=""><i-->
+<!--                                                    class="fa fa-align-left fa-fw"></i><span translate="">Xem báo cáo-->
+<!--                              cuối ngày</span></a></li>-->
 
-                                            <li><a href="javascript:void(0);" skip-disable=""><i
-                                                    class="fa fa-mail-reply-all fa-fw"></i><span
-                                                    translate="">Chọn hóa đơn trả hàng</span></a></li>
+<!--                                            <li><a href="javascript:void(0);" skip-disable=""><i-->
+<!--                                                    class="fa fa-mail-reply-all fa-fw"></i><span-->
+<!--                                                    translate="">Chọn hóa đơn trả hàng</span></a></li>-->
 
-                                            <li><a skip-disable=""><i
-                                                    class="fa fa-file-text-o fa-fw"></i><span translate="">Lập phiếu
-                              thu</span></a></li>
+<!--                                            <li><a skip-disable=""><i-->
+<!--                                                    class="fa fa-file-text-o fa-fw"></i><span translate="">Lập phiếu-->
+<!--                              thu</span></a></li>-->
 
-                                            <li><a skip-disable=""><i
-                                                    class="fa fa-eye-slash fa-fw"></i><span translate=""><span
-                                                    translate="">Tùy chọn hiển thị</span></span></a></li>
-                                            <li>
-                                                <a skip-disable=""
-                                                   href="https://fnb.kiotviet.vn/0983808444/#/Invoices"><i
-                                                        class="fa fa-list-alt fa-fw"></i><span translate="">Quản
-                              lý</span></a>
+<!--                                            <li><a skip-disable=""><i-->
+<!--                                                    class="fa fa-eye-slash fa-fw"></i><span translate=""><span-->
+<!--                                                    translate="">Tùy chọn hiển thị</span></span></a></li>-->
+<!--                                            <li>-->
+<!--                                                <a skip-disable=""-->
+<!--                                                   href="https://fnb.kiotviet.vn/0983808444/#/Invoices"><i-->
+<!--                                                        class="fa fa-list-alt fa-fw"></i><span translate="">Quản-->
+<!--                              lý</span></a>-->
 
-                                            </li>
+<!--                                            </li>-->
 
-                                            <li><a skip-disable="" target="_blank"><i
-                                                    class="fas fa-desktop fa-fw"></i><span
-                                                    translate="">Màn hình phụ</span></a></li>
-                                            <li><a href="javascript:void(0);" skip-disable=""><i
-                                                    class="fa fa-external-link fa-fw"></i><span
-                                                    translate="">Đăng xuất</span></a></li>
-                                        </ul>
+<!--                                            <li><a skip-disable="" target="_blank"><i-->
+<!--                                                    class="fas fa-desktop fa-fw"></i><span-->
+<!--                                                    translate="">Màn hình phụ</span></a></li>-->
+<!--                                            <li><a href="javascript:void(0);" skip-disable=""><i-->
+<!--                                                    class="fa fa-external-link fa-fw"></i><span-->
+<!--                                                    translate="">Đăng xuất</span></a></li>-->
+<!--                                        </ul>-->
                                     </li>
                                 </ul>
-
-
                             </kv-cashier-menu>
                         </div>
                     </div>
@@ -182,29 +179,29 @@
                 <div class="wrap-content">
                     <div class="col-left col-table">
                         <kv-cashier-table-container class="cashier-table">
-                            <div class="list-filter">
-                                <div class="swiper-category none-swiper-btn">
-                                    <div
-                                            class="swiper-container swiper-container-initialized swiper-container-horizontal">
-                                        <div class="swiper-wrapper">
+<!--                            <div class="list-filter">-->
+<!--                                <div class="swiper-category none-swiper-btn">-->
+<!--                                    <div-->
+<!--                                            class="swiper-container swiper-container-initialized swiper-container-horizontal">-->
+<!--                                        <div class="swiper-wrapper">-->
 
-                                            <div class="swiper-slide swiper-slide-active" style="margin-right: 30px;">
-                                                <a data-tab-index="1" skip-disable="" class="active"> Tất cả </a></div>
-                                            <div class="swiper-slide swiper-slide-next" style="margin-right: 30px;"><a
-                                                    data-tab-index="2" skip-disable=""> Lầu 2 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="3" skip-disable=""> Lầu 3 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="4" skip-disable=""> Nhom 1 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="5" skip-disable="" class=""> Phòng VIP </a></div>
-                                        </div>
-                                        <span class="swiper-notification" aria-live="assertive"
-                                              aria-atomic="true"></span>
-                                    </div>
+<!--                                            <div class="swiper-slide swiper-slide-active" style="margin-right: 30px;">-->
+<!--                                                <a data-tab-index="1" skip-disable="" class="active"> Tất cả </a></div>-->
+<!--                                            <div class="swiper-slide swiper-slide-next" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="2" skip-disable=""> Lầu 2 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="3" skip-disable=""> Lầu 3 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="4" skip-disable=""> Nhom 1 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="5" skip-disable="" class=""> Phòng VIP </a></div>-->
+<!--                                        </div>-->
+<!--                                        <span class="swiper-notification" aria-live="assertive"-->
+<!--                                              aria-atomic="true"></span>-->
+<!--                                    </div>-->
 
-                                </div>
-                            </div>
+<!--                                </div>-->
+<!--                            </div>-->
                             <kv-cashier-table-list>
                                 <div class="table-actions">
                                     <div class="form-inline">

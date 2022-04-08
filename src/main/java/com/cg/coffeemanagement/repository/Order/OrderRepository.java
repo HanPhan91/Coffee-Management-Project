@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
-    Optional<Order> getByCoffeeTableId(Long id);
+    Optional<Order> getByCoffeeTable(Long id);
 
     void deleteOrderById(Long id);
 

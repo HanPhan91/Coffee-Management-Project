@@ -53,7 +53,6 @@
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
-                            <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
                             <th scope="col" class="fw-bold fs-5">Avatar</th>
                             <th scope="col" class="text-center fw-bold fs-5">Thao tác</th>
                         </tr>
@@ -98,13 +97,11 @@
 <script th:inline="javascript">
     var listUser = [[${users}]];
     $("#tblUserDelete").DataTable({
-        "ordering": false,
         data: listUser,
         columns: [
             {data: 'username'},
             {data: 'staff.name'},
-            {data: 'staff.position.name'},
-            {data: 'staff.createAt'},
+            {data: 'staff.position.name', searchable: false},
             {
                 data: 'avatar.fileUrl', render: function (data, type, row, meta) {
                     // var img = data.fileUrl;

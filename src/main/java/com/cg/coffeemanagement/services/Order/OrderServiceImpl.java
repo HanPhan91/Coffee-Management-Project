@@ -48,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> getByCoffeeTableId(Long id) {
-        return orderRepository.getByCoffeeTableId(id);
+    public Optional<Order> getByCoffeeTable(Long id) {
+        return orderRepository.getByCoffeeTable(id);
     }
 
     @Override

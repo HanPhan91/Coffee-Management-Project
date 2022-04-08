@@ -378,7 +378,8 @@ $("#createOrder").on('click', function () {
         data: JSON.stringify(order)
     })
         .done(function (data) {
-            swal("thành công", "tạo order thành công","success");
+            swal("Thành công", "Tạo order thành công","success").then(function () {
+                location.reload()});
         })
         .fail(function (resp){
             console.log(resp);
@@ -395,7 +396,8 @@ $("#createBill").on('click',function (){
         url: "/api/orders/pay/"+ OrderId,
     })
         .done(function (data) {
-            swal("thành công","tạo hoá đơn thành công")
+            swal("Thành công","Thanh toán thành công", "success").then(function () {
+                location.reload()});
         })
         .fail(function (resp){
             console.log(resp);

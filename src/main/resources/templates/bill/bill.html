@@ -80,13 +80,15 @@
         rowId: 'id',
         selected: true,
         columns: [
-            {data: 'id'},
+            {data: 'id', render: function (data) {
+                   return `<a href="javascript:void(0)" class="showDetail" data-id="${data}">${data}</a>`;
+                }},
             {
                 data: 'createdAt', render: function (data) {
                     return data.slice(0, 19);
                 }
             },
-            {data: 'table.name'},
+            {data: 'coffeeTable'},
             {
                 data: 'subAmount', render: function (data) {
                     return `${App.formatNumberSpace(data)} VNĐ`;
@@ -105,19 +107,19 @@
                 }, className: 'text-end'
             },
             {
-                data: 'user', render: function (data) {
+                data: 'staffName', render: function (data) {
                     if (data == null)
                         return null;
                     else
-                        return 'user.staff.name';
+                        return `${data}`;
                 }
             },
         ],
     });
 </script>
 <script>
-    $("#tblBill").on('click', 'tr', function () {
-        let id = table.row(this).id();
+    $("a.showDetail").on('click', function () {
+        let id = $(this).data("id");
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -131,9 +133,9 @@
                 for (let i = 0; i < data.length; i++) {
                     str+= `
                     <tr>
-                        <td>${data[i].drink.name}</td>
+                        <td>${data[i].drink}</td>
                         <td class="text-center">${data[i].quantity}</td>
-                        <td class="text-end">${App.formatNumberSpace(data[i].drink.price)} VNĐ</td>
+                        <td class="text-end">${App.formatNumberSpace(data[i].drinkPrice)} VNĐ</td>
                         <td class="text-end">${App.formatNumberSpace(data[i].totalPrice)} VNĐ</td>
                     </tr>
                 `;

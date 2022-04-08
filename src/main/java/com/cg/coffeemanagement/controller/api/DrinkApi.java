@@ -83,12 +83,8 @@ public class DrinkApi {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> doUpdate(@PathVariable Long id, @Validated DrinkDto drinkDto, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
-        }
-        if (drinkService.existsByName(drinkDto.getName())) {
-            throw new DataInputException("Thức uống đã tồn tại");
         }
         Optional<Drink> drink = drinkService.findById(id);
         if (drink.isPresent()) {
@@ -120,7 +116,6 @@ public class DrinkApi {
 
     @PutMapping("/restore/{id}")
     public ResponseEntity<?> doRestore(@PathVariable Long id , @Validated DrinkDto drinkDto, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return appUtil.mapErrorToResponse(bindingResult);
         }
