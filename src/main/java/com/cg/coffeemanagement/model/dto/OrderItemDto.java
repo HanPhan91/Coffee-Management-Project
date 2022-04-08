@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class OrderItemDto {
     @Autowired
     DrinkService drinkService;
@@ -27,7 +28,7 @@ public class OrderItemDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long drink;
+    private Drink drink;
 
     private int quantity;
 
@@ -35,6 +36,9 @@ public class OrderItemDto {
 
     public OrderItem toOderItem() {
         return new OrderItem()
-                .setQuantity(quantity);
+                .setId(id)
+                .setDrink(drink)
+                .setQuantity(quantity)
+                .setTotalPrice(totalPrice);
     }
 }

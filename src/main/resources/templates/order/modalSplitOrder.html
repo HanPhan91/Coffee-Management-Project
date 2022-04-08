@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalSplitOrder">
+    <div class="modal" id="modalSplitOrder">
+        <kv-modal _nghost-ekl-c30="">
+            <!---->
+
+            <div _ngcontent-ekl-c30="" class="modal-header ui-draggable-handle"><h4 _ngcontent-ekl-c30=""
+                                                                                    class="modal-title pull-left">6-3 -
+                Bàn 17 Lầu 3</h4>
+                <button _ngcontent-ekl-c30="" aria-label="Close" class="close pull-right" skip-disable="" type="button">
+                    <i _ngcontent-ekl-c30="" class="fal fa-times"></i></button>
+            </div>
+            <!---->
+
+            <div _ngcontent-ekl-c30="">
+            </div>
+            <kv-cashier-table-changing _nghost-ekl-c31="">
+                <!---->
+                <!---->
+
+                <div _ngcontent-ekl-c31="" class="table-changing form-wraper modal-body" skip-disable="">
+
+<!--                    <div _ngcontent-ekl-c31="" class="form-label-80">-->
+
+<!--                        <div _ngcontent-ekl-c31="" class="form-group checkbox-changing">-->
+
+<!--                            <div _ngcontent-ekl-c31="" class="form-control-static">-->
+<!--                                -->
+<!--                                <label _ngcontent-ekl-c31="" class="radio-inline">-->
+<!--                                    <input _ngcontent-ekl-c31="" name="orderActions" type="radio" value="merge">-->
+
+<!--                                    <span _ngcontent-ekl-c31="" translate="">Ghép đơn-->
+<!--</span>-->
+<!--                                </label>-->
+<!--                                -->
+<!--                                <label _ngcontent-ekl-c31="" class="radio-inline">-->
+<!--                                    <input _ngcontent-ekl-c31="" name="orderActions" type="radio" value="split">-->
+
+<!--                                    <span _ngcontent-ekl-c31="" translate="">Tách đơn-->
+<!--</span>-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!---->
+                    <!---->
+                    <kv-cashier-split-order _ngcontent-ekl-c31="" _nghost-ekl-c33="">
+
+                        <div _ngcontent-ekl-c33="" class="form-group">
+                            <label _ngcontent-ekl-c33="" class="form-label control-label" translate="">Tách đến
+                            </label>
+<!--div chọn bàn chuyển đến -->
+                            <div _ngcontent-ekl-c33="" class="form-inline form-output">
+
+                                <div _ngcontent-ekl-c33="" class="form-group">
+                                    <kendo-dropdownlist _ngcontent-ekl-c33=""
+                                                        class="form-control k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"
+                                                        dir="ltr">
+                                        <!---->
+
+                                        <span aria-haspopup="listbox" role="listbox" unselectable="on"
+                                              class="k-dropdown-wrap k-state-default"
+                                              id="k-cb46a24f-3061-4948-97f8-3ef884bfaf96" dir="ltr" readonly="false"
+                                              tabindex="0" aria-disabled="false" aria-readonly="false"
+                                              aria-expanded="false"
+                                              aria-activedescendant="94d02632-981e-4dcf-acd3-1ac804b7a863-null"
+                                              aria-describedby="63c03d4d-ab50-41e5-a169-69c59ac23cef">
+
+<span class="k-input" unselectable="on" id="63c03d4d-ab50-41e5-a169-69c59ac23cef">
+<!---->
+    <!----> Tạo đơn mới
+    <!---->
+    <!---->
+</span>
+
+<span class="k-select" unselectable="on">
+
+<span class="k-icon k-i-arrow-s">
+</span>
+</span>
+                                            <!---->
+</span>
+                                        <!---->
+                                        <!----></kendo-dropdownlist>
+                                </div>
+                                <!---->
+
+                                <div _ngcontent-ekl-c33="" class="form-group">
+                                    <kendo-dropdownlist _ngcontent-ekl-c33=""
+                                                        class="form-control k-widget k-dropdown k-header ng-valid ng-dirty ng-touched"
+                                                        dir="ltr">
+                                        <!---->
+
+                                        <span aria-haspopup="listbox" role="listbox" unselectable="on"
+                                              class="k-dropdown-wrap k-state-default"
+                                              id="k-3abb4bef-e660-4fac-ba7b-619f63124e67" dir="ltr" readonly="false"
+                                              tabindex="0" aria-disabled="false" aria-readonly="false"
+                                              aria-expanded="false"
+                                              aria-activedescendant="79a4c960-5436-4145-a119-2588a8eb02dd-637356"
+                                              aria-describedby="0f155097-7ae2-4c72-a833-84d7647bece3">
+
+<span class="k-input" unselectable="on" id="0f155097-7ae2-4c72-a833-84d7647bece3">
+<!---->
+    <!---->Bàn 17
+</span>
+
+<span class="k-select" unselectable="on">
+
+<span class="k-icon k-i-arrow-s">
+</span>
+</span>
+                                            <!---->
+</span>
+                                        <!---->
+                                        <!----></kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
+<!--end div chọn bàn chuyển đến -->
+
+
+
+                        <!--form hiển thị danh sách item trong order cần tách-->
+                        <div _ngcontent-ekl-c33="" class="product-cart-list form-products">
+
+                            <div _ngcontent-ekl-c33="" class="child-product-list">
+                                <!---->
+                                <div _ngcontent-ekl-c33="" class="product-groups">
+                                    <!----><h4 _ngcontent-ekl-c33="" class="title-products">Khác</h4>
+                                    <!---->
+
+                                    <div _ngcontent-ekl-c33="" class="row-list row-list-header">
+
+                                        <div _ngcontent-ekl-c33="" class="cell-change-price text-center" translate="">SL
+                                            trên đơn gốc
+                                        </div>
+
+                                        <div _ngcontent-ekl-c33="" class="cell-quatity" translate="">SL tách
+                                        </div>
+                                    </div>
+
+                                    <div _ngcontent-ekl-c33="">
+                                        <!---->
+
+                                        <div _ngcontent-ekl-c33="" class="row-list row-list-active">
+
+                                            <div _ngcontent-ekl-c33="" class="cell-order"> 1
+                                            </div>
+
+                                            <div _ngcontent-ekl-c33="" class="row-product">
+
+                                                <div _ngcontent-ekl-c33="" class="cell-name"><h4 _ngcontent-ekl-c33="">
+                                                    Lipton with milk
+                                                    <!---->
+                                                    <!----></h4>
+                                                    <!---->
+
+                                                    <div _ngcontent-ekl-c33="" class="list-topping">
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-change-price"> 2
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-quatity">
+
+                                                    <div _ngcontent-ekl-c33="" class="cell-quantity-inner">
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon down"
+                                                                type="button"><i _ngcontent-ekl-c33=""
+                                                                                 class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33=""
+                                                                class="form-control form-control-sm"> 0
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon up" type="button">
+                                                            <i _ngcontent-ekl-c33="" class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-ekl-c33="" class="row-list row-list-active">
+
+                                            <div _ngcontent-ekl-c33="" class="cell-order"> 2
+                                            </div>
+
+                                            <div _ngcontent-ekl-c33="" class="row-product">
+
+                                                <div _ngcontent-ekl-c33="" class="cell-name"><h4 _ngcontent-ekl-c33="">
+                                                    Mint Tea
+                                                    <!---->
+                                                    <!----></h4>
+                                                    <!---->
+
+                                                    <div _ngcontent-ekl-c33="" class="list-topping">
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-change-price"> 1
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-quatity">
+
+                                                    <div _ngcontent-ekl-c33="" class="cell-quantity-inner">
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon down"
+                                                                type="button"><i _ngcontent-ekl-c33=""
+                                                                                 class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33=""
+                                                                class="form-control form-control-sm"> 0
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon up" type="button">
+                                                            <i _ngcontent-ekl-c33="" class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-ekl-c33="" class="row-list row-list-active">
+
+                                            <div _ngcontent-ekl-c33="" class="cell-order"> 3
+                                            </div>
+
+                                            <div _ngcontent-ekl-c33="" class="row-product">
+
+                                                <div _ngcontent-ekl-c33="" class="cell-name"><h4 _ngcontent-ekl-c33="">
+                                                    Peach Tea
+                                                    <!---->
+                                                    <!----></h4>
+                                                    <!---->
+
+                                                    <div _ngcontent-ekl-c33="" class="list-topping">
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-change-price"> 1
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-quatity">
+
+                                                    <div _ngcontent-ekl-c33="" class="cell-quantity-inner">
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon down"
+                                                                type="button"><i _ngcontent-ekl-c33=""
+                                                                                 class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33=""
+                                                                class="form-control form-control-sm"> 0
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon up" type="button">
+                                                            <i _ngcontent-ekl-c33="" class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-ekl-c33="" class="row-list row-list-active">
+
+                                            <div _ngcontent-ekl-c33="" class="cell-order"> 4
+                                            </div>
+
+                                            <div _ngcontent-ekl-c33="" class="row-product">
+
+                                                <div _ngcontent-ekl-c33="" class="cell-name"><h4 _ngcontent-ekl-c33="">
+                                                    Lemon Tea
+                                                    <!---->
+                                                    <!----></h4>
+                                                    <!---->
+
+                                                    <div _ngcontent-ekl-c33="" class="list-topping">
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-change-price"> 1
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-quatity">
+
+                                                    <div _ngcontent-ekl-c33="" class="cell-quantity-inner">
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon down"
+                                                                type="button"><i _ngcontent-ekl-c33=""
+                                                                                 class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33=""
+                                                                class="form-control form-control-sm"> 0
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon up" type="button">
+                                                            <i _ngcontent-ekl-c33="" class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-ekl-c33="" class="row-list row-list-active">
+
+                                            <div _ngcontent-ekl-c33="" class="cell-order"> 5
+                                            </div>
+
+                                            <div _ngcontent-ekl-c33="" class="row-product">
+
+                                                <div _ngcontent-ekl-c33="" class="cell-name"><h4 _ngcontent-ekl-c33="">
+                                                    Lemon Juice
+                                                    <!---->
+                                                    <!----></h4>
+                                                    <!---->
+
+                                                    <div _ngcontent-ekl-c33="" class="list-topping">
+                                                        <!---->
+                                                    </div>
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-change-price"> 1
+                                                </div>
+                                                <!---->
+
+                                                <div _ngcontent-ekl-c33="" class="cell-quatity">
+
+                                                    <div _ngcontent-ekl-c33="" class="cell-quantity-inner">
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon down"
+                                                                type="button"><i _ngcontent-ekl-c33=""
+                                                                                 class="fas fa-minus-circle"></i>
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33=""
+                                                                class="form-control form-control-sm"> 0
+                                                        </button>
+                                                        <button _ngcontent-ekl-c33="" class="btn-icon up" type="button">
+                                                            <i _ngcontent-ekl-c33="" class="fas fa-plus-circle"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </kv-cashier-split-order>
+                </div>
+<!--end div hiển thị item trong order cần tách-->
+                <div _ngcontent-ekl-c31="" class="modal-footer">
+                    <button _ngcontent-ekl-c31="" class="btn btn-primary"><i _ngcontent-ekl-c31=""
+                                                                             class="fa fa-check-square"></i>
+
+                        <span _ngcontent-ekl-c31="" translate="">Thực hiện
+</span></button>
+                    <a _ngcontent-ekl-c31="" class="btn btn-default"><i _ngcontent-ekl-c31="" class="fa fa-ban"></i>
+
+                        <span _ngcontent-ekl-c31="" translate="">Bỏ qua
+</span></a>
+                </div>
+            </kv-cashier-table-changing>
+            <!---->
+            <!----></kv-modal>
+    </div>
+</th:block>

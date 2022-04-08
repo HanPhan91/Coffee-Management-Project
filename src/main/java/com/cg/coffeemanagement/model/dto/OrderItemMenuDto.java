@@ -1,0 +1,36 @@
+package com.cg.coffeemanagement.model.dto;
+
+import com.cg.coffeemanagement.model.Drink;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
+public class OrderItemMenuDto {
+
+    private Long id;
+
+    private String name;
+
+    private int quantity;
+
+    private BigDecimal totalPrice;
+
+    public OrderItemDto toOrderItemDto(Drink drink) {
+        return new OrderItemDto()
+                .setId(id)
+                .setDrink(drink)
+                .setQuantity(quantity)
+                .setTotalPrice(totalPrice);
+    }
+
+}

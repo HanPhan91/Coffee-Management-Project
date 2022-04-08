@@ -1,5 +1,9 @@
 package com.cg.coffeemanagement.model;
 
+<<<<<<< HEAD
+=======
+import com.cg.coffeemanagement.model.dto.OrderItemDto;
+>>>>>>> main
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,4 +47,6 @@ public class OrderItem {
                 .setQuantity(quantity)
                 .setTotalPrice(totalPrice);
     }
+
+
 }

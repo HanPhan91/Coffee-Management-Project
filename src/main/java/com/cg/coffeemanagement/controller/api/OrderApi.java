@@ -5,9 +5,8 @@ import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.dto.OrderItemDto;
-import com.cg.coffeemanagement.repository.Bill.BillRepository;
-import com.cg.coffeemanagement.repository.BillDetail.BillDetailRepository;
-import com.cg.coffeemanagement.repository.OrderItem.OrderItemRepository;
+import com.cg.coffeemanagement.model.dto.OrderItemMenuDto;
+
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.BillDetailService.BillDetailService;
 import com.cg.coffeemanagement.services.Drink.DrinkService;
@@ -62,15 +61,22 @@ public class OrderApi {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> showOrderByIdTable(@PathVariable Long id) {
-        Order order = orderService.getByCoffeeTableId(id).get();
-        List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
-        return new ResponseEntity<>(orderItems, HttpStatus.OK);
+        Optional<Order> order = orderService.getByCoffeeTableId(id);
+//        List<OrderItem> orderItems = orderItemService.findAllByOrder(order.get());
+
+        List<OrderItemMenuDto> orderItemMenuDto = orderItemService.findAllOrderItemMenuDTOByOrder(order.get());
+
+        return new ResponseEntity<>(orderItemMenuDto, HttpStatus.OK);
     }
 
 
     @PostMapping("/create/{idtable}")
+<<<<<<< HEAD
     public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemDto> listOrders, @RequestParam String discount) {
         User user = userService.getByUsername(Principal.getPrincipal()).get();
+=======
+    public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemMenuDto> listMenuOrders, @RequestParam String discount) {
+>>>>>>> main
         int percentDiscount;
         Discount activeDiscount = null;
         if (discount.isEmpty()) {
@@ -84,18 +90,30 @@ public class OrderApi {
                 throw new DataInputException("Voucher không tồn tại hoặc đã hết hạn sử dụng");
             }
         }
+
         Optional<Order> opOrder = orderService.getByCoffeeTableId(idtable);
         if (opOrder.isPresent()) {
             Order order = opOrder.get();
-            for (OrderItemDto orderItemDto : listOrders) {
+            List<OrderItemDto> orderItemDtoList = new ArrayList<>();
+
+            for (OrderItemMenuDto orderItemMenuDto : listMenuOrders) {
+                Drink drink = drinkService.findById(orderItemMenuDto.getId()).get();
+
+                orderItemDtoList.add(orderItemMenuDto.toOrderItemDto(drink));
+            }
+
+            orderItemService.deleteAllByOrder(order);
+
+            for (OrderItemDto orderItemDto : orderItemDtoList) {
                 OrderItem orderItem = orderItemDto.toOderItem();
-                Drink drink = drinkService.findById(orderItemDto.getDrink()).get();
+                Drink drink = drinkService.findById(orderItemDto.getId()).get();
                 orderItem.setDrink(drink);
                 BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItemDto.getQuantity()));
                 orderItem.setTotalPrice(totalPrice);
                 orderItem.setOrder(order);
                 orderItemService.save(orderItem);
             }
+
             BigDecimal subPrice = orderItemService.calcSubAmount(order.getId());
             order.setSubAmount(subPrice);
             order.setDiscount(activeDiscount);
@@ -160,7 +178,7 @@ public class OrderApi {
                 Order newOrder = opNewOrder.get();
                 for (OrderItemDto orderItemDto : listOrders) {
                     for (OrderItem orderItem : listOldOrder) {
-                        if (orderItem.getDrink().getId().compareTo(orderItemDto.getDrink()) == 0) {
+                        if (orderItem.getDrink().getId().compareTo(orderItemDto.getId()) == 0) {
                             int quantity = orderItem.getQuantity() - orderItemDto.getQuantity();
                             if (quantity == 0) {
                                 listOldOrder.remove(orderItem);
@@ -171,7 +189,7 @@ public class OrderApi {
                         }
                     }
                     OrderItem orderItem = orderItemDto.toOderItem();
-                    Drink drink = drinkService.findById(orderItemDto.getDrink()).get();
+                    Drink drink = drinkService.findById(orderItemDto.getId()).get();
                     orderItem.setDrink(drink);
                     BigDecimal totalPrice = drink.getPrice().multiply(BigDecimal.valueOf(orderItemDto.getQuantity()));
                     orderItem.setTotalPrice(totalPrice);

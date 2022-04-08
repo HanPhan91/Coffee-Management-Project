@@ -3,6 +3,8 @@ package com.cg.coffeemanagement.services.OrderItem;
 
 import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.OrderItem;
+import com.cg.coffeemanagement.model.dto.OrderItemDto;
+import com.cg.coffeemanagement.model.dto.OrderItemMenuDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
@@ -43,5 +45,10 @@ public interface OrderItemService extends IGeneralServices<OrderItem> {
 
     List<OrderItem> findAllByOrder(Order order);
 
+//    List<OrderItemMenuDto> findAllOrderItemMenuDTOByOrder(String idOrder);
+
+    List<OrderItemMenuDto> findAllOrderItemMenuDTOByOrder(Order objOrder);
+
     BigDecimal calcSubAmount(@Param("order") Long id);
+
 }
