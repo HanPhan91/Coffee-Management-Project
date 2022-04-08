@@ -40,10 +40,25 @@ public class Order {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
     public Order newOrder(){
         return new Order()
                 .setId(id)
                 .setCoffeeTable(coffeeTable);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderItem=" + orderItem +
+                ", coffeeTable=" + coffeeTable +
+                ", subAmount=" + subAmount +
+                ", discount=" + discount +
+                ", totalAmount=" + totalAmount +
+                '}';
     }
 }

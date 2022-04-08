@@ -3,7 +3,7 @@
 <head>
 
     <th:block th:fragment="listDeleted"
-            th:replace="layout/head :: head"/>
+              th:replace="layout/head :: head"/>
     <meta charset="UTF-8">
     <title>Quản lý danh mục đã xoá</title>
     <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
@@ -48,29 +48,42 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Danh mục thức uống đã ẩn</h1>
             </div>
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-outline-primary" href="/catalogs">
+                            <i class="fa fa-arrow-left"></i>
+                            Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="row justify-content-center">
-                <table class="table table-hover w-75" id="tblCatalog">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Tên danh mục</th>
-                        <th scope="col" class="text-center">Khôi phục</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:each="catalog: ${catalogs}">
-                        <tr th:id="'tr_'+ ${catalog.id}">
-                            <td th:text="${catalog.id}"></td>
-                            <td th:text="${catalog.catalogName}"></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-outline-danger restoreCatalog" th:data-id="${catalog.id}">
-                                    <i class="fas fa-trash-restore"></i>
-                                </button>
-                            </td>
+                <div class="col mb-2 text-center">
+                    <table class="table table-hover" id="tblCatalog">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">ID</th>
+                            <th scope="col" class="fw-bold fs-5">Tên danh mục</th>
+                            <th scope="col" colspan="2" class="fw-bold fs-5 text-center">Thao tác</th>
                         </tr>
-                    </th:block>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <!--                    <th:block th:each="catalog: ${catalogs}">-->
+                        <!--                        <tr th:id="'tr_'+ ${catalog.id}">-->
+                        <!--                            <td th:text="${catalog.id}"></td>-->
+                        <!--                            <td th:text="${catalog.catalogName}"></td>-->
+                        <!--                            <td class="text-center">-->
+                        <!--                                <button type="button" class="btn btn-outline-danger restoreCatalog"-->
+                        <!--                                        th:data-id="${catalog.id}">-->
+                        <!--                                    <i class="fas fa-trash-restore"></i>-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                    </th:block>-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>        <!-- ============================================================== -->
         <!-- End Container fluid  -->
@@ -86,10 +99,42 @@
 </div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="catalog/modalRestoreCatalog :: modalRestoreCatalog"/>
+<script th:inline="javascript">
+    var listCatalog = [[${catalogs}]];
+    $("#tblCatalog").DataTable({
+        data: listCatalog,
+        columns: [
+            {data: 'id'},
+            {data: 'catalogName'},
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button type="button" class="btn btn-outline-danger restoreCatalog" data-id="${data}">
+                            <i class="fas fa-trash-restore"></i></button>`;
+                }
+            },
+        ],
+    });
 
-<script src="/assets/App/validatedTable.js"></script>
+</script>
 <script>
-
+    handlerShowModalRestoreCatalog();
+    function handlerShowModalRestoreCatalog() {
+        $("button.restoreCatalog").on("click", function () {
+            let id = $(this).data("id");
+            $.ajax({
+                type: "GET",
+                url: "/api/catalogs/" + id
+            })
+                .done(function (data) {
+                    $("#idCatalogRestore").val(data.id);
+                    $("#catalogNameRestore").val(data.catalogName);
+                    $("#modalRestoreCatalog").modal("show");
+                })
+                .fail(function (resp) {
+                    alert("Show modal restore catalog error");
+                })
+        });
+    };
 </script>
 </body>
 </html>

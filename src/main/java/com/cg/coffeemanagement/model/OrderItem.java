@@ -1,5 +1,6 @@
 package com.cg.coffeemanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +29,14 @@ public class OrderItem {
 
     private int quantity;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cart")
     private Order order;
 
     private BigDecimal totalPrice;
 
-    public BillDetail toBillDetail(){
+    public BillDetail toBillDetail() {
         return new BillDetail()
                 .setId(id)
                 .setDrink(drink)

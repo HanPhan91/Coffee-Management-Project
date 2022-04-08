@@ -52,6 +52,16 @@
             <div class="row">
                 <div class="col mb-2">
                     <div class="d-flex justify-content-end">
+                        <a type="button" class="btn btn-outline-secondary create" href="/catalogs">
+                            <i class="fa fa-plus-square"></i>
+                            Quản lý danh mục thức uống
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-primary create">
                             <i class="fa fa-plus-square"></i>
                             Thêm thức uống mới
@@ -62,13 +72,13 @@
             <div class="row" id="row_tbl">
                 <div class="col text-center">
                     <table class="table table-striped" id="tblDrink">
-                        <thead>
+                        <thead class="text-center">
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
-                            <th scope="col" class="fw-bold fs-5">Giá</th>
-                            <th scope="col" class="fw-bold fs-5">Danh mục</th>
-                            <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
-                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                            <th scope="col" class="fw-bold fs-5 ">Giá (VNĐ)</th>
+                            <th scope="col" class="fw-bold fs-5 ">Danh mục</th>
+                            <th scope="col" class="fw-bold fs-5 ">Hình ảnh</th>
+                            <th scope="col" colspan="2" class=" fw-bold fs-5">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,7 +87,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col mb-2">
+                <div class="col mt-2">
                     <div class="d-flex justify-content-end">
                         <a type="button" class="btn btn-danger restore" href="/drinks/deleted">
                             <i class="fa fa-trash-restore"></i>
@@ -113,7 +123,9 @@
         data: listDrink,
         columns: [
             {data: 'name'},
-            {data: 'price'},
+            {data: 'price', render: function (data, type, row, meta){
+                return App.formatNumberSpace(data);
+                }},
             {data: 'catalog.catalogName'},
             {
                 data: 'imgUrl',
@@ -138,7 +150,9 @@
     });
 </script>
 <script>
-
+    $(document).on('input', '.num-space', function (e) {
+        $(this).val(App.formatNumberSpace($(this).val()));
+    })
     //show modal create
     $("button.create").on("click", function () {
         $.ajax({
@@ -166,7 +180,7 @@
         let drink = {
             id: $("#idDrinkDelete").val(),
             drinkName: $("#drinkNameDelete").val(),
-            price: ($("#priceDrinkDelete").val()),
+            price: App.removeFormatNumberSpace($("#priceDrinkDelete").val()),
             description: $("#desDrinkDelete").val(),
             inventory: $("#inventoryDrinkDelete").val()
         };
@@ -232,7 +246,7 @@
                 .done(function (data) {
                     $("#idDrinkUpdate").val(data.id);
                     $("#drinkNameUpdate").val(data.name);
-                    $("#priceDrinkUpdate").val((data.price));
+                    $("#priceDrinkUpdate").val(App.formatNumberSpace(data.price));
                     $("#desDrinkUpdate").val(data.description);
                     for (let i = 0; i < catalog.length; i++) {
                         let id = catalog[i].id;
@@ -263,7 +277,7 @@
                 .done(function (data) {
                     $("#idDrinkDelete").val(data.id);
                     $("#drinkNameDelete").val(data.name);
-                    $("#priceDrinkDelete").val((data.price));
+                    $("#priceDrinkDelete").val(App.formatNumberSpace(data.price));
                     $("#desDrinkDelete").val(data.description);
                     $("#inventoryDrinkDelete").val(data.inventory);
                     $("#modalDeleteDrink").modal("show");

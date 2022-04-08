@@ -147,4 +147,9 @@ public class DrinkServiceImpl implements DrinkService{
     public List<Drink> findAllByCatalog(Catalog catalog) {
         return drinkRepository.findAllByCatalog(catalog);
     }
+
+    @Override
+    public void deleteDrinkByCatalog(Long idCatalog) {
+        drinkRepository.deleteDrinkByCatalog(idCatalog);
+    }
 }

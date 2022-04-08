@@ -17,21 +17,43 @@
                             <input type="text" id="idCatalogRestore" hidden>
                             <div class="col">
                                 <label for="catalogNameRestore" class="form-label fw-bold">Tên danh mục</label>
-                                <input type="text" class="form-control" id="catalogNameRestore" name="catalogNameRestore">
+                                <input type="text" class="form-control" id="catalogNameRestore"
+                                       name="catalogNameRestore">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-outline-warning" id="btnRestoreCatalog">Khôi phục danh mục</button>
+                    <button type="button" class="btn btn-outline-warning" id="btnRestoreCatalog">Khôi phục danh mục
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-
-
-
+        function restoreCatalog() {
+            let catalog = {
+                id: $("#idCatalogRestore").val(),
+                catalogName: $("#catalogNameRestore").val(),
+            };
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/catalogs/restore",
+                data: JSON.stringify(catalog)
+            })
+                .done(function (data) {
+                    swal("Thành công", "Danh mục đã được khôi phục", "success").then(function () {
+                        location.reload();
+                    });
+                })
+        };
+        $("#btnRestoreCatalog").on('click', function () {
+            restoreCatalog();
+        })
     </script>
 </th:block>

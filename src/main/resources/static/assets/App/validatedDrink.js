@@ -9,8 +9,6 @@ $(document).ready(function () {
             },
             priceDrinkCreate:{
                 required: true,
-                min: 500,
-                max: 100000,
             }
         },
         messages:{
@@ -21,8 +19,6 @@ $(document).ready(function () {
             },
             priceDrinkCreate:{
                 required: true,
-                min: "Giá thức uống phải hơn hơn hoặc bằng 500d",
-                max: "Giá thức uống phải bé hơn hoặc bằng 100 000d",
             }
         },
         errorLabelContainer: '#modalCreateDrink .modal-body .modal-alert-danger',
@@ -53,8 +49,6 @@ $(document).ready(function () {
             },
             priceDrinkUpdate:{
                 required: true,
-                min: 500,
-                max: 100000,
             }
         },
         messages:{
@@ -65,8 +59,6 @@ $(document).ready(function () {
             },
             priceDrinkUpdate:{
                 required: true,
-                min: "Giá thức uống phải hơn hơn hoặc bằng 500d",
-                max: "Giá thức uống phải bé hơn hoặc bằng 100 000d",
             }
         },
         errorLabelContainer: '#modalUpdateDrink .modal-body .modal-alert-danger',
@@ -97,8 +89,6 @@ $(document).ready(function () {
             },
             priceDrinkRestore:{
                 required: true,
-                min: 500,
-                max: 100000,
             }
         },
         messages:{
@@ -109,8 +99,6 @@ $(document).ready(function () {
             },
             priceDrinkRestore:{
                 required: true,
-                min: "Giá thức uống phải hơn hơn hoặc bằng 500d",
-                max: "Giá thức uống phải bé hơn hoặc bằng 100 000d",
             }
         },
         errorLabelContainer: '#modalRestoreDrink .modal-body .modal-alert-danger',

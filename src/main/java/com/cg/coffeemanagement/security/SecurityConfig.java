@@ -62,36 +62,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
 
-//        http.authorizeRequests()
-//                .antMatchers("/", "/api/auth/login","/logout").permitAll()
-//                .antMatchers("/home", "/staffs", "/users", "/positions").hasAnyAuthority("ADMIN", "MANAGER");
-
-//        http.authorizeRequests()
-//                .antMatchers("/", "/api/auth/login", "/api/auth/register", "/login", "/logout").permitAll()
-//                .antMatchers("/transfers").hasAnyAuthority("ADMIN")
-//                .antMatchers("/test").permitAll()
-//                .antMatchers("/resources/**", "/assets/**").permitAll()
-//                .antMatchers(
-//                        "/v2/api-docs",
-//                        "/swagger-resources/configuration/ui",
-//                        "/configuration/ui",
-//                        "/swagger-resources",
-//                        "/swagger-resources/configuration/security",
-//                        "/configuration/security",
-//                        "/swagger-ui/**"
-//                ).permitAll()
+        http.authorizeRequests()
+                .antMatchers("/resources/**", "/assets/**").permitAll()
+                .antMatchers("/", "/api/auth/login", "/logout").permitAll()
+                .antMatchers("/home", "/staffs", "/users", "/positions", "/catalogs",
+                        "/tables", "/discounts").hasAnyAuthority("ADMIN", "MANAGER")
+                .antMatchers("/orders").hasAnyAuthority("ADMIN", "MANAGER", "STAFF");
 //                .anyRequest().authenticated()
 //                .and()
 //                .formLogin()
-//                .loginProcessingUrl("/login")
-//                .loginPage("/login")
+//                .loginProcessingUrl("/")
+//                .loginPage("/")
 //                .usernameParameter("username")
 //                .passwordParameter("password")
-//                .defaultSuccessUrl("/")
 //                .and()
 //                .logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login")
 //                .deleteCookies("JWT")
 //                .invalidateHttpSession(true)
 //                .and()

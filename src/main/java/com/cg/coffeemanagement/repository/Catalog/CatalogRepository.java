@@ -27,10 +27,7 @@ public interface CatalogRepository extends JpaRepository<Catalog,Long> {
     List<Catalog> findAllDeleted();
 
     @Modifying
-    @Query("UPDATE Drink d SET d.deleted = true WHERE d.id= :idCatalog")
-    void deletedDrinkByCatalog(@Param("idCatalog") Long idCatalog);
-
-    @Modifying
     @Query("UPDATE Drink d SET d.deleted = false WHERE d.id= :idCatalog")
     void restoreDrinkByCatalog(@Param("idCatalog") Long idCatalog);
+
 }

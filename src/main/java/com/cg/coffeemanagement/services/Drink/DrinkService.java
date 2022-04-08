@@ -28,4 +28,6 @@ public interface DrinkService extends IGeneralServices<Drink> {
     Drink update(Drink drink, DrinkDto drinkDto);
 
     List<Drink> findAllByCatalog(Catalog catalog);
+
+    void deleteDrinkByCatalog(@Param("idCatalog") Long idCatalog);
 }

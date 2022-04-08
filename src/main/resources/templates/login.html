@@ -21,15 +21,15 @@
             <button type="button" class="toggle-btn login-box-btn">Quản lý</button>
             <button type="button" class="toggle-btn register-box-btn">Phục vụ</button>
         </div>
-        <div class="social-icons tooltip">
-            <img src="/assets/images/fb.png" alt="Facebook">
-            <img src="/assets/images/tw.png" alt="Twitter">
-            <img src="/assets/images/gp.png" alt="Google">
-            <img src="/assets/images/fly.png" class="airplane" alt="Plane">
-            <span class="tooltiptext">
-                Airplane driving relax. Press the C key to change planes when on the runway. Press the BACKSPACE key to go back.
-            </span>
-        </div>
+<!--        <div class="social-icons tooltip">-->
+<!--            <img src="/assets/images/fb.png" alt="Facebook">-->
+<!--            <img src="/assets/images/tw.png" alt="Twitter">-->
+<!--            <img src="/assets/images/gp.png" alt="Google">-->
+<!--            <img src="/assets/images/fly.png" class="airplane" alt="Plane">-->
+<!--            <span class="tooltiptext">-->
+<!--                Airplane driving relax. Press the C key to change planes when on the runway. Press the BACKSPACE key to go back.-->
+<!--            </span>-->
+<!--        </div>-->
         <form id="frmLogin" class="input-group">
             <input type="text" id="usnLogin" class="input-field" placeholder="Tên đăng nhập">
             <input type="password" id="pwdLogin" class="input-field" placeholder="Mật khẩu">
@@ -217,34 +217,21 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: page.urls.register,
+            url:'/api/auth/loginStaff',
             data: JSON.stringify(user)
         }).done((resp) => {
-            $.notify("Successful account registration !", "success");
-
+            $.notify("Đăng nhập thành công !", "success");
             setTimeout(function () {
                 page.element.usnLogin.val(page.element.usnReg.val());
                 page.element.pwdLogin.val(page.element.pwdReg.val());
-                page.commands.switchLoginForm();
+                window.location="/orders";
             }, 1000);
 
         }).fail(function (jqXHR) {
-            page.element.frmLogin[0].reset();
-
             if (jqXHR.status === 403) {
                 $.notify("Access Denied! You are not authorized to perform this function.", "error");
             } else {
-                if (jqXHR.responseJSON) {
-                    if (jqXHR.responseJSON.message) {
-                        $.notify(jqXHR.responseJSON.message, "error");
-                    } else {
-                        $.each(jqXHR.responseJSON, function (key, value) {
-                            $.notify(value, "error");
-                        });
-                    }
-                } else {
-                    $.notify("Something went wrong, please try again", "error");
-                }
+                $.notify("Tên đăng nhập hoặc mật khẩu không đúng", "error");
             }
         });
     }

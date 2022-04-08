@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalBillDetail">
+    <div class="modal" tabindex="-1" id="modalBillDetail">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin hóa đơn</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <table class="table table-striped" id="tblBillDetail">
+                                <thead style="text-align: center">
+                                <tr>
+                                    <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                                    <th scope="col" class="fw-bold fs-5">Số lượng</th>
+                                    <th scope="col" class="fw-bold fs-5">Đơn giá</th>
+                                    <th scope="col" class="fw-bold fs-5">Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

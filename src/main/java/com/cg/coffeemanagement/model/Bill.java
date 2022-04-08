@@ -50,4 +50,8 @@ public class Bill {
     @Column(name = "sub_amount")
     private BigDecimal subAmount;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
 }

@@ -1,9 +1,12 @@
 package com.cg.coffeemanagement.controller;//package com.cg.coffeemanagement.controller;
 
+import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.Catalog;
 import com.cg.coffeemanagement.model.Drink;
+import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Catalog.CatalogService;
 import com.cg.coffeemanagement.services.Drink.DrinkService;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,8 @@ public class DrinkController {
     private DrinkService drinkService;
     @Autowired
     private CatalogService catalogService;
+    @Autowired
+    private IUserService userServices;
 
     @GetMapping
     public ModelAndView showListPage() {
@@ -26,6 +31,8 @@ public class DrinkController {
         modelAndView.setViewName("drink/list");
         List<Drink> drinks = drinkService.findAllNotDeleted();
         List<Catalog> catalogDrinks = catalogService.findAllNotDeleted();
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("catalogs", catalogDrinks);
         modelAndView.addObject("drinks", drinks);
         return modelAndView;
@@ -37,6 +44,8 @@ public class DrinkController {
         modelAndView.setViewName("drink/deleted");
         List<Drink> drinks = drinkService.findAllDeleted();
         List<Catalog> catalogDrinks = catalogService.findAllNotDeleted();
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("catalogs", catalogDrinks);
         modelAndView.addObject("drinks", drinks);
         return modelAndView;

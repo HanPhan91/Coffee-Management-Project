@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:replace="layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Quản lý hóa đơn</title>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Quản lý hóa đơn</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-striped" id="tblBill">
+                        <thead style="text-align: center">
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Mã hóa đơn</th>
+                            <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
+                            <th scope="col" class="fw-bold fs-5">Bàn</th>
+                            <th scope="col" class="fw-bold fs-5">Tổng tiền</th>
+                            <th scope="col" class="fw-bold fs-5">Voucher giảm giá</th>
+                            <th scope="col" class="fw-bold fs-5">Thực thu</th>
+                            <th scope="col" class="fw-bold fs-5">Người tạo</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="bill/modalBillDetail :: modalBillDetail"/>
+<script th:inline="javascript">
+    let billList = [[${billList}]];
+    let table = $("#tblBill").DataTable({
+        data: billList,
+        rowId: 'id',
+        selected: true,
+        columns: [
+            {data: 'id'},
+            {
+                data: 'createdAt', render: function (data) {
+                    return data.slice(0, 19);
+                }
+            },
+            {data: 'table.name'},
+            {
+                data: 'subAmount', render: function (data) {
+                    return `${App.formatNumberSpace(data)} VNĐ`;
+                }, className: 'text-end'
+            },
+            {
+                data: 'discount', render: function (data) {
+                    if (data == null) {
+                        return null;
+                    } else return 'discount.code'
+                }
+            },
+            {
+                data: 'totalAmount', render: function (data) {
+                    return `${App.formatNumberSpace(data)} VNĐ`;
+                }, className: 'text-end'
+            },
+            {
+                data: 'user', render: function (data) {
+                    if (data == null)
+                        return null;
+                    else
+                        return 'user.staff.name';
+                }
+            },
+        ],
+    });
+</script>
+<script>
+    $("#tblBill").on('click', 'tr', function () {
+        let id = table.row(this).id();
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "/api/bills/" + id,
+        })
+            .done(function (data) {
+                let str='';
+                for (let i = 0; i < data.length; i++) {
+                    str+= `
+                    <tr>
+                        <td>${data[i].drink.name}</td>
+                        <td class="text-center">${data[i].quantity}</td>
+                        <td class="text-end">${App.formatNumberSpace(data[i].drink.price)} VNĐ</td>
+                        <td class="text-end">${App.formatNumberSpace(data[i].totalPrice)} VNĐ</td>
+                    </tr>
+                `;
+                }
+                $("#tblBillDetail tbody").append(str);
+                $("#modalBillDetail").modal('show');
+            })
+    });
+
+    $("#modalBillDetail").on('hidden.bs.modal', function () {
+        $("#tblBillDetail tbody tr").remove();
+    });
+</script>
+</body>
+</html>

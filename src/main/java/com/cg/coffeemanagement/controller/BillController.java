@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.controller;
 
 import com.cg.coffeemanagement.Static.Principal;
+import com.cg.coffeemanagement.model.Bill;
 import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.Users.IUserService;
@@ -10,29 +11,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-@RequestMapping("/home")
-public class HomeController {
+import java.util.List;
 
+@Controller
+@RequestMapping("/bills")
+public class BillController {
+    @Autowired
+    private BillService billService;
     @Autowired
     private IUserService userServices;
 
-    @Autowired
-    private BillService billService;
-
-    @GetMapping()
-    public ModelAndView showHome(){
-        ModelAndView modelAndView= new ModelAndView();
-        modelAndView.setViewName("home");
+    @GetMapping
+    public ModelAndView showBill(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("bill/bill");
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
         modelAndView.addObject("user", user);
-        String incomeToday = billService.incomeToday();
-        String incomeToMonth = billService.incomeToMonth();
-        String billToday = billService.billToday();
-        modelAndView.addObject("incomeToday", incomeToday);
-        modelAndView.addObject("incomeToMonth", incomeToMonth);
-        modelAndView.addObject("billToday", billToday);
+        List<Bill> billList = billService.findAll();
+        modelAndView.addObject("billList", billList);
         return modelAndView;
     }
-
 }

@@ -35,4 +35,8 @@ public interface DrinkRepository extends JpaRepository<Drink,Long> {
     boolean existsByName(String name);
 
     List<Drink> findAllByCatalog(Catalog catalog);
+
+    @Modifying
+    @Query("UPDATE Drink d SET d.deleted = true WHERE d.catalog.id = :idCatalog")
+    void deleteDrinkByCatalog(@Param("idCatalog") Long idCatalog);
 }

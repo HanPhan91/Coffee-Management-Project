@@ -28,7 +28,6 @@ public class Drink {
     @Column(name = "drink_name")
     private String name;
 
-
     @Digits(integer = 12, fraction = 0)
     private BigDecimal price;
 

@@ -1,8 +1,11 @@
 package com.cg.coffeemanagement.services.BillDetailService;
 
+import com.cg.coffeemanagement.model.Bill;
 import com.cg.coffeemanagement.model.BillDetail;
 import com.cg.coffeemanagement.services.IGeneralServices;
 
-public interface BillDetailService extends IGeneralServices<BillDetail> {
+import java.util.List;
 
+public interface BillDetailService extends IGeneralServices<BillDetail> {
+    List<BillDetail> findAllByBill(Bill bill);
 }

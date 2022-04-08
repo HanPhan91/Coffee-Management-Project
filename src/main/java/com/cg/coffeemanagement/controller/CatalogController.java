@@ -1,7 +1,10 @@
 package com.cg.coffeemanagement.controller;
 
+import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.model.Catalog;
+import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.services.Catalog.CatalogService;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +18,17 @@ import java.util.List;
 public class CatalogController {
 
     @Autowired
-    CatalogService catalogService;
+    private CatalogService catalogService;
+    @Autowired
+    private IUserService userServices;
 
     @GetMapping
     public ModelAndView listCatalogs(){
         ModelAndView modelAndView = new ModelAndView();
         List<Catalog> catalogs = catalogService.findAllNotDeleted();
         modelAndView.setViewName("catalog/list");
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("catalogs",catalogs);
         return modelAndView;
     }
@@ -31,6 +38,8 @@ public class CatalogController {
         ModelAndView modelAndView = new ModelAndView();
         List<Catalog> catalogs = catalogService.findAllDeleted();
         modelAndView.setViewName("catalog/listDeleted");
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
         modelAndView.addObject("catalogs",catalogs);
         return modelAndView;
     }

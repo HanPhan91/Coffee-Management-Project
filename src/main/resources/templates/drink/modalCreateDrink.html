@@ -21,7 +21,7 @@
                             </div>
                             <div class="mb-3 col-6">
                                 <label for="priceDrinkCreate" class="form-label fw-bold">Giá thức uống</label>
-                                <input type="text" class="form-control number-separator inNumber" id="priceDrinkCreate"
+                                <input type="text" class="form-control num-space" id="priceDrinkCreate"
                                        name="priceDrinkCreate">
                             </div>
                             <div class="row">
@@ -30,33 +30,6 @@
                                     <select class="form-select" id="catalogsCreate">
                                     </select>
                                 </div>
-<!--                                <div class="mb-3 col-6">-->
-<!--                                    <section>-->
-<!--                                        <div class="wrapper">-->
-<!--                                            <div class="image-preview">-->
-<!--                                                <canvas id="canvas"></canvas>-->
-<!--                                            </div>-->
-<!--                                            <div class="content">-->
-<!--                                                <div class="icon">-->
-<!--                                                    <i class="fas fa-cloud-upload-alt"></i>-->
-<!--                                                </div>-->
-<!--                                                <div class="text">-->
-<!--                                                    No file chosen, yet!-->
-<!--                                                </div>-->
-<!--                                                <div class="text">-->
-<!--                                                    Max file size = 2MB-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="clear-image-preview">-->
-<!--                                                <i class="fas fa-times"></i>-->
-<!--                                            </div>-->
-<!--                                            <div class="file-name">-->
-<!--                                                Change image-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <input type="file" id="imageFile" accept="image/jpeg, image/png" hidden/>-->
-<!--                                    </section>-->
-<!--                                </div>-->
                             </div>
                                                         <div class="row">
                                                             <div class="mb-3 col mx-auto">
@@ -83,6 +56,8 @@
         </div>
     </div>
     <script>
+
+
         $('#uploadCre').change(function () {
             const file = this.files[0];
             if (file) {
@@ -97,7 +72,7 @@
         function createDrink() {
             let formData = new FormData();
             formData.append("name", $("#drinkNameCreate").val());
-            formData.append("price", $("#priceDrinkCreate").val());
+            formData.append("price", App.removeFormatNumberSpace($("#priceDrinkCreate").val()));
             formData.append("catalog", $("#catalogsCreate").val());
             formData.append("description", $("#desDrinkCreate").val());
             if ($("#uploadCre")[0].files[0] != null) {

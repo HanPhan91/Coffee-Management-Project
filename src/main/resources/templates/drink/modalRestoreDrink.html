@@ -22,7 +22,7 @@
                             </div>
                             <div class=" mb-3 col-6">
                                 <label for="priceDrinkRestore" class="form-label fw-bold">Giá thức uống</label>
-                                <input type="text" class="form-control number-separator inNumber"
+                                <input type="text" class="form-control num-space"
                                        id="priceDrinkRestore" name="priceDrinkRestore">
                             </div>
                             <div class="row">
@@ -56,7 +56,7 @@
             let form = new FormData();
             form.append("id", id);
             form.append("name", $("#drinkNameRestore").val());
-            form.append("price", $("#priceDrinkRestore").val());
+            form.append("price", App.removeFormatNumberSpace($("#priceDrinkRestore").val()));
             form.append("catalog", $("#catalogsRestore").val());
             form.append("description", $("#desDrinkRestore").val());
             $.ajax({

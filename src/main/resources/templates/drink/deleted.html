@@ -94,6 +94,11 @@
 <th:block th:replace="drink/modalRestoreDrink :: modalRestoreDrink"/>
 <script src="/assets/App/validatedDrink.js"></script>
 </body>
+<script>
+    $(document).on('input', '.num-space', function (e) {
+        $(this).val(App.formatNumberSpace($(this).val()));
+    })
+</script>
 <script th:inline="javascript">
     var listDrink = [[${drinks}]];
     $("#tblDrink").DataTable({
@@ -101,7 +106,9 @@
         data: listDrink,
         columns: [
             {data: 'name'},
-            {data: 'price'},
+            {data: 'price', render: function (data) {
+                    return App.formatNumberSpace(data);
+                }},
             {data: 'catalog.catalogName'},
             {
                 data: 'imgUrl',
@@ -151,7 +158,7 @@
                 .done(function (data) {
                     $("#idDrinkRestore").val(data.id);
                     $("#drinkNameRestore").val(data.name);
-                    $("#priceDrinkRestore").val((data.price));
+                    $("#priceDrinkRestore").val(App.formatNumberSpace(data.price));
                     $("#desDrinkRestore").val(data.description);
                     for (let i = 0; i < catalog.length; i++) {
                         let id = catalog[i].id;
@@ -171,9 +178,7 @@
                 })
         });
     };
-
     handlerShowModalRestore();
-
     $("#modalRestoreDrink").on('hidden.bs.modal', function () {
         $("#modalRestoreDrink .modal-body .modal-alert-danger").empty();
         $("#modalRestoreDrink .modal-body .modal-alert-danger").removeClass("show").addClass("hide");

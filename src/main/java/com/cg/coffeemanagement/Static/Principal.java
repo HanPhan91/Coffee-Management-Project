@@ -12,7 +12,6 @@ public class Principal {
         } else {
             userName = principal.toString();
         }
-
         return userName;
     }
 }

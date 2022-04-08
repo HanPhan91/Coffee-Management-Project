@@ -18,12 +18,12 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> findAll() {
-        return null;
+        return billRepository.findAll();
     }
 
     @Override
     public Optional<Bill> findById(Long id) {
-        return Optional.empty();
+        return billRepository.findById(id);
     }
 
     @Override
@@ -38,6 +38,20 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void remove(Long id) {
+    }
 
+    @Override
+    public String incomeToday() {
+        return billRepository.incomeToday();
+    }
+
+    @Override
+    public String incomeToMonth() {
+        return billRepository.incomeToMonth();
+    }
+
+    @Override
+    public String billToday() {
+        return billRepository.billToday();
     }
 }

@@ -76,13 +76,10 @@ public class AuthAPI {
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         User userRole = userService.getByUsername(user.getUsername()).get();
-        if (userRole.getStaff().getPosition().getPermission().getPermissionAccess() > 2){
+        if (userRole.getStaff().getPosition().getPermission().getPermissionAccess() > 2) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.getByUsername(user.getUsername()).get();

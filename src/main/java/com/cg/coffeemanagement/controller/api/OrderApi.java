@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.controller.api;
 
 
+import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.dto.OrderItemDto;
@@ -13,6 +14,7 @@ import com.cg.coffeemanagement.services.Drink.DrinkService;
 import com.cg.coffeemanagement.services.Order.OrderService;
 import com.cg.coffeemanagement.services.CoffeeTable.CoffeeTableService;
 import com.cg.coffeemanagement.services.OrderItem.OrderItemService;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.services.discount.IDiscountService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,28 +32,33 @@ import java.util.Optional;
 public class OrderApi {
 
     @Autowired
-    IDiscountService discountService;
+    private IDiscountService discountService;
 
     @Autowired
-    DrinkService drinkService;
+    private DrinkService drinkService;
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Autowired
-    CoffeeTableService coffeeTableService;
+    private CoffeeTableService coffeeTableService;
 
     @Autowired
-    OrderItemService orderItemService;
+    private OrderItemService orderItemService;
 
     @Autowired
-    BillService billService;
+    private BillService billService;
 
     @Autowired
-    BillDetailService billDetailService;
+    private BillDetailService billDetailService;
 
     @Autowired
-    AppUtil appUtil;
+    private AppUtil appUtil;
+
+    @Autowired
+    private IUserService userService;
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> showOrderByIdTable(@PathVariable Long id) {
@@ -63,6 +70,7 @@ public class OrderApi {
 
     @PostMapping("/create/{idtable}")
     public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemDto> listOrders, @RequestParam String discount) {
+        User user = userService.getByUsername(Principal.getPrincipal()).get();
         int percentDiscount;
         Discount activeDiscount = null;
         if (discount.isEmpty()) {
@@ -94,6 +102,7 @@ public class OrderApi {
             double valueDiscount = (double) percentDiscount / 100;
             BigDecimal totalAmount = subPrice.subtract(subPrice.multiply(BigDecimal.valueOf(valueDiscount)));
             order.setTotalAmount(totalAmount);
+            order.setUser(user);
             orderService.save(order);
             if (activeDiscount != null) {
                 discountService.reduceQuantity(activeDiscount);
@@ -109,6 +118,7 @@ public class OrderApi {
 
     @PutMapping("/pay/{idtable}")
     public ResponseEntity<?> doPay(@PathVariable Long idtable) {
+        User user = userService.getByUsername(Principal.getPrincipal()).get();
         Optional<Order> opOrder = orderService.getByCoffeeTableId(idtable);
         if (opOrder.isPresent()) {
             Order order = opOrder.get();
@@ -117,6 +127,7 @@ public class OrderApi {
             bill.setSubAmount(order.getSubAmount());
             bill.setDiscount(order.getDiscount());
             bill.setTotalAmount(order.getTotalAmount());
+            bill.setUser(user);
             billService.save(bill);
             List<OrderItem> listOrderItems = orderItemService.findAllByOrder(order);
             for (OrderItem orderItem : listOrderItems) {
@@ -139,6 +150,7 @@ public class OrderApi {
 
     @PutMapping("/split/{oldTable}/{newTable}")
     public ResponseEntity<?> splitTable(@PathVariable Long oldTable, @PathVariable Long newTable, @RequestBody List<OrderItemDto> listOrders) {
+        User user = userService.getByUsername(Principal.getPrincipal()).get();
         Optional<Order> opOldOrder = orderService.getByCoffeeTableId(oldTable);
         if (opOldOrder.isPresent()) {
             Order oldOrder = opOldOrder.get();
@@ -180,6 +192,7 @@ public class OrderApi {
                 double valueDiscount = (double) percentDiscount / 100;
                 BigDecimal totalAmount = subPrice.subtract(subPrice.multiply(BigDecimal.valueOf(valueDiscount)));
                 newOrder.setTotalAmount(totalAmount);
+                newOrder.setUser(user);
                 orderService.save(newOrder);
                 orderItemService.deleteAllByOrder(oldOrder);
                 Order newOldOrder = oldOrder.newOrder();
@@ -202,6 +215,7 @@ public class OrderApi {
                 double valueDiscountOld = (double) percentDiscount / 100;
                 BigDecimal totalAmountOld = subPriceOld.subtract(subPriceOld.multiply(BigDecimal.valueOf(valueDiscountOld)));
                 newOldOrder.setTotalAmount(totalAmountOld);
+                newOldOrder.setUser(user);
                 orderService.save(newOldOrder);
 
                 CoffeeTable oldTableGet = coffeeTableService.findById(oldTable).get();

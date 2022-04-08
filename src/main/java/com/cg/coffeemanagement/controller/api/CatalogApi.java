@@ -4,6 +4,7 @@ package com.cg.coffeemanagement.controller.api;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.Catalog;
 import com.cg.coffeemanagement.services.Catalog.CatalogService;
+import com.cg.coffeemanagement.services.Drink.DrinkService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class CatalogApi {
 
     @Autowired
     CatalogService catalogService;
+
+    @Autowired
+    DrinkService drinkService;
 
     @Autowired
     private AppUtil appUtil;
@@ -67,7 +71,7 @@ public class CatalogApi {
         Optional opCatalog = catalogService.findById(catalog.getId());
         if (opCatalog.isPresent()) {
             catalogService.deleteCatalog(catalog.getId());
-            catalogService.deletedDrinkByCatalog(catalog.getId());
+            drinkService.deleteDrinkByCatalog(catalog.getId());
             return new ResponseEntity<>(opCatalog.get(), HttpStatus.OK);
         } else {
             throw new DataInputException("Catalog's not valid");
@@ -76,9 +80,12 @@ public class CatalogApi {
 
     @PutMapping("/restore")
     public ResponseEntity<?> doRestore(@RequestBody Catalog catalog) {
-        Optional opCatalog = catalogService.findById(catalog.getId());
+        Optional<Catalog> opCatalog = catalogService.findById(catalog.getId());
         if (opCatalog.isPresent()) {
-            catalogService.restoreCatalog(catalog.getId());
+            Catalog catalogRestore = opCatalog.get();
+            catalogRestore.setCatalogName(catalog.getCatalogName());
+            catalogService.save(catalogRestore);
+            catalogService.restoreCatalog(catalogRestore.getId());
             return new ResponseEntity<>(opCatalog.get(), HttpStatus.OK);
         } else {
             throw new DataInputException("Catalog's not valid");
