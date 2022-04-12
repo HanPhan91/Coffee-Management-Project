@@ -2,6 +2,7 @@ let listTables = $("#showTable ul");
 let OrderId = 0;
 let history = {};
 let order=[];
+let totalAmount = 0;
 
 
 function getAllDrink() {
@@ -87,13 +88,14 @@ function addOrderItemToOrder(orderId, drinkId) {
 
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
-    console.log('order:')
-    console.log(order)
     let str = "";
     let show =$(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
     show.empty();
+    totalAmount = 0;
     for (let i = 0; i < order.length; i++) {
+        totalAmount += order[i].totalPrice * order[i].quantity;
+
         str += `
         <kv-cashier-cart-item class="row-list row-list-active">
             <div class="cell-action"><a
@@ -135,7 +137,7 @@ function showOrderItem() {
                         </button>
                     </div>
                 </div>
-                <div class="cell-price"> total Amount</div>
+                <div class="cell-price"> ${order[i].quantity*order[i].totalPrice}</div>
                 <div class="cell-actions">
                     <div class="btn-group" dropdown="">
                         <button class="dropdown-toggle" type="button"
@@ -148,10 +150,13 @@ function showOrderItem() {
         `
     }
     show.append(str);
-    deleteItemInOrder();
+    $("#totalAmount").text(totalAmount)
 
+    // document.getElementById('totalAmount').text(totalAmount);
+    deleteItemInOrder();
     handlerUpQuantity();
     handlerDownQuantity();
+    handlerShowSplitOrder();
 }
 
 // xoá đồ uống trong order
@@ -175,57 +180,8 @@ function handlerAddItemInOrder() {
     });
 }
 
-// hiển thị form tách ghép đơn
-function handlerShowSplitOrder(){
-    $("button.split").on("click", function () {
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "/api/orders/" + OrderId,
-        })
-            .done(function (data) {
 
-
-
-            })
-            .fail(function (jqXHR) {
-                console.log("get drinks fails");
-            })
-    });
-
-}
-
-
-//hiển thị đồ uống đang có trong order
-function handlerShowAvailableInOrder() {
-    $(".table").on("click", function () {
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "/api/orders/" + OrderId,
-        })
-            .done(function (data) {
-                console.log(data);
-                order = data;
-                showOrderItem();
-
-            })
-            .fail(function (jqXHR) {
-                console.log("get drinks fails");
-            })
-    });
-
-}
-
-
-
-
+//Hiển thị bàn sẵn có + order hiện có trong bàn
 function getAllTable() {
     $.ajax({
         type: "GET",
@@ -283,12 +239,15 @@ function getAllTable() {
                         console.log(data);
                         order = data;
                         showOrderItem();
+                        handlerShowSplitOrder();
 
                     })
                     .fail(function (jqXHR) {
                         console.log("get drinks fails");
                     })
-
+                    // $("#totalAmount").val()
+                    $("#tableNumber").text("Bàn " + item.name)
+                    console.log(item.name);
                     document.getElementById("showCart").style.display = "block";
 
                 });
@@ -297,7 +256,7 @@ function getAllTable() {
         })
 }
 
-
+//Hiển thị bàn và thức uống
 $(".kv-tabs a").click(function () {
     $(".kv-tabs a").removeClass("active");
     $(this).addClass("active");
@@ -315,7 +274,7 @@ $(".kv-tabs a").click(function () {
 });
 
 
-
+//Sự kiện tăng giảm số lượng
 function handlerUpQuantity () {
     $("button.up").on("click", function () {
         let id = $(this).data('id');
@@ -364,9 +323,9 @@ $(document).ready(function () {
     getAllTable();
     getAllDrink();
     document.getElementById("showCart").style.display = "none";
-    handlerShowSplitOrder();
 });
 
+//Tạo order
 $("#createOrder").on('click', function () {
     $.ajax({
         headers: {
@@ -385,6 +344,8 @@ $("#createOrder").on('click', function () {
         })
 });
 
+
+// Xuất bill tính tiền
 $("#createBill").on('click',function (){
     $.ajax({
         headers:{
@@ -401,3 +362,26 @@ $("#createBill").on('click',function (){
             console.log(resp);
         })
 });
+
+// hiển thị form tách ghép đơn
+function handlerShowSplitOrder(){
+    $("button.split").on("click", function () {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "/api/orders/" + OrderId,
+        })
+            .done(function (data) {
+                console.log(data);
+                $("#modalSplitOrder").modal("show");
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
+    });
+
+}

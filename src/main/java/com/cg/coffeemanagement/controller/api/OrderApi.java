@@ -6,7 +6,6 @@ import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.*;
 import com.cg.coffeemanagement.model.dto.OrderItemDto;
 import com.cg.coffeemanagement.model.dto.OrderItemMenuDto;
-
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.BillDetailService.BillDetailService;
 import com.cg.coffeemanagement.services.Drink.DrinkService;
@@ -71,12 +70,8 @@ public class OrderApi {
 
 
     @PostMapping("/create/{idtable}")
-<<<<<<< HEAD
-    public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemDto> listOrders, @RequestParam String discount) {
-        User user = userService.getByUsername(Principal.getPrincipal()).get();
-=======
     public ResponseEntity<?> doCreate(@PathVariable Long idtable, @RequestBody List<OrderItemMenuDto> listMenuOrders, @RequestParam String discount) {
->>>>>>> main
+        User user = userService.getByUsername(Principal.getPrincipal()).get();
         int percentDiscount;
         Discount activeDiscount = null;
         if (discount.isEmpty()) {

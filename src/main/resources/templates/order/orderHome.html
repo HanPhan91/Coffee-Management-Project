@@ -82,13 +82,15 @@
                                     <div class="header-tab-wrap">
                                         <ul>
 
-                                            <li class="active largest"><a class="active"
-                                                                          title="Lầu 3 /  Bàn 12 -  1-9">
-
-
-                                                <span> 1-9&nbsp; </span></a>
+                                            <li class="active largest">
+                                                <a class="active" title="Lầu 3 /  Bàn 12 -  1-9">
+                                                    <span> 1-9&nbsp;
+                                                    </span>
+                                                </a>
                                                 <span class="close-tab" title="Đóng"><i
-                                                        class="far fa-times"></i></span></li>
+                                                        class="far fa-times"></i>
+                                                </span>
+                                            </li>
 
                                             <li class="list-invoice">
 
@@ -190,14 +192,14 @@
 
                                             <div class="swiper-slide swiper-slide-active" style="margin-right: 30px;">
                                                 <a data-tab-index="1" skip-disable="" class="active"> Tất cả </a></div>
-                                            <div class="swiper-slide swiper-slide-next" style="margin-right: 30px;"><a
-                                                    data-tab-index="2" skip-disable=""> Lầu 2 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="3" skip-disable=""> Lầu 3 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="4" skip-disable=""> Nhom 1 </a></div>
-                                            <div class="swiper-slide" style="margin-right: 30px;"><a
-                                                    data-tab-index="5" skip-disable="" class=""> Phòng VIP </a></div>
+<!--                                            <div class="swiper-slide swiper-slide-next" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="2" skip-disable=""> Lầu 2 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="3" skip-disable=""> Lầu 3 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="4" skip-disable=""> Nhom 1 </a></div>-->
+<!--                                            <div class="swiper-slide" style="margin-right: 30px;"><a-->
+<!--                                                    data-tab-index="5" skip-disable="" class=""> Phòng VIP </a></div>-->
                                         </div>
                                         <span class="swiper-notification" aria-live="assertive"
                                               aria-atomic="true"></span>
@@ -305,9 +307,8 @@
                                     <div class="form-actions-left">
                                         <div>
                                             <button class="btn btn-control"
-                                                    title="Bàn 12 / Lầu 3">
-                                                <i class="fas fa-table"></i>
-                                                Bàn 12 / Lầu 3
+                                                    id = "tableNumber">
+                                                <i class="fas fa-table" ></i>
                                             </button>
                                         </div>
                                         <div>
@@ -320,7 +321,7 @@
                                                                     class="form-control form-control-sm" kvselecttext=""
                                                                     type="text"
                                                                     id="searchCustomerInput"
-                                                                    placeholder="Tìm khách hàng (F4)">
+                                                                    placeholder="Tìm khách hàng">
                                                                 <div class="output-complete" hidden="">
                                                                     <ul>
                                                                         <li>
@@ -524,8 +525,9 @@
                                                                 <div class="form-actions-right">
                                                                     <label class="control-label"><span
                                                                             translate="">Tổng tiền</span>
-                                                                        <span class="badge"> 7 </span></label><span
-                                                                        class="form-control-static total-price">685,000</span>
+                                                                        <span class="badge"> 7 </span></label>
+                                                                    <span
+                                                                        class="form-control-static total-price" id="totalAmount"></span>
 
                                                                 </div>
                                                             </div>
@@ -552,9 +554,7 @@
                                                                             </kendo-dropdownlist>
                                                                         </li>
 
-                                                                        <li class="note-invoice"><a
-                                                                                href="javascript:void(0);" title="Ghi chú"><i
-                                                                                class="fa fa-pencil"></i><span>Ghi chú</span></a></li>
+
 
                                                                         <li class="li-history"><a href="javascript:void(0);"
                                                                                                   title="Lịch sử"><i class="fas fa-history"></i><span
@@ -600,10 +600,10 @@
                             <button id="createBill" class="btn btn-success" skip-disable="" type="button">
                  <span><i class="fas fa-dollar-sign"></i>Thanh toán
                   </span>
-                                <span> (F9)</span></button>
+                                <span></span></button>
                             <button id="createOrder"
                                     class="btn btn-alert" type="button"><i class="fas fa-bullhorn"></i>Thông báo
-                                <span>(F10)</span></button>
+                                <span></span></button>
                         </div>
                     </div>
                 </div>
