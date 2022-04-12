@@ -71,14 +71,15 @@
             </div>
             <div class="row" id="row_tbl">
                 <div class="col text-center">
-                    <table class="table table-striped" id="tblDrink">
+                    <table class="" id="tblDrink">
                         <thead class="text-center">
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
                             <th scope="col" class="fw-bold fs-5 ">Giá (VNĐ)</th>
                             <th scope="col" class="fw-bold fs-5 ">Danh mục</th>
                             <th scope="col" class="fw-bold fs-5 ">Hình ảnh</th>
-                            <th scope="col" colspan="2" class=" fw-bold fs-5">Sửa / Lưu trữ</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,6 +111,7 @@
     <!-- End footer -->
     <!-- ============================================================== -->
 </div>
+<div class="loader hide"></div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="drink/modalCreateDrink :: modalCreateDrink"/>
 <th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>
@@ -123,9 +125,11 @@
         data: listDrink,
         columns: [
             {data: 'name'},
-            {data: 'price', render: function (data, type, row, meta){
-                return App.formatNumberSpace(data);
-                }},
+            {
+                data: 'price', render: function (data, type, row, meta) {
+                    return App.formatNumberSpace(data);
+                }
+            },
             {data: 'catalog.catalogName'},
             {
                 data: 'imgUrl',
@@ -142,9 +146,15 @@
                 data: 'id',
                 render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
-                                    <button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-archive"></i></button>
                                     `;
-                }
+                }, orderable: false
+            },
+            {
+                data: 'id',
+                render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-archive"></i></button>
+                                    `;
+                }, orderable: false
             },
         ],
     });
@@ -184,6 +194,7 @@
             description: $("#desDrinkDelete").val(),
             inventory: $("#inventoryDrinkDelete").val()
         };
+        $(".loader").removeClass('hide');
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -203,7 +214,7 @@
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
                         str +=
-                            `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                            `<label id="${key}-error" class="error" for="${key}">${value}</lable>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -212,6 +223,9 @@
                 $("#modalDeleteDrink .modal-body .modal-alert-danger").removeClass("hide").addClass(
                     "show");
                 $("#modalDeleteDrink .modal-body .modal-alert-danger").html(str);
+            })
+            .always(function () {
+                $(".loader").addClass('hide');
             })
     }
 

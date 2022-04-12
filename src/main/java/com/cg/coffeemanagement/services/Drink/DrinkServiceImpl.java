@@ -152,4 +152,14 @@ public class DrinkServiceImpl implements DrinkService{
     public void deleteDrinkByCatalog(Long idCatalog) {
         drinkRepository.deleteDrinkByCatalog(idCatalog);
     }
+
+    @Override
+    public Integer countDrinkByCatalog(Catalog catalog) {
+        return drinkRepository.countDrinkByCatalog(catalog);
+    }
+
+    @Override
+    public List<Drink> findAllByCatalogAndDeletedFalse(Catalog catalog) {
+        return drinkRepository.findAllByCatalogAndDeletedFalse(catalog);
+    }
 }

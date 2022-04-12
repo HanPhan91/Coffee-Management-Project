@@ -31,6 +31,8 @@ public class Staff {
 
     private String email;
 
+    @Column(name = "has_user", columnDefinition = "boolean default false")
+    private boolean hasUser;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Ho_Chi_Minh")
     private Date birthDay;

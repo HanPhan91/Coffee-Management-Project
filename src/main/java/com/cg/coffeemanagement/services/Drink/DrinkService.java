@@ -30,4 +30,8 @@ public interface DrinkService extends IGeneralServices<Drink> {
     List<Drink> findAllByCatalog(Catalog catalog);
 
     void deleteDrinkByCatalog(@Param("idCatalog") Long idCatalog);
+
+    Integer countDrinkByCatalog(Catalog catalog);
+
+    List<Drink> findAllByCatalogAndDeletedFalse(Catalog catalog);
 }

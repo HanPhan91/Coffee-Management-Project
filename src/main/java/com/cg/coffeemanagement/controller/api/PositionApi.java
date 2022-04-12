@@ -1,11 +1,14 @@
 package com.cg.coffeemanagement.controller.api;
 
+import com.cg.coffeemanagement.Static.Principal;
 import com.cg.coffeemanagement.exception.DataInputException;
 import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
+import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.model.dto.PositionDto;
 import com.cg.coffeemanagement.services.Permission.IPermissionServices;
 import com.cg.coffeemanagement.services.Positions.IPositionServices;
+import com.cg.coffeemanagement.services.Users.IUserService;
 import com.cg.coffeemanagement.utils.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,9 +33,13 @@ public class PositionApi {
     @Autowired
     private IPermissionServices permissionServices;
 
+    @Autowired
+    private IUserService userServices;
+
     @GetMapping
     public ResponseEntity<?> getAllPosition() {
-        List<Position> positions = positionServices.findAll();
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        List<Position> positions = positionServices.findPositionNotDeletedAndPermissionSmaller(user.getStaff().getPosition().getPermission().getPermissionAccess());
         return new ResponseEntity<>(positions, HttpStatus.OK);
     }
 

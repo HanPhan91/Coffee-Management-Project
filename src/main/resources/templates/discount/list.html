@@ -39,8 +39,9 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col text-end">
-                    <button class="btn btn-outline-primary" id="discount"><i class="fa fa-plus-square"></i> Creat discount</button>
+                <div class="col text-end mb-2">
+                    <button class="btn btn-outline-primary" id="discount"><i class="fa fa-plus-square"></i> Tạo mã giảm giá
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -48,35 +49,37 @@
                     <table class="table table-hover" id="tblDiscount">
                         <thead>
                         <tr>
-                            <th scope="col" class="fw-bold fs-3">Mã KM</th>
-                            <th scope="col" class="fw-bold fs-3">Mô tả</th>
-                            <th scope="col" class="fw-bold fs-3">Phần trăm KM</th>
-                            <th scope="col" class="fw-bold fs-3">TG bắt đầu</th>
-                            <th scope="col" class="fw-bold fs-3">TG kết thúc</th>
-                            <th scope="col" class="fw-bold fs-3">số lượng</th>
-                            <th scope="col" colspan="2" class="text-center fw-bold fs-3">Action</th>
+                            <th scope="col" class="fw-bold fs-5">Mã KM</th>
+                            <th scope="col" class="fw-bold fs-5">Mô tả</th>
+                            <th scope="col" class="fw-bold fs-5">Giảm giá (%)</th>
+                            <th scope="col" class="fw-bold fs-5">Ngày bắt đầu</th>
+                            <th scope="col" class="fw-bold fs-5">Ngày kết thúc</th>
+                            <th scope="col" class="fw-bold fs-5">Số lượng</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each= "discount, count: ${discounts}">
-                            <tr th:id="'tr_'+ ${discount.id}">
-                                <td th:text="${discount.code}"></td>
-                                <td th:text="${discount.description}"></td>
-                                <td th:text="${discount.percentDiscount}"></td>
-                                <td th:text="${#dates.format(discount.createdAt, 'dd-MM-yyyy')}"></td>
-                                <td th:text="${#dates.format(discount.endedAt, 'dd-MM-yyyy')}"></td>
-                                <td th:text="${discount.quantity}"></td>
-                                <td class="text-center"><button class="btn btn-outline-warning editDiscount" th:data-id="${discount.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                                <td class="text-center"><button class="btn btn-outline-danger deleteDiscount" th:data-id="${discount.id}"><i class="fa fa-trash"></i></button></td>
-                            </tr>
-                        </th:block>
+                        <!--                        <th:block th:each= "discount, count: ${discounts}">-->
+                        <!--                            <tr th:id="'tr_'+ ${discount.id}">-->
+                        <!--                                <td th:text="${discount.code}"></td>-->
+                        <!--                                <td th:text="${discount.description}"></td>-->
+                        <!--                                <td th:text="${discount.percentDiscount}"></td>-->
+                        <!--                                <td th:text="${#dates.format(discount.createdAt, 'dd-MM-yyyy')}"></td>-->
+                        <!--                                <td th:text="${#dates.format(discount.endedAt, 'dd-MM-yyyy')}"></td>-->
+                        <!--                                <td th:text="${discount.quantity}"></td>-->
+                        <!--                                <td class="text-center"><button class="btn btn-outline-warning editDiscount" th:data-id="${discount.id}"><i class="fa fa-pencil-alt"></i></button></td>-->
+                        <!--                                <td class="text-center"><button class="btn btn-outline-danger deleteDiscount" th:data-id="${discount.id}"><i class="fa fa-trash"></i></button></td>-->
+                        <!--                            </tr>-->
+                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
-                <div class="col text-end">
-                    <a class="btn btn-outline-danger" id="deletedDiscount" th:href="@{/discount/deleted}"><i class="fa fa-trash"></i> Danh sách đã xóa
+                <div class="col text-end mt-2">
+                    <a class="btn btn-outline-danger" id="deletedDiscount" th:href="@{/discounts/deleted}"><i
+                            class="fa fa-trash"></i> Danh sách đã xóa
                     </a>
                 </div>
             </div>
@@ -100,8 +103,38 @@
 <th:block th:replace="discount/delete :: deleteDiscount"/>
 <script src="/assets/App/appDiscount.js"></script>
 <script src="/assets/App/validateDiscount.js"></script>
+<script th:inline="javascript">
+    let discount = [[${discounts}]];
+    $("#tblDiscount").DataTable({
+        data: discount,
+        columns: [
+            // {data: 'id'},
+            {data: 'code'},
+            {data: 'description', orderable: false, searchable: false},
+            {data: 'percentDiscount'},
+            {data: 'createdAt'},
+            {data: 'endedAt'},
+            {data: 'quantity'},
+            {
+                data: 'id',
+                render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-warning editDiscount" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            `;
+                }, orderable: false, searchable: false
+            },
+            {
+                data: 'id',
+                render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-danger deleteDiscount" data-id="${data}"><i class="fa fa-trash"></i></button>
+                            `;
+                }, orderable: false, searchable: false
+            }],
+
+    })
+    ;
+</script>
 <script>
-    $("#discount").on("click", function (){
+    $("#discount").on("click", function () {
         $("#createDiscount").modal("show");
     });
     handlerActionDiscount();

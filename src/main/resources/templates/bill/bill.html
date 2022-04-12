@@ -43,15 +43,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <table class="table table-striped" id="tblBill">
+                    <table id="tblBill">
                         <thead style="text-align: center">
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Mã hóa đơn</th>
                             <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
                             <th scope="col" class="fw-bold fs-5">Bàn</th>
-                            <th scope="col" class="fw-bold fs-5">Tổng tiền</th>
+                            <th scope="col" class="fw-bold fs-5">Tổng tiền (VNĐ)</th>
                             <th scope="col" class="fw-bold fs-5">Voucher giảm giá</th>
-                            <th scope="col" class="fw-bold fs-5">Thực thu</th>
+                            <th scope="col" class="fw-bold fs-5">Thực thu (VNĐ)</th>
                             <th scope="col" class="fw-bold fs-5">Người tạo</th>
                         </tr>
                         </thead>
@@ -77,6 +77,20 @@
     let billList = [[${billList}]];
     let table = $("#tblBill").DataTable({
         data: billList,
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'collection',
+                text: 'Xuất toàn bộ hóa đơn',
+                className: 'custom-html-collection',
+                buttons: [
+                    '<h3>Loại file</h3>',
+                    'pdf',
+                    'csv',
+                    'excel',
+                ]
+            }
+        ],
         rowId: 'id',
         selected: true,
         columns: [
@@ -91,7 +105,7 @@
             {data: 'coffeeTable'},
             {
                 data: 'subAmount', render: function (data) {
-                    return `${App.formatNumberSpace(data)} VNĐ`;
+                    return `${App.formatNumberSpace(data)}`;
                 }, className: 'text-end'
             },
             {
@@ -103,7 +117,7 @@
             },
             {
                 data: 'totalAmount', render: function (data) {
-                    return `${App.formatNumberSpace(data)} VNĐ`;
+                    return `${App.formatNumberSpace(data)}`;
                 }, className: 'text-end'
             },
             {
@@ -130,7 +144,9 @@
         })
             .done(function (data) {
                 let str='';
+                let totalAmount = 0;
                 for (let i = 0; i < data.length; i++) {
+                    totalAmount +=data[i].totalPrice
                     str+= `
                     <tr>
                         <td>${data[i].drink}</td>
@@ -140,6 +156,10 @@
                     </tr>
                 `;
                 }
+                str+=`<tr>
+                        <td colspan="3" class="fw-bold text-center fs-5">Tổng tiền: </td>
+                        <td class="text-end">${App.formatNumberSpace(totalAmount)} VNĐ</td>
+                      </tr>`;
                 $("#tblBillDetail tbody").append(str);
                 $("#modalBillDetail").modal('show');
             })

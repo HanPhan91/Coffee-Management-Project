@@ -46,17 +46,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col text-center">
-                    <table class="table table-striped" id="tblStaff">
+                <div class="col-md-12">
+                    <table class="" id="tblStaff">
                         <thead>
                         <tr>
-                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
-                            <th scope="col" class="fw-bold fs-5">Địa chỉ</th>
-                            <th scope="col" class="fw-bold fs-5">Số điện thoại</th>
-                            <th scope="col" class="fw-bold fs-5">Email</th>
-                            <th scope="col" class="fw-bold fs-5">Ngày sinh</th>
-                            <th scope="col" class="fw-bold fs-5">Nhiệm vụ</th>
-                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Tên nhân viên</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Địa chỉ</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Ngày sinh</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Số điện thoại</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Email</th>
+                            <th scope="col" class="fw-bold fs-5 text-center">Nhiệm vụ</th>
+                            <!--                            <th scope="col" colspan="3" class="text-center fw-bold fs-5">Thao tác</th>-->
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,7 +68,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col text-end">
+                <div class="col text-end mt-2">
                     <a class="btn btn-outline-danger" id="deletedStaff" th:href="@{/staffs/deleted}"><i
                             class="fa fa-trash"></i> Danh sách nhân viên đã xóa
                     </a>
@@ -83,37 +86,52 @@
         <!-- End footer -->
         <!-- ============================================================== -->
     </div>
+    <div class="loader hide"></div>
 </div>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="staffs/modalCreate :: modalCreate"/>
 <th:block th:replace="staffs/modalEdit :: modalEdit"/>
 <th:block th:replace="staffs/modalDelete :: modalDelete"/>
+<th:block th:replace="staffs/modalCreateUser :: modalCreateUser"/>
 <script src="/assets/App/appStaff.js"></script>
 <script src="/assets/App/validatedStaff.js"></script>
 <script src="/assets/App/appPosition.js"></script>
 <script th:inline="javascript">
     var listStaffs = [[${staffs}]];
-    $("#tblStaff").DataTable({
+    let table = $("#tblStaff").DataTable({
         data: listStaffs,
+        select: true,
+        rowId: 'id',
         columns: [
             {data: 'name'},
             {data: 'address', orderable: false, searchable: false},
+            {data: 'birthDay', orderable: false},
             {data: 'phone', orderable: false},
             {data: 'email', orderable: false},
-            {data: 'birthDay', searchable: false},
             {data: 'position.name', searchable: false},
             {
                 data: 'id', render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-warning editStaff" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            `;
+                }, orderable: false
+            },
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `
                             <button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-ban"></i></button>
                             `;
-                }
+                }, orderable: false
             },
-            // {
-            //     data: 'id', render: function (data, type, row, meta) {
-            //         return `<button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-trash"></i></button>`;
-            //     }
-            // },
+            {
+                targets: 2,
+                data: {hasUser: 'hasUser', id: 'id'},
+                render: function (data, type, row, meta) {
+                    if (data.hasUser == true) {
+                        return null;
+                    } else
+                        return `<button class="btn btn-outline-danger createUser" data-id="${data.id}"><i class="fa fa-user-plus"></i></button>`;
+                }, orderable: false
+            }
         ],
     });
 </script>
@@ -145,6 +163,25 @@
 
     });
     handlerActionStaff();
+    handlerActionCreateUser();
+
+    function handlerActionCreateUser() {
+        $(".createUser").on('click', function () {
+            let id = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "/api/staffs/" + id
+            })
+                .done(function (data) {
+                    $("#idStafftoCre").val(data.id);
+                    $("#forStaffName").text(data.name);
+                    $("#modalCreateUser").modal('show');
+                })
+                .fail(function () {
+                    console.log("show modal create user fail");
+                })
+        })
+    };
 
 
 </script>

@@ -22,7 +22,8 @@
                                 <input type="text" class="form-control" id="addressStaffCre" name="addressStaffCre">
                             </div>
                             <div class="col co4">
-                                <label for="phoneStaffCre" class="form-label fw-bold">Số điện thoại nhân viên:</label>
+                                <label for="phoneStaffCre" class="form-label fw-bold">Số điện thoại nhân
+                                    viên:</label>
                                 <input type="text" class="form-control" id="phoneStaffCre" name="phoneStaffCre">
                             </div>
                         </div>
@@ -53,13 +54,15 @@
     </div>
 
     <script>
-        $("#btnCreate").on("click", function (){
+        $("#btnCreate").on("click", function () {
             $("#frmCreateStaff").trigger("submit");
         });
-        function createStaff(){
+
+        function createStaff() {
             let date = new Date($("#bodStaffCre").val()).toISOString().slice(0, 10);
-            let staff = new Staff(0,$("#nameStaffCre").val(), $("#addressStaffCre").val(), $("#phoneStaffCre").val(),
-                                   $("#emailStaffCre").val(), date , $("#positionStaffCre").val());
+            let staff = new Staff(0, $("#nameStaffCre").val(), $("#addressStaffCre").val(), $("#phoneStaffCre").val(),
+                $("#emailStaffCre").val(), date, $("#positionStaffCre").val());
+            $(".loader").removeClass('hide');
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -69,24 +72,27 @@
                 url: "/api/staffs/create",
                 data: JSON.stringify(staff)
             })
-            .done(function (data){
-                swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function() {
-                    window.location = "/staffs";
-                });
-            })
-            .fail(function (jqXHR){
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                    $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
-                        $("#" + key).addClass("error");
+                .done(function (data) {
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
+                        window.location = "/staffs";
                     });
-                } else {
-                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
-                $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#modalCreate .modal-body .modal-alert-danger").html(str);
-            })
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreate .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $(".loader").addClass('hide');
+                })
         }
 
         $("#modalCreate").on('hidden.bs.modal', function () {

@@ -47,14 +47,14 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <table class="table table-striped" id="tblUser">
+                    <table class="" id="tblUser">
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
                             <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
                             <th scope="col" class="fw-bold fs-5">Chức vụ</th>
                             <th scope="col" class="fw-bold fs-5">Avatar</th>
-                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@
             {
                 data: 'id', render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-ban"></i></button>`;
-                }
+                }, orderable: false, searchable: false
             },
         ],
     });
@@ -118,10 +118,9 @@
 </script>
 <script>
     $("#createUser").on("click", function () {
-
         $.ajax({
             type: "GET",
-            url: "/api/staffs"
+            url: "/api/staffs/notuser"
         })
             .done(function (data) {
                 let str = "";

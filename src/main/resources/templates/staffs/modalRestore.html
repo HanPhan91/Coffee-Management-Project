@@ -68,6 +68,7 @@
             let birthDay = new Date($("#bodStaffRestore").val()).toISOString().slice(0, 10);
             let position = $("#positionStaffRestore").val();
             let staff = new Staff(id, name, address, phone, email, birthDay, position);
+            $(".loader").removeClass('hide');
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -98,6 +99,9 @@
                     }
                     $("#modalRestore .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalRestore .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $(".loader").addClass('hide');
                 })
         }
 

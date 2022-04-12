@@ -39,4 +39,8 @@ public interface DrinkRepository extends JpaRepository<Drink,Long> {
     @Modifying
     @Query("UPDATE Drink d SET d.deleted = true WHERE d.catalog.id = :idCatalog")
     void deleteDrinkByCatalog(@Param("idCatalog") Long idCatalog);
+
+    Integer countDrinkByCatalog(Catalog catalog);
+
+    List<Drink> findAllByCatalogAndDeletedFalse(Catalog catalog);
 }

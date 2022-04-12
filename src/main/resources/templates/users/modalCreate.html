@@ -13,6 +13,13 @@
                     </div>
                     <form id="frmCreateUser">
                         <div class="row">
+                            <div class="col text-center">
+<!--                                <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>-->
+                                <img id="previewImg" width="100px" class="img-circle mb-2" src="/assets/plugins/images/users/1.jpg"/>
+                                <input id="uploadCre" type="file" accept="image/*" hidden />
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col col-md-6">
                                 <label for="usernameCre" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameCre" name="usernameCre">
@@ -23,17 +30,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col">
                                 <label for="staffCre" class="form-label fw-bold">Nhân viên được cấp:</label>
                                 <select class="form-select" id="staffCre">
 
                                 </select>
                             </div>
-                            <div class="col col-md-6">
-                                    <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>
-                                    <img id="previewImg" width="100px" class="img-circle mb-2"/>
-                                    <input id="uploadCre" type="file" accept="image/jpeg, image/png"/>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -97,6 +100,10 @@
             $("#staffCre option").remove();
             $("#frmCreateUser")[0].reset();
         });
+
+        $("#previewImg").on('click', function () {
+            $('#uploadCre').trigger('click');
+        })
 
         $('#uploadCre').change(function(){
             const file = this.files[0];

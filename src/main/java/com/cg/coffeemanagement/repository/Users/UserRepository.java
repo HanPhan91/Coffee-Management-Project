@@ -28,6 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByDeletedTrue();
 
+    @Query("SELECT u FROM User u WHERE u.deleted = false AND u.staff.position.permission.permissionAccess > :permission")
+    List<User> findUserNotDeletedAndPermissionSmaller(@Param("permission") int permission);
 
     @Modifying
     @Query("UPDATE User u SET u.deleted = true WHERE u.id = :id")

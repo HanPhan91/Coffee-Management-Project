@@ -45,7 +45,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnRestoreDrink">Khôi phục thức uống</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestoreDrink">Khôi phục thức uống
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,6 +60,7 @@
             form.append("price", App.removeFormatNumberSpace($("#priceDrinkRestore").val()));
             form.append("catalog", $("#catalogsRestore").val());
             form.append("description", $("#desDrinkRestore").val());
+            $(".loader").removeClass('hide');
             $.ajax({
                 type: "PUT",
                 contentType: false,
@@ -84,6 +86,9 @@
                     }
                     $("#modalRestoreDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalRestoreDrink .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $(".loader").addClass('hide');
                 })
         }
     </script>

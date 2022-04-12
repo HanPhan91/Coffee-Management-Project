@@ -20,13 +20,15 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="descriptionDisCountEdit" class="form-label fw-bold">Mô tả</label>
-                                <input type="text" class="form-control" id="descriptionDisCountEdit" name="descriptionEdit">
+                                <input type="text" class="form-control" id="descriptionDisCountEdit"
+                                       name="descriptionEdit">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="percentDiscountEdit" class="form-label fw-bold">% khuyến mãi</label>
-                                <input type="number" class="form-control" id="percentDiscountEdit" name="percentDiscountEdit">
+                                <input type="number" class="form-control" id="percentDiscountEdit"
+                                       name="percentDiscountEdit">
                             </div>
                             <div class="col col-md-6">
                                 <label for="createdAtDiscountEdit" class="form-label fw-bold">Thời gian bắt đầu</label>
@@ -54,13 +56,13 @@
     </div>
 
     <script>
-        $("#btnEditDiscount").on("click", function (){
+        $("#btnEditDiscount").on("click", function () {
             $("#frmEditDiscount").trigger("submit");
         });
 
-        function editDiscount(){
-            let dateStart = new Date($("#createdAtDiscountEdit").val()).toISOString().slice(0,10);
-            let dateEnd = new Date($("#endedAtDiscountEdit").val()).toISOString().slice(0,10);
+        function editDiscount() {
+            let dateStart = new Date($("#createdAtDiscountEdit").val()).toISOString().slice(0, 10);
+            let dateEnd = new Date($("#endedAtDiscountEdit").val()).toISOString().slice(0, 10);
             let discount = new Discount($("#codeDiscountEdit").val().trim());
             discount.description = frmEditDiscount.descriptionEdit.value;
             discount.percentDiscount = frmEditDiscount.percentDiscountEdit.value;
@@ -78,27 +80,12 @@
                 url: "/api/discount/edit/" + id,
                 data: JSON.stringify(discount)
             })
-                .done(function (data){
-                    let str= `
-                    <tr id="tr_${data.id}">
-                            <td>${data.code}</td>
-                            <td>${data.description}</td>
-                            <td>${data.percentDiscount}</td>
-                            <td>${data.createdAt}</td>
-                            <td>${data.endedAt}</td>
-                            <td>${data.quantity}</td>
-
-                            <td><button class="btn btn-outline-warning editDiscount" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger deleteDiscount" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
-                        </tr>
-                `;
-                    swal("Thành công", "Sửa khuyến mại thành công", "success");
-                    $("#tr_"+id).replaceWith(str);
-                    $("#editDiscount").modal("hide");
-                    $("#frmEditDiscount")[0].reset();
-                    handlerActionDiscount();
+                .done(function (data) {
+                    swal("Thành công", "Sửa khuyến mại thành công", "success").then(function () {
+                        location.reload();
+                    });
                 })
-                .fail(function (jqXHR){
+                .fail(function (jqXHR) {
                     let str = ``;
                     if (jqXHR.responseJSON) {
                         $.each(jqXHR.responseJSON, function (key, value) {

@@ -2,6 +2,7 @@ package com.cg.coffeemanagement.services.Positions;
 
 import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
+import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
@@ -34,5 +35,6 @@ public interface IPositionServices extends IGeneralServices<Position> {
 
     void restorePosition(@Param("id") Long id);
 
+    List<Position> findPositionNotDeletedAndPermissionSmaller(@Param("permission") int permission);
 
 }

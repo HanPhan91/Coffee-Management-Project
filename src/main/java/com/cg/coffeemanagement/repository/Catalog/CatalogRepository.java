@@ -30,4 +30,7 @@ public interface CatalogRepository extends JpaRepository<Catalog,Long> {
     @Query("UPDATE Drink d SET d.deleted = false WHERE d.id= :idCatalog")
     void restoreDrinkByCatalog(@Param("idCatalog") Long idCatalog);
 
+    @Modifying
+    @Query("UPDATE Catalog c SET c.summary = :summary WHERE c.id = :id")
+    void updateSummary(@Param("id") Long id, int summary);
 }

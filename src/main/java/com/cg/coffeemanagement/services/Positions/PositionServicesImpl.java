@@ -2,6 +2,7 @@ package com.cg.coffeemanagement.services.Positions;
 
 import com.cg.coffeemanagement.model.Permission;
 import com.cg.coffeemanagement.model.Position;
+import com.cg.coffeemanagement.model.Staff;
 import com.cg.coffeemanagement.repository.Positions.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,4 +63,8 @@ public class PositionServicesImpl implements IPositionServices{
         positionRepository.restorePosition(id);
     }
 
+    @Override
+    public List<Position> findPositionNotDeletedAndPermissionSmaller(int permission) {
+        return positionRepository.findPositionNotDeletedAndPermissionSmaller(permission);
+    }
 }

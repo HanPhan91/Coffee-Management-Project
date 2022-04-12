@@ -70,4 +70,9 @@ public class CatalogServiceImpl implements CatalogService{
     public void restoreDrinkByCatalog(Long idCatalog) {
             catalogRepository.restoreDrinkByCatalog(idCatalog);
     }
+
+    @Override
+    public void updateSummary(Long id, int summary) {
+        catalogRepository.updateSummary(id, summary);
+    }
 }

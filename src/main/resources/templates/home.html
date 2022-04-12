@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
     <th:block th:replace="layout/head :: head"/>
 </head>
 <body>
@@ -47,10 +47,7 @@
                         <h3 class="box-title">Doanh thu hôm nay</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fa fa-dollar-sign text-success" style="font-size: 50px"></i>
                             </li>
                             <li class="ms-auto"><span class="counter text-success" id="incomeToday"></span></li>
                         </ul>
@@ -61,10 +58,7 @@
                         <h3 class="box-title">Số bill trong ngày</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash2">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fa fa-money-bill text-purple" style="font-size: 50px"></i>
                             </li>
                             <li class="ms-auto"><span class="counter text-purple" id="billToday"></span></li>
                         </ul>
@@ -75,10 +69,7 @@
                         <h3 class="box-title">Doanh thu trong tháng</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash3">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
                             </li>
                             <li class="ms-auto"><span class="counter text-info" id="incomeToMonth"></span>
                             </li>

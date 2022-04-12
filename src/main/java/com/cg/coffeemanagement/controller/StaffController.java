@@ -27,8 +27,8 @@ public class StaffController {
     public ModelAndView showStaff(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("staffs/list");
-        List<Staff> staffs = staffServices.findByDeletedFalse();
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        List<Staff> staffs = staffServices.findStaffNotDeletedAndPermissionSmaller(user.getStaff().getPosition().getPermission().getPermissionAccess());
         modelAndView.addObject("user", user);
         modelAndView.addObject("staffs", staffs);
         return modelAndView;
@@ -38,8 +38,8 @@ public class StaffController {
     public ModelAndView showStaffDeleted(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("staffs/deleted");
-        List<Staff> staffs = staffServices.findByDeletedTrue();
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        List<Staff> staffs = staffServices.findStaffNotDeletedAndPermissionSmaller(user.getStaff().getPosition().getPermission().getPermissionAccess());
         modelAndView.addObject("user", user);
         modelAndView.addObject("staffs", staffs);
         return modelAndView;

@@ -80,10 +80,9 @@
                 data: JSON.stringify(discount)
             })
                 .done(function (data) {
-                    $("#tr_" + id).remove();
-                    $("#deleteDiscount").modal("hide");
-                    $("#frmDeleteDiscount")[0].reset();
-                    swal("Thành công", "Khuyến mãi đã được xóa", "success");
+                    swal("Thành công", "Khuyến mãi đã được xóa", "success").then(function () {
+                        location.reload();
+                    });
                 })
                 .fail(function (jqXHR) {
                     let str = ``;

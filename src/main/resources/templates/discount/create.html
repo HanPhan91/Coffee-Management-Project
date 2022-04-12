@@ -2,115 +2,106 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <th:block th:fragment="create">
-  <div class="modal" tabindex="-1" id="createDiscount">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Create Discount</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-alert-danger hide">
-          </div>
-          <form id="frmCreateDiscount">
-            <div class="row">
-              <div class="col col-md-6">
-                <label for="codeDiscountCre" class="form-label fw-bold">Mã khuyến mãi</label>
-                <input type="text" class="form-control" id="codeDiscountCre" name="codeCreate">
-              </div>
-              <div class="col col-md-6">
-                <label for="descriptionDisCountCre" class="form-label fw-bold">Mô tả</label>
-                <input type="text" class="form-control" id="descriptionDisCountCre" name="descriptionCreate">
-              </div>
+    <div class="modal" tabindex="-1" id="createDiscount">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Discount</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateDiscount">
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="codeDiscountCre" class="form-label fw-bold">Mã khuyến mãi</label>
+                                <input type="text" class="form-control" id="codeDiscountCre" name="codeCreate">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="descriptionDisCountCre" class="form-label fw-bold">Mô tả</label>
+                                <input type="text" class="form-control" id="descriptionDisCountCre"
+                                       name="descriptionCreate">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="percentDiscountCre" class="form-label fw-bold">% khuyến mãi</label>
+                                <input type="number" class="form-control" id="percentDiscountCre"
+                                       name="percentDiscountCreate">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="createdAtDiscountCre" class="form-label fw-bold">Thời gian bắt đầu</label>
+                                <input type="date" class="form-control" id="createdAtDiscountCre"
+                                       name="createdAtCreate">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="endedAtDiscountCre" class="form-label fw-bold">Thời gian kết thúc</label>
+                                <input type="date" class="form-control" id="endedAtDiscountCre" name="endedAtCreate">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="quantityDiscountCre" class="form-label fw-bold">Số lượng</label>
+                                <input type="number" class="form-control" id="quantityDiscountCre"
+                                       name="quantityCreate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateDiscount">Create Discount
+                    </button>
+                </div>
             </div>
-            <div class="row">
-              <div class="col col-md-6">
-                <label for="percentDiscountCre" class="form-label fw-bold">% khuyến mãi</label>
-                <input type="number" class="form-control" id="percentDiscountCre" name="percentDiscountCreate">
-              </div>
-              <div class="col col-md-6">
-                <label for="createdAtDiscountCre" class="form-label fw-bold">Thời gian bắt đầu</label>
-                <input type="date" class="form-control" id="createdAtDiscountCre" name="createdAtCreate">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col col-md-6">
-                <label for="endedAtDiscountCre" class="form-label fw-bold">Thời gian kết thúc</label>
-                <input type="date" class="form-control" id="endedAtDiscountCre" name="endedAtCreate">
-              </div>
-              <div class="col col-md-6">
-                <label for="quantityDiscountCre" class="form-label fw-bold">Số lượng</label>
-                <input type="number" class="form-control" id="quantityDiscountCre" name="quantityCreate">
-              </div>
-            </div>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-primary" id="btnCreateDiscount">Create Discount</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    $("#btnCreateDiscount").on("click", function (){
-      $("#frmCreateDiscount").trigger("submit");
-    });
+    <script>
+        $("#btnCreateDiscount").on("click", function () {
+            $("#frmCreateDiscount").trigger("submit");
+        });
 
-    function createDiscount(){
-      let discount = new Discount($("#codeDiscountCre").val().trim());
-      discount.description = frmCreateDiscount.descriptionCreate.value;
-      discount.percentDiscount = frmCreateDiscount.percentDiscountCreate.value;
-      discount.createdAt = frmCreateDiscount.createdAtCreate.value;
-      discount.endedAt = frmCreateDiscount.endedAtCreate.value;
-      discount.quantity = frmCreateDiscount.quantityCreate.value;
-
-
-      $.ajax({
-        headers: {
-          "Accept": "application/json",
-          "Content-type": "application/json"
-        },
-        type: "POST",
-        url: "/api/discount/create",
-        data: JSON.stringify(discount)
-      })
-              .done(function (data){
-                let str= `
-                    <tr id="tr_${data.id}">
-                            <td>${data.code}</td>
-                            <td>${data.description}</td>
-                            <td>${data.percentDiscount}</td>
-                            <td>${data.createdAt}</td>
-                            <td>${data.endedAt}</td>
-                            <td>${data.quantity}</td>
-                            <td><button class="btn btn-outline-warning editDiscount" data-id="${data.id}"><i class="fa fa-pencil-alt"></i></button></td>
-                            <td><button class="btn btn-outline-danger deleteDiscount" data-id="${data.id}"><i class="fa fa-trash"></i></button></td>
-                        </tr>
-                `;
-                swal("Thành công", "Tạo khuyến mãi  thành công", "success")
-                $("#tblDiscount").prepend(str);
-                $("#createDiscount").modal("hide");
-                $("#frmCreateDiscount")[0].reset();
-                handlerActionDiscount();
-              })
-              .fail(function (jqXHR){
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                  $.each(jqXHR.responseJSON, function (key, value) {
-                    str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                    $("#" + key).addClass("error");
-                  });
-                } else {
-                  str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
-                $("#createDiscount .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                $("#createDiscount .modal-body .modal-alert-danger").html(str);
-              })
-    }
+        function createDiscount() {
+            let discount = new Discount($("#codeDiscountCre").val().trim());
+            discount.description = frmCreateDiscount.descriptionCreate.value;
+            discount.percentDiscount = frmCreateDiscount.percentDiscountCreate.value;
+            discount.createdAt = frmCreateDiscount.createdAtCreate.value;
+            discount.endedAt = frmCreateDiscount.endedAtCreate.value;
+            discount.quantity = frmCreateDiscount.quantityCreate.value;
 
 
-  </script>
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/discount/create",
+                data: JSON.stringify(discount)
+            })
+                .done(function (data) {
+                    swal("Thành công", "Tạo khuyến mãi  thành công", "success").then(function () {
+                        location.reload();
+                    })
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#createDiscount .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#createDiscount .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+
+    </script>
 
 </th:block>

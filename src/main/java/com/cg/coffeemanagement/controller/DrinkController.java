@@ -10,10 +10,13 @@ import com.cg.coffeemanagement.services.Users.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/drinks")
@@ -37,6 +40,28 @@ public class DrinkController {
         modelAndView.addObject("drinks", drinks);
         return modelAndView;
     }
+
+    @GetMapping("/{idCatalog}")
+    public ModelAndView getDrinkByCatalog(@PathVariable Long idCatalog){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Catalog> catalogDrinks = catalogService.findAllNotDeleted();
+        modelAndView.setViewName("drink/list");
+        User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("catalogs", catalogDrinks);
+        Optional<Catalog> opCatalog = catalogService.findById(idCatalog);
+        if (opCatalog.isPresent()){
+            Catalog catalog = opCatalog.get();
+            List<Drink> drinks = drinkService.findAllByCatalogAndDeletedFalse(catalog);
+            modelAndView.addObject("drinks", drinks);
+            return modelAndView;
+        }
+        else {
+            modelAndView.addObject("drinks", null);
+            return modelAndView;
+        }
+    }
+
 
     @GetMapping("/deleted")
     public ModelAndView showListDeleted() {

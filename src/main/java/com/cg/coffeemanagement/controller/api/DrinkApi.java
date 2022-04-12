@@ -70,14 +70,10 @@ public class DrinkApi {
         if (drinkService.existsByName(drinkDto.getName())) {
             throw new DataInputException("Thức uống đã tồn tại");
         }
-//        Drink drink = new Drink();
-//        drink.setName(drinkDto.getName());
-//        drink.setDescription(drinkDto.getDescription());
-//        drink.setPrice(drinkDto.getPrice());
-//        drink.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
-//        Drink returnDrink = drinkService.save(drink);
-//        returnDrink.setStorage(true);
         Drink drink = drinkService.create(drinkDto);
+        Catalog catalog = catalogService.findById(drinkDto.getCatalog()).get();
+        int summary = drinkService.countDrinkByCatalog(catalog);
+        catalogService.updateSummary(catalog.getId(), summary);
         return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
@@ -88,14 +84,7 @@ public class DrinkApi {
         }
         Optional<Drink> drink = drinkService.findById(id);
         if (drink.isPresent()) {
-//            drinkUp.setName(drinkDto.getName());
-//            drinkUp.setDescription(drinkDto.getDescription());
-//            drinkUp.setPrice(drinkDto.getPrice());
-//            drinkUp.setCatalog(catalogService.findById(drinkDto.getCatalog()).get());
             Drink returnDrink = drinkService.update(drink.get(), drinkDto);
-//            if(returnDrink.getInventory()>0){
-//                returnDrink.setStorage(true);
-//            }
             return new ResponseEntity<>(returnDrink, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

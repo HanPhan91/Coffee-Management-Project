@@ -110,6 +110,9 @@
                     $("#modalUpdateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalUpdateDrink .modal-body .modal-alert-danger").html(str);
                 })
+                .always(function () {
+                    $(".loader").addClass('hide');
+                })
         }
     </script>
 </th:block>

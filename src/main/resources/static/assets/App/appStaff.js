@@ -37,17 +37,16 @@ function handlerActionStaff() {
                 $("#emailStaffEdit").val(data.email);
                 let limitDay = "";
                 let today = new Date();
-                limitDay= `${today.getFullYear() - 16}-12-31`;
+                limitDay = `${today.getFullYear() - 16}-12-31`;
                 $("#bodStaffEdit").attr("max", limitDay);
                 $("#bodStaffEdit").val(data.birthDay);
-                let str="";
+                let str = "";
                 for (let i = 0; i < positons.length; i++) {
                     let position = positons[i];
-                    if (positons[i].id == data.position.id){
-                        str+=`<option value="${position.id}" selected>${position.name}</option>`;
-                    }
-                    else {
-                        str+=`<option value="${position.id}">${position.name}</option>`;
+                    if (positons[i].id == data.position.id) {
+                        str += `<option value="${position.id}" selected>${position.name}</option>`;
+                    } else {
+                        str += `<option value="${position.id}">${position.name}</option>`;
                     }
                 }
                 $("#positionStaffEdit").prepend(str);
@@ -80,3 +79,45 @@ function handlerActionStaff() {
             })
     });
 }
+
+
+$("#frmCreateUserForStaff").validate({
+    rules: {
+        usernameCreForStaff: {
+            required: true,
+            minlength: 5,
+            maxlength: 30,
+        },
+        passCreForStaff: {
+            required: true,
+            pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$"
+        },
+    },
+    messages: {
+        usernameCreForStaff: {
+            required: "Tên đăng nhập không được để trống",
+            minlength: "Tên đăng nhập phải có độ dài nằm trong khoảng 5-30 ký tự",
+            maxlength: "Tên đăng nhập phải có độ dài nằm trong khoảng 5-30 ký tự",
+        },
+        passCreForStaff: {
+            required: "Mật khẩu không được để trống",
+            pattern: "Mật khẩu phải có trên 6 ký tự, bao gồm ít nhất 1 chữ HOA, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
+        },
+    },
+    errorLabelContainer: '#modalCreateUser .modal-body .modal-alert-danger',
+    errorPlacement: function (error, element) {
+        error.appendTo("#modalCreateUser .modal-body .modal-alert-danger");
+    },
+    showErrors: function (errorMap, errorList) {
+        if (this.numberOfInvalids() > 0) {
+            $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+        } else {
+            $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
+            $("#modalCreateUser input.error").removeClass("error");
+        }
+        this.defaultShowErrors();
+    },
+    submitHandler: function () {
+        createUserForStaff();
+    }
+});

@@ -32,7 +32,7 @@ public interface CatalogService extends IGeneralServices<Catalog> {
 
     List<Catalog> findAllDeleted();
 
-
-
     void restoreDrinkByCatalog(@Param("idCatalog") Long idCatalog);
+
+    void updateSummary(@Param("id") Long id, int summary);
 }

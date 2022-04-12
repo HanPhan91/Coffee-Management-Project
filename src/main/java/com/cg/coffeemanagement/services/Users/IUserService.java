@@ -52,4 +52,6 @@ public interface IUserService extends IGeneralServices<User>, UserDetailsService
     void changePass(@Param("id") Long id, String pass);
 
     void saveAvatar(@Param("id") Long id, Long idavatar);
+
+    List<User> findUserNotDeletedAndPermissionSmaller(@Param("permission") int permission);
 }

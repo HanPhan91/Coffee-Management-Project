@@ -24,7 +24,6 @@ function handlerActionDiscount() {
                 $("#createdAtDiscountEdit").val(data.createdAt);
                 $("#endedAtDiscountEdit").val(data.endedAt);
                 $("#quantityDiscountEdit").val(data.quantity);
-
                 $("#editDiscount").modal("show");
             })
             .fail(function (resp) {

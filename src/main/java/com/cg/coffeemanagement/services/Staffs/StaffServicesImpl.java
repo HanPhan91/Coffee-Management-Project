@@ -1,6 +1,7 @@
 package com.cg.coffeemanagement.services.Staffs;
 
 import com.cg.coffeemanagement.model.Staff;
+import com.cg.coffeemanagement.model.User;
 import com.cg.coffeemanagement.repository.Staffs.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -62,5 +63,25 @@ public class StaffServicesImpl implements IStaffServices {
     @Override
     public void restoreStaff(Long id) {
         staffRepository.restoreStaff(id);
+    }
+
+    @Override
+    public List<Staff> findStaffNotUser() {
+        return staffRepository.findByDeletedFalseAndHasUserFalse();
+    }
+
+    @Override
+    public void staffHasUser(Long id) {
+        staffRepository.staffHasUser(id);
+    }
+
+    @Override
+    public List<Staff> findStaffNotDeletedAndPermissionSmaller(int permission) {
+        return staffRepository.findStaffNotDeletedAndPermissionSmaller(permission);
+    }
+
+    @Override
+    public List<Staff> findStaffNotDeletedAndPermissionEqualAndNotUser(int permission) {
+        return staffRepository.findStaffNotDeletedAndPermissionEqualAndNotUser(permission);
     }
 }

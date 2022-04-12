@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreateUser">
+    <div class="modal" tabindex="-1" id="modalCreateUser">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo user mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateUserForStaff">
+                        <input type="text" id="idStafftoCre" hidden>
+                        <div class="row">
+                            <div class="col text-center">
+                                <img id="previewImg" width="100px" class="img-circle mb-2"
+                                     src="/assets/plugins/images/users/1.jpg"/>
+                                <input id="uploadCreForStaff" type="file" accept="image/*" hidden />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mt-2 text-center">
+                                <label class="form-label fw-bold">Nhân viên được cấp:</label>
+                                <label class="form-label" id="forStaffName"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="usernameCreForStaff" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameCreForStaff"
+                                       name="usernameCreForStaff">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passCreForStaff" class="form-label fw-bold">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="passCreForStaff" name="passCreForStaff">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateUserForStaff">Tạo user</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreateUserForStaff").on("click", function () {
+            $("#frmCreateUserForStaff").trigger("submit");
+        });
+
+        function createUserForStaff() {
+            let formData = new FormData();
+            formData.append("username", $("#usernameCreForStaff").val().toString());
+            formData.append("password", $("#passCreForStaff").val().toString());
+            formData.append("id_staff", $("#idStafftoCre").val().toString());
+            if ($("#uploadCreForStaff")[0].files[0] != null) {
+                formData.append("file", $("#uploadCreForStaff")[0].files[0]);
+            }
+            $("div.loader").removeClass("hide");
+            $.ajax({
+                type: "POST",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/create",
+                data: formData
+            })
+                .done(function (data) {
+                    swal("Thành công", "User mới đã được tạo", "success").then(function () {
+                        location.reload();
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreateUser .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $("div.loader").addClass("hide");
+                })
+        }
+
+        $("#modalCreateUser").on('hidden.bs.modal', function () {
+            $("#modalCreateUser .modal-body .modal-alert-danger").empty();
+            $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreateUser input.error").removeClass("error");
+            $("#frmCreateUserForStaff")[0].reset();
+        });
+
+        $("#previewImg").on('click', function () {
+            $('#uploadCreForStaff').trigger('click');
+        })
+
+        $('#uploadCreForStaff').change(function () {
+            const file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+
+</th:block>

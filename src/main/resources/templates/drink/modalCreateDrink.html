@@ -15,6 +15,13 @@
                     </div>
                     <form id="frmCreateDrink">
                         <div class="row">
+                            <div class="mb-3 col text-center">
+<!--                                <label for="uploadCre" class="form-label fw-bold">Tải ảnh lên:</label>-->
+                                <img id="previewImg" width="150px" class="img-circle mb-2" src="/assets/plugins/images/users/imagedrink.png" />
+                                <input id="uploadCre" type="file" accept="image/*" hidden/>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="mb-3 col-6">
                                 <label for="drinkNameCreate" class="form-label fw-bold">Tên thức uống</label>
                                 <input type="text" class="form-control" id="drinkNameCreate" name="drinkNameCreate">
@@ -31,13 +38,7 @@
                                     </select>
                                 </div>
                             </div>
-                                                        <div class="row">
-                                                            <div class="mb-3 col mx-auto">
-                                                                <label for="uploadCre" class="form-label fw-bold">Tải ảnh lên:</label>
-                                                                <img id="previewImg" width="150px" class="img-circle mb-2"/>
-                                                                <input id="uploadCre" type="file" accept="image/*"/>
-                                                            </div>
-                                                        </div>
+
                         </div>
                         <div class="row">
                             <div class="mb-3 col">
@@ -56,7 +57,9 @@
         </div>
     </div>
     <script>
-
+        $("#previewImg").on('click', function () {
+            $("#uploadCre").trigger('click');
+        })
 
         $('#uploadCre').change(function () {
             const file = this.files[0];
@@ -78,6 +81,7 @@
             if ($("#uploadCre")[0].files[0] != null) {
                 formData.append("file", $("#uploadCre")[0].files[0]);
             }
+            $(".loader").removeClass('hide');
             $.ajax({
                 type: "POST",
                 contentType: false,
@@ -104,15 +108,19 @@
                     $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                     $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
                 })
+                .always(function () {
+                    $(".loader").addClass('hide');
+                })
         }
 
-        $("div.image-preview, div.file-name").on('click',function (){
+        $("div.image-preview, div.file-name").on('click', function () {
             $("#imageFile").trigger('click');
         });
-        $("#imageFile").on('change',function (){
+        $("#imageFile").on('change', function () {
             changeImagePreview();
         });
-        function loadImageToCanvas(imageFile){
+
+        function loadImageToCanvas(imageFile) {
             $("section .image-preview canvas").css("display", "");
             $("section .wrapper").addClass("active");
             $("section .wrapper .content").css("opacity", 0);
@@ -125,7 +133,7 @@
             imageObj.src = URL.createObjectURL(imageFile)
         }
 
-        function changeImagePreview(){
+        function changeImagePreview() {
             let imageFile = $("#imageFile")[0].files[0];
             if (imageFile) {
                 let reader = new FileReader();
@@ -139,7 +147,8 @@
                 clearImagePreview();
             }
         }
-        function clearImagePreview(){
+
+        function clearImagePreview() {
             $("#imageFile")[0].files[0].val("");
             $("section .image-preview canvas").css("display", "none");
             $("section .wrapper").removeClass("active");

@@ -40,6 +40,13 @@ public class StaffApi {
         return new ResponseEntity<>(staffs, HttpStatus.OK);
     }
 
+    @GetMapping("/notuser")
+    public ResponseEntity<?> getStaffNotUser(){
+        User user = userService.getByUsername(Principal.getPrincipal()).get();
+        List<Staff> staffs = staffServices.findStaffNotDeletedAndPermissionEqualAndNotUser(user.getStaff().getPosition().getPermission().getPermissionAccess());
+        return new ResponseEntity<>(staffs, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getStaff(@PathVariable Long id) {
         Optional<Staff> staff = staffServices.findById(id);

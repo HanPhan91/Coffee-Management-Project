@@ -188,4 +188,9 @@ public class UserServiceImpl implements IUserService {
         String pass = passwordEncoder.encode(password);
         userRepository.changePass(id, pass);
     }
+
+    @Override
+    public List<User> findUserNotDeletedAndPermissionSmaller(int permission) {
+        return userRepository.findUserNotDeletedAndPermissionSmaller(permission);
+    }
 }

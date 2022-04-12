@@ -21,9 +21,9 @@ public class UserController {
     @GetMapping
     public ModelAndView showUser(){
         ModelAndView modelAndView= new ModelAndView();
-        modelAndView.setViewName("users/list");
-        List<User> users = userServices.findByDeletedFalse();
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        modelAndView.setViewName("users/list");
+        List<User> users = userServices.findUserNotDeletedAndPermissionSmaller(user.getStaff().getPosition().getPermission().getPermissionAccess());
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", users);
         return modelAndView;
@@ -33,8 +33,8 @@ public class UserController {
     public ModelAndView showUserDeleted(){
         ModelAndView modelAndView= new ModelAndView();
         modelAndView.setViewName("users/deleted");
-        List<User> users = userServices.findByDeletedTrue();
         User user = userServices.getByUsername(Principal.getPrincipal()).get();
+        List<User> users = userServices.findUserNotDeletedAndPermissionSmaller(user.getStaff().getPosition().getPermission().getPermissionAccess());
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", users);
         return modelAndView;

@@ -50,12 +50,14 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <table class="table table-striped" id="tblCatalog">
+                    <table class="" id="tblCatalog">
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">ID</th>
                             <th scope="col" class="fw-bold fs-5">Tên danh mục</th>
-                            <th scope="col" colspan="2" class="fw-bold fs-5 text-center">Thao tác</th>
+                            <th scope="col" class="fw-bold fs-5">Số lượng thức uống</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -101,11 +103,21 @@
             {data: 'id'},
             {data: 'catalogName'},
             {
+                data: {id : 'id', summary: 'summary'}, render: function (data, type, row, meta) {
+                    return `<a class="btn btn-circle btn-outline-primary summaryDrink" data-id="${data.id}" href="javascript:void(0)">${data.summary}</a>`;
+                }
+            },
+            {
                 data: 'id', render: function (data, type, row, meta) {
                     return `<button class="btn btn-outline-warning editCatalog" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
-                            <button class="btn btn-outline-danger deleteCatalog" data-id="${data}"><i class="fa fa-trash"></i></button>
                             `;
-                }
+                }, orderable: false, searchable: false
+            },
+            {
+                data: 'id', render: function (data, type, row, meta) {
+                    return `<button class="btn btn-outline-danger deleteCatalog" data-id="${data}"><i class="fa fa-trash"></i></button>
+                            `;
+                }, orderable: false, searchable: false
             },
         ],
     });
@@ -145,7 +157,7 @@
                 let str = ``;
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -179,7 +191,7 @@
                 let str = ``;
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -214,7 +226,7 @@
                 let str = ``;
                 if (jqXHR.responseJSON) {
                     $.each(jqXHR.responseJSON, function (key, value) {
-                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable><br>`;
+                        str += `<label id="${key}-error" class="error" for="${key}">${value}</lable>`;
                         $("#" + key).addClass("error");
                     });
                 } else {
@@ -311,6 +323,11 @@
         $("#modalDeleteCatalog .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
         $("#modalDeleteCatalog input.error").removeClass("error");
         $("#frmDeleteCatalog")[0].reset();
+    });
+
+    $(".summaryDrink").on('click', function () {
+        let id = $(this).data('id');
+        window.location = "/drinks/"+id;
     });
 </script>
 </body>

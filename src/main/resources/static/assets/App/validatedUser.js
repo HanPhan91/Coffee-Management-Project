@@ -9,7 +9,7 @@ $(document).ready(function () {
             },
             passCre: {
                 required: true,
-                minlength: 3,
+                pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$"
             },
         },
         messages: {
@@ -20,7 +20,7 @@ $(document).ready(function () {
             },
             passCre: {
                 required: "Mật khẩu không được để trống",
-                minlength: "Mật khẩu phải dài hơn trong khoảng 3 ký tự",
+                pattern: "Mật khẩu phải có trên 6 ký tự, bao gồm ít nhất 1 chữ HOA, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
             },
         },
         errorLabelContainer: '#modalCreate .modal-body .modal-alert-danger',
@@ -51,7 +51,7 @@ $(document).ready(function () {
             },
             passEdit: {
                 required: true,
-                minlength: 3,
+                pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$"
             },
         },
         messages: {
@@ -62,7 +62,7 @@ $(document).ready(function () {
             },
             passEdit: {
                 required: "Mật khẩu không được để trống",
-                minlength: "Mật khẩu phải dài hơn trong khoảng 3 ký tự",
+                pattern: "Mật khẩu phải có trên 6 ký tự, bao gồm ít nhất 1 chữ HOA, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
             },
         },
         errorLabelContainer: '#modalEdit .modal-body .modal-alert-danger',
@@ -92,7 +92,7 @@ $(document).ready(function () {
             },
             passRestore: {
                 required: true,
-                minlength: 3,
+                pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$"
             },
         },
         messages: {
@@ -103,7 +103,7 @@ $(document).ready(function () {
             },
             passRestore: {
                 required: "Mật khẩu không được để trống",
-                minlength: "Mật khẩu phải dài hơn trong khoảng 3 ký tự",
+                pattern: "Mật khẩu phải có trên 6 ký tự, bao gồm ít nhất 1 chữ HOA, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
             },
         },
         errorLabelContainer: '#modalRestore .modal-body .modal-alert-danger',
@@ -123,4 +123,5 @@ $(document).ready(function () {
             restoreUser();
         }
     });
+
 })

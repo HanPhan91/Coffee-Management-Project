@@ -26,10 +26,11 @@ public class Catalog {
     @Column(name = "name_catalog")
     private String catalogName;
 
+    @Column(updatable = false)
+    private int summary = 0;
+
     @Column(columnDefinition = "boolean default false")
     private boolean deleted;
 
     private String description;
-
-
 }
