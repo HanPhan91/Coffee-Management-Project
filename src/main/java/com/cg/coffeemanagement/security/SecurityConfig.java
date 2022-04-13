@@ -61,7 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
-
         http.authorizeRequests()
                 .antMatchers("/resources/**", "/assets/**").permitAll()
                 .antMatchers("/", "/api/auth/login", "/logout").permitAll()

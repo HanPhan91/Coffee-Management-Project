@@ -40,40 +40,40 @@
                         <div class="header-left">
                             <div class="kv-tabs">
                                 <ul>
-                                    <li><a data-tab-index="1" href="javascript:void(0);"
+                                    <li><a data-tab-index="1" href="javascript:void(0);" id="showTables"
                                            class="active"><i class="fas fa-table"></i> Phòng bàn </a></li>
 
-                                    <li><a data-tab-index="2" href="javascript:void(0);"><i
+                                    <li><a data-tab-index="2" href="javascript:void(0);" id="showDrink"><i
                                             class="fas fa-utensils"></i> Thực đơn </a></li>
                                 </ul>
                             </div>
 
-                            <div class="search-wrapper">
-                                <div class="search-content">
-                                    <kv-product-search class="kv-product-search">
+<!--                            <div class="search-wrapper">-->
+<!--                                <div class="search-content">-->
+<!--                                    <kv-product-search class="kv-product-search">-->
 
-                                        <div class="wrap-auto-complete not-electronic">
-                                            <kv-auto-complete>
-                                                <div class="autocomplete"><i
-                                                        class="far fa-search"></i><input
-                                                        class="form-control form-control-sm" kvselecttext="" type="text"
-                                                        id="productSearchInput"
-                                                        placeholder="Tìm món (F3)">
-                                                    <div class="output-complete" hidden="">
-                                                        <ul>
+<!--                                        <div class="wrap-auto-complete not-electronic">-->
+<!--                                            <kv-auto-complete>-->
+<!--                                                <div class="autocomplete"><i-->
+<!--                                                        class="far fa-search"></i><input-->
+<!--                                                        class="form-control form-control-sm" kvselecttext="" type="text"-->
+<!--                                                        id="productSearchInput"-->
+<!--                                                        placeholder="Tìm món (F3)">-->
+<!--                                                    <div class="output-complete" hidden="">-->
+<!--                                                        <ul>-->
 
-                                                        </ul>
+<!--                                                        </ul>-->
 
-                                                    </div>
-                                                </div>
-                                            </kv-auto-complete>
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </kv-auto-complete>-->
 
-                                        </div>
-                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"
-                                           title="Chế độ nhập"><i class="fas fa-bolt"></i></a>
-                                    </kv-product-search>
-                                </div>
-                            </div>
+<!--                                        </div>-->
+<!--                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"-->
+<!--                                           title="Chế độ nhập"><i class="fas fa-bolt"></i></a>-->
+<!--                                    </kv-product-search>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <div class="header-right">
 <!--                            <kv-cashier-cart-tabs>-->
@@ -119,12 +119,12 @@
 <!--                                            href="javascript:void(0);" outsideclick="true" placement="bottom"-->
 <!--                                            skip-disable="" class=""><i-->
 <!--                                            aria-hidden="true" class="fa fa-print"></i></a></li>-->
-                                    <li class="user-name"><a skip-disable="">
+                                    <li class="user-name" style="width: 150px;margin-right: 20px;"><a skip-disable="">
                                         <th:block>
                                         <span th:text="${user.staff.name}"></span>
                                         </th:block></a></li>
-                                    <li class="menu-bar"><a class="list-bar"
-                                                            skip-disable=""><i class="fa fa-navicon"></i></a>
+<!--                                    <li class="menu-bar"><a class="list-bar"-->
+<!--                                                            skip-disable=""><i class="fa fa-navicon"></i></a>-->
 <!--                                        <ul>-->
 
 <!--                                            <li><a skip-disable=""-->
@@ -203,59 +203,59 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <kv-cashier-table-list>
-                                <div class="table-actions">
-                                    <div class="form-inline">
-                                        <div class="form-group"><label
-                                                class="control-label">Sử dụng:</label>
-                                            <div class="form-control-static"><span>6</span>/33
-                                            </div>
-                                        </div>
-                                        <div class="form-group"><label
-                                                class="checkbox-inline"><input type="checkbox"
-                                                                               class="ng-untouched ng-pristine ng-valid"><span
-                                                translate="">Mở thực
-                            đơn khi chọn bàn</span></label></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <kendo-dropdownlist
-                                                class="form-control dropdown-filter k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"
-                                                dir="ltr">
-                       <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                             class="k-dropdown-wrap k-state-default k-state-focused"
-                             id="k-0ee08eed-17d6-4f41-ba5d-8fd66044c918" dir="ltr" readonly="false" tabindex="0"
-                             aria-disabled="false" aria-readonly="false" aria-expanded="false"
-                             aria-describedby="1a01ce13-550a-4515-8e49-4e55f643b7f0"
-                             aria-activedescendant="4d9e962e-1923-43b0-84b2-6ac406959a75-0"><span class="k-input"
-                                                                                                  unselectable="on"
-                                                                                                  id="1a01ce13-550a-4515-8e49-4e55f643b7f0">
+<!--                                <div class="table-actions">-->
+<!--                                    <div class="form-inline">-->
+<!--                                        <div class="form-group"><label-->
+<!--                                                class="control-label">Sử dụng:</label>-->
+<!--                                            <div class="form-control-static"><span>6</span>/33-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group"><label-->
+<!--                                                class="checkbox-inline"><input type="checkbox"-->
+<!--                                                                               class="ng-untouched ng-pristine ng-valid"><span-->
+<!--                                                translate="">Mở thực-->
+<!--                            đơn khi chọn bàn</span></label></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <kendo-dropdownlist-->
+<!--                                                class="form-control dropdown-filter k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"-->
+<!--                                                dir="ltr">-->
+<!--                       <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+<!--                             class="k-dropdown-wrap k-state-default k-state-focused"-->
+<!--                             id="k-0ee08eed-17d6-4f41-ba5d-8fd66044c918" dir="ltr" readonly="false" tabindex="0"-->
+<!--                             aria-disabled="false" aria-readonly="false" aria-expanded="false"-->
+<!--                             aria-describedby="1a01ce13-550a-4515-8e49-4e55f643b7f0"-->
+<!--                             aria-activedescendant="4d9e962e-1923-43b0-84b2-6ac406959a75-0"><span class="k-input"-->
+<!--                                                                                                  unselectable="on"-->
+<!--                                                                                                  id="1a01ce13-550a-4515-8e49-4e55f643b7f0">-->
 
-                           <span class="template">Tất cả</span>
+<!--                           <span class="template">Tất cả</span>-->
 
-                           </span><span class="k-select" unselectable="on"><span
-                               class="k-icon k-i-arrow-s"></span></span>
-                         </span>
+<!--                           </span><span class="k-select" unselectable="on"><span-->
+<!--                               class="k-icon k-i-arrow-s"></span></span>-->
+<!--                         </span>-->
 
 
-                                        </kendo-dropdownlist>
-                                        <div class="search-autocomplete search-table">
-                                            <kv-auto-complete>
-                                                <div class="autocomplete"><i
-                                                        class="far fa-search"></i><input
-                                                        class="form-control form-control-sm" kvselecttext="" type="text"
-                                                        id="searchTableAndRoomInput" placeholder="Tìm phòng/bàn (F2)">
-                                                    <div class="output-complete" hidden="">
-                                                        <ul>
+<!--                                        </kendo-dropdownlist>-->
+<!--                                        <div class="search-autocomplete search-table">-->
+<!--                                            <kv-auto-complete>-->
+<!--                                                <div class="autocomplete"><i-->
+<!--                                                        class="far fa-search"></i><input-->
+<!--                                                        class="form-control form-control-sm" kvselecttext="" type="text"-->
+<!--                                                        id="searchTableAndRoomInput" placeholder="Tìm phòng/bàn (F2)">-->
+<!--                                                    <div class="output-complete" hidden="">-->
+<!--                                                        <ul>-->
 
-                                                        </ul>
+<!--                                                        </ul>-->
 
-                                                    </div>
-                                                </div>
-                                            </kv-auto-complete>
-                                            <button class="btn-icon btn-trash"><i
-                                                    class="fal fa-arrow-right"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </kv-auto-complete>-->
+<!--                                            <button class="btn-icon btn-trash"><i-->
+<!--                                                    class="fal fa-arrow-right"></i></button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="table-list product-list">
                                     <div
                                             class="swiper-container swiper-container-initialized swiper-container-horizontal">
@@ -284,145 +284,145 @@
                                     </div>
                                     <div class="hidden-item"></div>
 
-                                    <div class="swiper-paging">
-                                        <button
-                                                class="btn-icon move-prev" disabled="" style="margin: 0px 60px;"><i
-                                                class="fas fa-angle-left"></i></button>
-                                        <button class="btn-icon move-next" style="margin: 0px 60px;"><i
-                                                class="fas fa-angle-right"></i></button>
-                                    </div>
+<!--                                    <div class="swiper-paging">-->
+<!--                                        <button-->
+<!--                                                class="btn-icon move-prev" disabled="" style="margin: 0px 60px;"><i-->
+<!--                                                class="fas fa-angle-left"></i></button>-->
+<!--                                        <button class="btn-icon move-next" style="margin: 0px 60px;"><i-->
+<!--                                                class="fas fa-angle-right"></i></button>-->
+<!--                                    </div>-->
                                 </div>
                             </kv-cashier-table-list>
                         </kv-cashier-table-container>
                     </div>
                     <div class="col-right" id="showCart">
                         <div class="col-right-content has-alert" style="background-color: white;">
-                            <kv-cashier-payment-info-top>
-                                <div class="form-actions">
-                                    <div class="form-actions-left">
-                                        <div>
-                                            <button class="btn btn-control"
-                                                    title="Bàn 12 / Lầu 3">
-                                                <i class="fas fa-table"></i>
-                                                Bàn 12 / Lầu 3
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <kv-customer-search>
-                                                <div class="customer-search-autocomplete">
-                                                    <div class="not-current-customer">
-                                                        <kv-auto-complete>
-                                                            <div class="autocomplete"><i
-                                                                    class="far fa-search"></i><input
-                                                                    class="form-control form-control-sm" kvselecttext=""
-                                                                    type="text"
-                                                                    id="searchCustomerInput"
-                                                                    placeholder="Tìm khách hàng (F4)">
-                                                                <div class="output-complete" hidden="">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <span class="pull-right"></span>
-                                                                            <div class="user-info"><span
-                                                                                    class="name-info">Nguyễn Văn Hải</span><span
-                                                                            >KH000001</span></div>
-                                                                        </li>
-                                                                    </ul>
+<!--                            <kv-cashier-payment-info-top>-->
+<!--                                <div class="form-actions">-->
+<!--                                    <div class="form-actions-left">-->
+<!--                                        <div>-->
+<!--                                            <button class="btn btn-control"-->
+<!--                                                    title="Bàn 12 / Lầu 3">-->
+<!--                                                <i class="fas fa-table"></i>-->
+<!--                                                Bàn 12 / Lầu 3-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                        <div>-->
+<!--                                            <kv-customer-search>-->
+<!--                                                <div class="customer-search-autocomplete">-->
+<!--                                                    <div class="not-current-customer">-->
+<!--                                                        <kv-auto-complete>-->
+<!--                                                            <div class="autocomplete"><i-->
+<!--                                                                    class="far fa-search"></i><input-->
+<!--                                                                    class="form-control form-control-sm" kvselecttext=""-->
+<!--                                                                    type="text"-->
+<!--                                                                    id="searchCustomerInput"-->
+<!--                                                                    placeholder="Tìm khách hàng (F4)">-->
+<!--                                                                <div class="output-complete" hidden="">-->
+<!--                                                                    <ul>-->
+<!--                                                                        <li>-->
+<!--                                                                            <span class="pull-right"></span>-->
+<!--                                                                            <div class="user-info"><span-->
+<!--                                                                                    class="name-info">Nguyễn Văn Hải</span><span-->
+<!--                                                                            >KH000001</span></div>-->
+<!--                                                                        </li>-->
+<!--                                                                    </ul>-->
 
-                                                                </div>
-                                                            </div>
-                                                        </kv-auto-complete>
-                                                        <button class="btn-icon" id="addCustomer" kv-tab-index=""
-                                                                skip-disable="" title="Thêm khách hàng"><i
-                                                                class="far fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </kv-customer-search>
-                                        </div>
-                                    </div>
-                                    <!--                                    <div class="form-actions-right">-->
-                                    <!--                                        <kendo-dropdownlist-->
-                                    <!--                                                class="price-book form-control form-control-sm k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"-->
-                                    <!--                                                dir="ltr">-->
-                                    <!--                       <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
-                                    <!--                             class="k-dropdown-wrap k-state-default" id="k-315c8525-9467-4724-b3b8-3e52cb9de9fa"-->
-                                    <!--                             dir="ltr"-->
-                                    <!--                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"-->
-                                    <!--                             aria-describedby="fe977d71-57a9-4757-acc4-9913be5d8ce3" aria-disabled="false"-->
-                                    <!--                             aria-activedescendant="728876a6-6f87-48b0-a35b-57cd7d3e0123&#45;&#45;1"><span class="k-input"-->
-                                    <!--                                                                                                   unselectable="on"-->
-                                    <!--                                                                                                   id="fe977d71-57a9-4757-acc4-9913be5d8ce3">-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </kv-auto-complete>-->
+<!--                                                        <button class="btn-icon" id="addCustomer" kv-tab-index=""-->
+<!--                                                                skip-disable="" title="Thêm khách hàng"><i-->
+<!--                                                                class="far fa-plus"></i></button>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </kv-customer-search>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;                                    <div class="form-actions-right">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <kendo-dropdownlist&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                class="price-book form-control form-control-sm k-widget k-dropdown k-header ng-pristine ng-valid ng-touched"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                dir="ltr">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                       <span aria-haspopup="listbox" role="listbox" unselectable="on"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                             class="k-dropdown-wrap k-state-default" id="k-315c8525-9467-4724-b3b8-3e52cb9de9fa"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                             dir="ltr"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                             aria-describedby="fe977d71-57a9-4757-acc4-9913be5d8ce3" aria-disabled="false"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                             aria-activedescendant="728876a6-6f87-48b0-a35b-57cd7d3e0123&#45;&#45;1"><span class="k-input"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                                                   unselectable="on"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                                                   id="fe977d71-57a9-4757-acc4-9913be5d8ce3">&ndash;&gt;-->
 
-                                    <!--                           Bảng giá chung</span><span class="k-select" unselectable="on"><span-->
-                                    <!--                               class="k-icon k-i-arrow-s"></span></span>-->
-                                    <!--                         </span>-->
-                                    <!--                                        </kendo-dropdownlist>-->
-                                    <!--                                        <kv-select-purchase-channel>-->
-                                    <!--                                            <div id="sale-channel-container" class="sale-channel-dropdown ">-->
-                                    <!--                                                <button-->
-                                    <!--                                                        id="dropdown-button-id"><i-->
-                                    <!--                                                        title="Khách đến trực tiếp"-->
-                                    <!--                                                        class="fa-fw fas fas fa-shopping-basket"></i></button>-->
-                                    <!--                                                <kv-search-sale-channel class="search-autocomplete">-->
-                                    <!--                                                    <div class="autocomplete" id="list-sale-channel-suggestion">-->
-                                    <!--                                                        <div class="output-complete">-->
-                                    <!--                                                            <div class="output-search-complete"><i-->
-                                    <!--                                                                    class="far fa-search"></i><input-->
-                                    <!--                                                                    class="form-control form-control-sm" kvselecttext=""-->
-                                    <!--                                                                    type="text"-->
-                                    <!--                                                                    id="searchSaleChannelId" placeholder=""></div>-->
-                                    <!--                                                            <ul>-->
+<!--                                    &lt;!&ndash;                           Bảng giá chung</span><span class="k-select" unselectable="on"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                               class="k-icon k-i-arrow-s"></span></span>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                         </span>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        </kendo-dropdownlist>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <kv-select-purchase-channel>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                            <div id="sale-channel-container" class="sale-channel-dropdown ">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                <button&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                        id="dropdown-button-id"><i&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                        title="Khách đến trực tiếp"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                        class="fa-fw fas fas fa-shopping-basket"></i></button>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                <kv-search-sale-channel class="search-autocomplete">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    <div class="autocomplete" id="list-sale-channel-suggestion">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                        <div class="output-complete">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                            <div class="output-search-complete"><i&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    class="far fa-search"></i><input&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    class="form-control form-control-sm" kvselecttext=""&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    type="text"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    id="searchSaleChannelId" placeholder=""></div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                            <ul>&ndash;&gt;-->
 
-                                    <!--                                                                <li class="active-checked">-->
-                                    <!--                                                                    <i class="fa-fw fas fas fa-shopping-basket"></i>-->
-                                    <!--                                                                    Khách-->
-                                    <!--                                                                    đến trực tiếp-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas fab fa-facebook"></i> Facebook-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-foody"></i>-->
-                                    <!--                                                                    Foody-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-grab"></i>-->
-                                    <!--                                                                    GrabFood-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas fas fa-phone"></i> Khách đặt qua-->
-                                    <!--                                                                    điện thoại-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-now"></i>-->
-                                    <!--                                                                    Now-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas kvchannel kvchannel-pasgo"></i>-->
-                                    <!--                                                                    Pasgo-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                                <li>-->
-                                    <!--                                                                    <i class="fa-fw fas fas fa-shopping-cart"></i> Khác-->
-                                    <!--                                                                </li>-->
-                                    <!--                                                            </ul>-->
+<!--                                    &lt;!&ndash;                                                                <li class="active-checked">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas fas fa-shopping-basket"></i>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    Khách&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    đến trực tiếp&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas fab fa-facebook"></i> Facebook&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas kvchannel kvchannel-foody"></i>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    Foody&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas kvchannel kvchannel-grab"></i>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    GrabFood&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas fas fa-phone"></i> Khách đặt qua&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    điện thoại&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas kvchannel kvchannel-now"></i>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    Now&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas kvchannel kvchannel-pasgo"></i>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    Pasgo&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                    <i class="fa-fw fas fas fa-shopping-cart"></i> Khác&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                </li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                            </ul>&ndash;&gt;-->
 
-                                    <!--                                                            <ul class="ul-add-item">-->
-                                    <!--                                                                <li><a><i-->
-                                    <!--                                                                        class="far fa-plus"></i> Thêm kênh bán</a></li>-->
-                                    <!--                                                            </ul>-->
-                                    <!--                                                        </div>-->
-                                    <!--                                                    </div>-->
-                                    <!--                                                </kv-search-sale-channel>-->
-                                    <!--                                            </div>-->
-                                    <!--                                        </kv-select-purchase-channel>-->
-                                    <!--                                        <div class="btn-group" dropdown="">-->
-                                    <!--                                            <button-->
-                                    <!--                                                    class="btn-icon dropdown-toggle" dropdowntoggle="" type="button"-->
-                                    <!--                                                    aria-haspopup="true"><i-->
-                                    <!--                                                    class="far fa-ellipsis-v"></i></button>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
-                                </div>
-                            </kv-cashier-payment-info-top>
+<!--                                    &lt;!&ndash;                                                            <ul class="ul-add-item">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                <li><a><i&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                                        class="far fa-plus"></i> Thêm kênh bán</a></li>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                            </ul>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                        </div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    </div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                </kv-search-sale-channel>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        </kv-select-purchase-channel>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <div class="btn-group" dropdown="">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                            <button&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    class="btn-icon dropdown-toggle" dropdowntoggle="" type="button"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    aria-haspopup="true"><i&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                                    class="far fa-ellipsis-v"></i></button>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                </div>-->
+<!--                            </kv-cashier-payment-info-top>-->
                             <!--                            <div class="col-right-container" id="cashier_cart_list_item_container">-->
                             <kv-cashier-cart-list-item>
                                 <div class="">
@@ -511,10 +511,10 @@
                                                             <div class="row-div">
                                                                 <div class="col-auto form-actions-left">
                                                                     <div class="form-group"><label
-                                                                            class="form-label control-label" translate="">Số lượng khách</label>
-                                                                        <div class="form-output"><input
-                                                                                class="form-control form-control-sm ng-untouched ng-pristine ng-valid"
-                                                                                kvautonumeric="">
+                                                                            class="form-label control-label" translate="">Mã giảm giá: </label>
+                                                                        <div class="form-output">
+                                                                            <input id="inputVoucher" class="form-control form-control-sm ng-untouched ng-pristine ng-valid"
+                                                                                kvautonumeric="" style="width: 100px"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -527,63 +527,63 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row-div">
-                                                                <div class="col-auto form-actions-left">
-                                                                    <ul>
-                                                                        <li class="li-dropdownlist">
-                                                                            <kendo-dropdownlist
-                                                                                    class="sale-user form-control form-control-sm k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                                                    dir="ltr">
-                        <!--                             <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
-                        <!--                                   class="k-dropdown-wrap k-state-default" id="k-3cec5699-c9ab-4214-adb7-dbd88906a2c8"-->
-                        <!--                                   dir="ltr" readonly="false" aria-disabled="false" aria-readonly="false"-->
-                        <!--                                   aria-expanded="false" aria-describedby="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6"-->
-                        <!--                                   tabindex="0"-->
-                        <!--                                   aria-activedescendant="7eb1caf4-11c6-48f8-b6e0-f3aebdf9a529-280827"><span-->
-                        <!--                                     class="k-input" unselectable="on" id="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6">-->
+<!--                                                                <div class="col-auto form-actions-left">-->
+<!--                                                                    <ul>-->
+<!--                                                                        <li class="li-dropdownlist">-->
+<!--                                                                            <kendo-dropdownlist-->
+<!--                                                                                    class="sale-user form-control form-control-sm k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+<!--                                                                                    dir="ltr">-->
+<!--                        &lt;!&ndash;                             <span aria-haspopup="listbox" role="listbox" unselectable="on"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                   class="k-dropdown-wrap k-state-default" id="k-3cec5699-c9ab-4214-adb7-dbd88906a2c8"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                   dir="ltr" readonly="false" aria-disabled="false" aria-readonly="false"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                   aria-expanded="false" aria-describedby="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                   tabindex="0"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                   aria-activedescendant="7eb1caf4-11c6-48f8-b6e0-f3aebdf9a529-280827"><span&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                     class="k-input" unselectable="on" id="1ece23f9-cb0b-40ac-b404-2e563cb6c1f6">&ndash;&gt;-->
 
-                        <!--                                 Trần Văn Cử</span><span class="k-select" unselectable="on"><span-->
-                        <!--                                     class="k-icon k-i-arrow-s"></span></span>-->
-                        <!--                               </span>-->
+<!--                        &lt;!&ndash;                                 Trần Văn Cử</span><span class="k-select" unselectable="on"><span&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                     class="k-icon k-i-arrow-s"></span></span>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                               </span>&ndash;&gt;-->
 
 
-                                                                            </kendo-dropdownlist>
-                                                                        </li>
+<!--                                                                            </kendo-dropdownlist>-->
+<!--                                                                        </li>-->
 
-                                                                        <li class="note-invoice"><a
-                                                                                href="javascript:void(0);" title="Ghi chú"><i
-                                                                                class="fa fa-pencil"></i><span>Ghi chú</span></a></li>
+<!--                                                                        <li class="note-invoice"><a-->
+<!--                                                                                href="javascript:void(0);" title="Ghi chú"><i-->
+<!--                                                                                class="fa fa-pencil"></i><span>Ghi chú</span></a></li>-->
 
-                                                                        <li class="li-history"><a href="javascript:void(0);"
-                                                                                                  title="Lịch sử"><i class="fas fa-history"></i><span
-                                                                        >Lịch sử</span></a></li>
-                                                                    </ul>
-                                                                </div>
+<!--                                                                        <li class="li-history"><a href="javascript:void(0);"-->
+<!--                                                                                                  title="Lịch sử"><i class="fas fa-history"></i><span-->
+<!--                                                                        >Lịch sử</span></a></li>-->
+<!--                                                                    </ul>-->
+<!--                                                                </div>-->
                                                                 <div class="form-actions-right">
-                                                                    <div class="reservation-search">
-                                                                        <kv-reservation-search>
-                                                                            <kendo-dropdownlist
-                                                                                    class="dropdownlist-reservation k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                                                    dir="ltr">
-                                                     <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                                           class="k-dropdown-wrap k-state-default" id="k-4bd278c9-da14-4da5-9eb0-d2b5b40c1566"
-                                                           dir="ltr" readonly="false" tabindex="0" aria-disabled="false" aria-readonly="false"
-                                                           aria-expanded="false" aria-describedby="e2a31f1e-dc4f-487b-a5bc-7acabffc024a"
-                                                           aria-label="NO DATA FOUND"><span class="k-input" unselectable="on"
-                                                                                            id="e2a31f1e-dc4f-487b-a5bc-7acabffc024a">
+<!--                                                                    <div class="reservation-search">-->
+<!--                                                                        <kv-reservation-search>-->
+<!--                                                                            <kendo-dropdownlist-->
+<!--                                                                                    class="dropdownlist-reservation k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+<!--                                                                                    dir="ltr">-->
+<!--                                                     <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+<!--                                                           class="k-dropdown-wrap k-state-default" id="k-4bd278c9-da14-4da5-9eb0-d2b5b40c1566"-->
+<!--                                                           dir="ltr" readonly="false" tabindex="0" aria-disabled="false" aria-readonly="false"-->
+<!--                                                           aria-expanded="false" aria-describedby="e2a31f1e-dc4f-487b-a5bc-7acabffc024a"-->
+<!--                                                           aria-label="NO DATA FOUND"><span class="k-input" unselectable="on"-->
+<!--                                                                                            id="e2a31f1e-dc4f-487b-a5bc-7acabffc024a">-->
 
 
-                                                         <span class="color-placehoder" translate="">Không đặt
-                                                            trước</span>
+<!--&lt;!&ndash;                                                         <span class="color-placehoder" translate="">Không đặt&ndash;&gt;-->
+<!--&lt;!&ndash;                                                            trước</span>&ndash;&gt;-->
 
 
-                                                         </span><span class="k-select" unselectable="on"><span
-                                                             class="k-icon k-i-arrow-s"></span></span>
-                                                       </span>
+<!--                                                         </span><span class="k-select" unselectable="on"><span-->
+<!--                                                             class="k-icon k-i-arrow-s"></span></span>-->
+<!--                                                       </span>-->
 
-                                                                            </kendo-dropdownlist>
-                                                                        </kv-reservation-search>
-                                                                    </div>
-                                                                    <div>
+<!--                                                                            </kendo-dropdownlist>-->
+<!--                                                                        </kv-reservation-search>-->
+<!--                                                                    </div>-->
+                                                                    <div class="justify-content-end">
                                                                         <button class="btn btn-primary split" id="btnSplitOrder" translate=""
                                                                                 type="button"> Tách ghép đơn
                                                                         </button>
@@ -596,11 +596,10 @@
                         <div class="wrap-button three-buttons">
                             <button id="createBill" class="btn btn-success" skip-disable="" type="button">
                  <span><i class="fas fa-dollar-sign"></i>Thanh toán
-                  </span>
-                                <span> (F9)</span></button>
+                  </span></button>
                             <button id="createOrder"
                                     class="btn btn-alert" type="button"><i class="fas fa-bullhorn"></i>Thông báo
-                                <span>(F10)</span></button>
+                                </button>
                         </div>
                     </div>
                 </div>

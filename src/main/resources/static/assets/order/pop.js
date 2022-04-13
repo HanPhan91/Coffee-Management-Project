@@ -1,8 +1,15 @@
 let listTables = $("#showTable ul");
 let OrderId = 0;
 let history = {};
-let order=[];
-
+let order = [];
+function checkStatusOrder() {
+    if (order.length == 0){
+        $("#createBill").attr("disabled", "disabled");
+    }
+    else {
+        $("#createBill").removeAttr("disabled");
+    }
+}
 
 function getAllDrink() {
     $.ajax({
@@ -41,7 +48,7 @@ function getAllDrink() {
 }
 
 class OrderItem {
-    constructor( quantity, totalPrice, id,name){
+    constructor(quantity, totalPrice, id, name) {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.id = id;
@@ -67,15 +74,13 @@ function addOrderItemToOrder(orderId, drinkId) {
 
                 if (drinkExist) {
                     order[index].quantity += 1;
-                }
-                else {
-                    let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
+                } else {
+                    let orderItem = new OrderItem(1, listDrink[i].price, drinkId, listDrink[i].name);
 
                     order.push(orderItem);
                 }
-            }
-            else {
-                let orderItem = new OrderItem(1,listDrink[i].price,drinkId,listDrink[i].name);
+            } else {
+                let orderItem = new OrderItem(1, listDrink[i].price, drinkId, listDrink[i].name);
 
                 order.push(orderItem);
             }
@@ -87,10 +92,8 @@ function addOrderItemToOrder(orderId, drinkId) {
 
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
-    console.log('order:')
-    console.log(order)
     let str = "";
-    let show =$(".product-cart-item");
+    let show = $(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
     show.empty();
     for (let i = 0; i < order.length; i++) {
@@ -101,7 +104,7 @@ function showOrderItem() {
                     class="btn-icon btn-trash delete"   href="javascript:void(0);"
                     title="Xóa hàng hóa"><i
                     class="far fa-trash-alt"></i></a></div>
-            <div class="cell-order"> ${i+1}
+            <div class="cell-order"> ${i + 1}
             </div>
             <div class="row-product">
                 <div class="cell-name full" title="">
@@ -155,11 +158,11 @@ function showOrderItem() {
 }
 
 // xoá đồ uống trong order
-function deleteItemInOrder(){
-    $(".delete").on("click",function(){
+function deleteItemInOrder() {
+    $(".delete").on("click", function () {
         let id = $(this).data("id");
         let index = order.indexOf((id));
-        order.splice(index-1,1);
+        order.splice(index - 1, 1);
         showOrderItem();
     })
 }
@@ -176,7 +179,7 @@ function handlerAddItemInOrder() {
 }
 
 // hiển thị form tách ghép đơn
-function handlerShowSplitOrder(){
+function handlerShowSplitOrder() {
     $("button.split").on("click", function () {
         $.ajax({
             headers: {
@@ -187,7 +190,6 @@ function handlerShowSplitOrder(){
             url: "/api/orders/" + OrderId,
         })
             .done(function (data) {
-
 
 
             })
@@ -224,8 +226,6 @@ function handlerShowAvailableInOrder() {
 }
 
 
-
-
 function getAllTable() {
     $.ajax({
         type: "GET",
@@ -236,10 +236,9 @@ function getAllTable() {
             listTables.empty();
             let statusTable = '';
             data.forEach(function (item) {
-                if (item.used == true){
+                if (item.used == true) {
                     statusTable = `<span style="background: blue"></span>`;
-                }
-                else {
+                } else {
                     statusTable = `<span></span>`;
                 }
                 listTables.append(`
@@ -262,13 +261,11 @@ function getAllTable() {
                         </a>
                     </li>
                     `);
-
                 let idtable = item.id;
-
                 $("#" + idtable).on("click", function () {
                     getAllDrink();
                     OrderId = item.id;
-
+                    $("a#showDrink").trigger('click');
                     // handlerShowAvailableInOrder();
 
                     $.ajax({
@@ -279,15 +276,14 @@ function getAllTable() {
                         type: "GET",
                         url: "/api/orders/" + OrderId,
                     })
-                    .done(function (data) {
-                        console.log(data);
-                        order = data;
-                        showOrderItem();
-
-                    })
-                    .fail(function (jqXHR) {
-                        console.log("get drinks fails");
-                    })
+                        .done(function (data) {
+                            order = data;
+                            showOrderItem();
+                            checkStatusOrder();
+                        })
+                        .fail(function (jqXHR) {
+                            console.log("get drinks fails");
+                        })
 
                     document.getElementById("showCart").style.display = "block";
 
@@ -315,8 +311,7 @@ $(".kv-tabs a").click(function () {
 });
 
 
-
-function handlerUpQuantity () {
+function handlerUpQuantity() {
     $("button.up").on("click", function () {
         let id = $(this).data('id');
 
@@ -335,7 +330,7 @@ function handlerUpQuantity () {
     })
 }
 
-function handlerDownQuantity () {
+function handlerDownQuantity() {
     $("button.down").on("click", function () {
         let id = $(this).data('id');
 
@@ -349,9 +344,8 @@ function handlerDownQuantity () {
         }
 
         if (order[index].quantity == 1) {
-            order.splice(index,1);
-        }
-        else {
+            order.splice(index, 1);
+        } else {
             order[index].quantity -= 1;
         }
 
@@ -361,45 +355,49 @@ function handlerDownQuantity () {
 
 
 $(document).ready(function () {
-    getAllTable();
     getAllDrink();
+    getAllTable();
+    checkStatusOrder();
     document.getElementById("showCart").style.display = "none";
     handlerShowSplitOrder();
 });
 
 $("#createOrder").on('click', function () {
+    let voucher = $("#inputVoucher").val();
     $.ajax({
         headers: {
             "Accept": "application/json",
             "Content-type": "application/json"
         },
         type: "POST",
-        url: "/api/orders/create/"+ OrderId + "?discount=",
+        url: "/api/orders/create/" + OrderId + "?discount=" + voucher,
         data: JSON.stringify(order)
     })
         .done(function (data) {
-            swal("Thành công", "Tạo order thành công","success").then(function () {
-                location.reload()});
+            swal("Thành công", "Tạo order thành công", "success").then(function () {
+                location.reload()
+            });
         })
-        .fail(function (resp){
+        .fail(function (resp) {
             console.log(resp);
         })
 });
 
-$("#createBill").on('click',function (){
+$("#createBill").on('click', function () {
     $.ajax({
-        headers:{
+        headers: {
             "Accept": "application/json",
             "Content-type": "application/json"
         },
-        type:"PUT",
-        url: "/api/orders/pay/"+ OrderId,
+        type: "PUT",
+        url: "/api/orders/pay/" + OrderId,
     })
         .done(function (data) {
-            swal("Thành công","Thanh toán thành công", "success").then(function () {
-                location.reload()});
+            swal("Thành công", "Thanh toán thành công", "success").then(function () {
+                location.reload()
+            });
         })
-        .fail(function (resp){
+        .fail(function (resp) {
             console.log(resp);
         })
 });
