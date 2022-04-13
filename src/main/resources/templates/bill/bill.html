@@ -50,7 +50,8 @@
                             <th scope="col" class="fw-bold fs-5">Ngày tạo</th>
                             <th scope="col" class="fw-bold fs-5">Bàn</th>
                             <th scope="col" class="fw-bold fs-5">Tổng tiền (VNĐ)</th>
-                            <th scope="col" class="fw-bold fs-5">Voucher giảm giá</th>
+                            <th scope="col" class="fw-bold fs-5">Mã giảm giá</th>
+                            <th scope="col" class="fw-bold fs-5">Mức giảm (%)</th>
                             <th scope="col" class="fw-bold fs-5">Thực thu (VNĐ)</th>
                             <th scope="col" class="fw-bold fs-5">Người tạo</th>
                         </tr>
@@ -77,6 +78,7 @@
     let billList = [[${billList}]];
     let table = $("#tblBill").DataTable({
         data: billList,
+        order: [1, "desc"],
         dom: 'Bfrtip',
         buttons: [
             {
@@ -94,9 +96,11 @@
         rowId: 'id',
         selected: true,
         columns: [
-            {data: 'id', render: function (data) {
-                   return `<a href="javascript:void(0)" class="showDetail" data-id="${data}">${data}</a>`;
-                }},
+            {
+                data: 'id', render: function (data) {
+                    return `<a href="javascript:void(0)" class="showDetail" data-id="${data}">${data}</a>`;
+                }
+            },
             {
                 data: 'createdAt', render: function (data) {
                     return data.slice(0, 19);
@@ -109,10 +113,17 @@
                 }, className: 'text-end'
             },
             {
-                data: 'discount', render: function (data) {
+                data: 'codeDiscount', render: function (data) {
                     if (data == null) {
                         return null;
-                    } else return 'discount.code'
+                    } else return 'data'
+                }
+            },
+            {
+                data: 'discountPercent', render: function (data) {
+                    if (data == null) {
+                        return null;
+                    } else return 'data'
                 }
             },
             {
@@ -143,11 +154,11 @@
             url: "/api/bills/" + id,
         })
             .done(function (data) {
-                let str='';
+                let str = '';
                 let totalAmount = 0;
                 for (let i = 0; i < data.length; i++) {
-                    totalAmount +=data[i].totalPrice
-                    str+= `
+                    totalAmount += data[i].totalPrice
+                    str += `
                     <tr>
                         <td>${data[i].drink}</td>
                         <td class="text-center">${data[i].quantity}</td>
@@ -156,7 +167,7 @@
                     </tr>
                 `;
                 }
-                str+=`<tr>
+                str += `<tr>
                         <td colspan="3" class="fw-bold text-center fs-5">Tổng tiền: </td>
                         <td class="text-end">${App.formatNumberSpace(totalAmount)} VNĐ</td>
                       </tr>`;

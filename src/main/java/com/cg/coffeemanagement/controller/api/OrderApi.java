@@ -135,7 +135,14 @@ public class OrderApi {
             CoffeeTable coffeeTable = coffeeTableService.findById(idtable).get();
             bill.setCoffeeTable(coffeeTable.getName());
             bill.setSubAmount(order.getSubAmount());
-            bill.setDiscount(order.getDiscount());
+            if (order.getDiscount() != null) {
+                bill.setCodeDiscount(order.getDiscount().getCode());
+                bill.setDiscountPercent(String.valueOf(order.getDiscount().getPercentDiscount()));
+            }
+            else {
+                bill.setCodeDiscount(null);
+                bill.setDiscountPercent(null);
+            }
             bill.setTotalAmount(order.getTotalAmount());
             bill.setStaffName(user.getStaff().getName());
             billService.save(bill);
