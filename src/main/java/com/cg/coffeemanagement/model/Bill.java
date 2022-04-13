@@ -39,9 +39,11 @@ public class Bill {
     @JoinColumn(name = "id_billitem")
     private Set<BillDetail> billDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "id_discount")
-    private Discount discount;
+    @Column(name = "code_discount")
+    private String codeDiscount;
+
+    @Column(name = "percent_discount")
+    private String discountPercent;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;

@@ -80,28 +80,31 @@
             <!-- ============================================================== -->
             <!-- PRODUCTS YEARLY SALES -->
             <!-- ============================================================== -->
-            <!--            <div class="row">-->
-            <!--                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">-->
-            <!--                    <div class="white-box">-->
-            <!--                        <h3 class="box-title">Products Yearly Sales</h3>-->
-            <!--                        <div class="d-md-flex">-->
-            <!--                            <ul class="list-inline d-flex ms-auto">-->
-            <!--                                <li class="ps-3">-->
-            <!--                                    <h5><i class="fa fa-circle me-1 text-info"></i>Mac</h5>-->
-            <!--                                </li>-->
-            <!--                                <li class="ps-3">-->
-            <!--                                    <h5><i class="fa fa-circle me-1 text-inverse"></i>Windows</h5>-->
-            <!--                                </li>-->
-            <!--                            </ul>-->
-            <!--                        </div>-->
-            <!--                        <div id="ct-visits" style="height: 405px;">-->
-            <!--                            <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span-->
-            <!--                                    class="chartist-tooltip-value">6</span>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
+            <div class="row">
+                <div class="col mb-2">
+                    <h3 class="box-title">Doanh thu 7 ngày gần nhất</h3>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <!--                    <div class="white-box">-->
+                    <!--                        <h3 class="box-title">Products Yearly Sales</h3>-->
+                    <!--                        <div class="d-md-flex">-->
+                    <!--                            <ul class="list-inline d-flex ms-auto">-->
+                    <!--                                <li class="ps-3">-->
+                    <!--                                    <h5><i class="fa fa-circle me-1 text-info"></i>Mac</h5>-->
+                    <!--                                </li>-->
+                    <!--                                <li class="ps-3">-->
+                    <!--                                    <h5><i class="fa fa-circle me-1 text-inverse"></i>Windows</h5>-->
+                    <!--                                </li>-->
+                    <!--                            </ul>-->
+                    <!--                        </div>-->
+                    <div id="ct-visits" style="height: 405px;">
+                        <div class="chartist-tooltip" style="top: -17px; left: -12px;"><span
+                                class="chartist-tooltip-value">6</span>
+                        </div>
+                    </div>
+                    <!--                    </div>-->
+                </div>
+            </div>
             <!-- ============================================================== -->
             <!-- RECENT SALES -->
             <!-- ============================================================== -->
@@ -382,6 +385,73 @@
     $("#incomeToday").text(App.formatNumberSpace(incomeToday));
     $("#incomeToMonth").text(App.formatNumberSpace(incomeToMonth));
     $("#billToday").text(billToday);
+
+    let amount7Date = [[${amount7Date}]];
+    let day1 = amount7Date[6];
+    let day2 = amount7Date[5];
+    let day3 = amount7Date[4];
+    let day4 = amount7Date[3];
+    let day5 = amount7Date[2];
+    let day6 = amount7Date[1];
+    let day7 = amount7Date[0];
+    var responsiveOptions = [
+        ['screen and (min-width: 641px) and (max-width: 1024px)', {
+            showPoint: false,
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+        }],
+        ['screen and (max-width: 640px)', {
+            showLine: false,
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+        }]
+    ];
+    $(function () {
+        "use strict";
+       var chart = new Chartist.Line('#ct-visits', {
+            labels: [day1.createdAt.slice(0, 10), day2.createdAt.slice(0, 10), day3.createdAt.slice(0, 10), day4.createdAt.slice(0, 10), day5.createdAt.slice(0, 10), day6.createdAt.slice(0, 10), 'Hôm nay'],
+            series: [
+                [day1.totalAmount, day2.totalAmount, day3.totalAmount, day4.totalAmount, day5.totalAmount, day6.totalAmount, day7.totalAmount]
+            ]
+        }, {
+            top: 0,
+            low: 1,
+            showPoint: true,
+            fullWidth: true,
+            plugins: [
+                Chartist.plugins.tooltip()
+            ],
+            axisY: {
+                labelInterpolationFnc: function (value) {
+                    return (value / 1000) + 'k';
+                }
+            },
+            axisX:{
+              fullWidth: true,
+            },
+            showArea: true
+        }, responsiveOptions);
+
+        chart.on('draw', function(data) {
+            if(data.type === 'line' || data.type === 'area') {
+                data.element.animate({
+                    d: {
+                        begin: 2000 * data.index,
+                        dur: 2000,
+                        from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                        to: data.path.clone().stringify(),
+                        easing: Chartist.Svg.Easing.easeOutQuint
+                    }
+                });
+            }
+        });
+    })
 </script>
 </body>
 </html>
