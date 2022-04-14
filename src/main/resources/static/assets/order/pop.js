@@ -15,13 +15,16 @@ function getAllDrink() {
         .done(function (data) {
             listDrink = data;
             listTables.empty();
-            data.forEach(function (item) {
+            // <div _ngcontent-yaj-c29="" className="product-img"><img _ngcontent-yaj-c29="" kvfallbackimg=""
+            //                                                         src="${item.imgUrl}"></div>
+
+        data.forEach(function (item) {
                 listTables.append(`
                     <li class="tableAndRoom" style="text-align: center;" tabindex="1" data-id="${item.id}">
                         <div class="tableroom-actions"></div>
                         <a container="body" placement="right top" skip-disable=""
                            triggers="mouseenter:mouseleave" class="">
-                            <div class="table-room"><span></span></div>
+                            <div _ngcontent-yaj-c29="" class="product-img" style = "height: calc(100% - 40px);"><img _ngcontent-yaj-c29="" kvfallbackimg="" src="${item.imgUrl}"></div>
                            
                             <div class="product-info">
                             <span class="product-name">${item.name}</span>
