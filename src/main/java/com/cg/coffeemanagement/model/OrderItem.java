@@ -1,5 +1,8 @@
 package com.cg.coffeemanagement.model;
+<<<<<<< HEAD
 
+=======
+>>>>>>> quang
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +30,7 @@ public class OrderItem {
     private Drink drink;
 
     private int quantity;
+
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
