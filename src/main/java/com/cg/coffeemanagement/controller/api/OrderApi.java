@@ -81,7 +81,7 @@ public class OrderApi {
                 activeDiscount = optionalDiscount.get();
                 percentDiscount = activeDiscount.getPercentDiscount();
             } else {
-                throw new DataInputException("Voucher không tồn tại hoặc đã hết hạn sử dụng");
+                throw new DataInputException("Voucher không thể sử dụng");
             }
         }
 
@@ -227,16 +227,20 @@ public class OrderApi {
                 } else {
                     newOldOrder.setDiscount(discount);
                 }
-                BigDecimal subPriceOld = orderItemService.calcSubAmount(newOldOrder.getId());
-                newOldOrder.setSubAmount(subPriceOld);
-                double valueDiscountOld = (double) percentDiscount / 100;
-                BigDecimal totalAmountOld = subPriceOld.subtract(subPriceOld.multiply(BigDecimal.valueOf(valueDiscountOld)));
-                newOldOrder.setTotalAmount(totalAmountOld);
-                newOldOrder.setStaffName(user.getStaff().getName());
-                orderService.save(newOldOrder);
-
+                if (orderItemService.calcSubAmount(newOldOrder.getId()) != null ){
+                    BigDecimal subPriceOld = orderItemService.calcSubAmount(newOldOrder.getId());
+                    newOldOrder.setSubAmount(subPriceOld);
+                    double valueDiscountOld = (double) percentDiscount / 100;
+                    BigDecimal totalAmountOld = subPriceOld.subtract(subPriceOld.multiply(BigDecimal.valueOf(valueDiscountOld)));
+                    newOldOrder.setTotalAmount(totalAmountOld);
+                    newOldOrder.setStaffName(user.getStaff().getName());
+                    orderService.save(newOldOrder);
+                    CoffeeTable oldTableGet = coffeeTableService.findById(oldTable).get();
+                    oldTableGet.setUsed(true);
+                    coffeeTableService.save(oldTableGet);
+                }
                 CoffeeTable oldTableGet = coffeeTableService.findById(oldTable).get();
-                oldTableGet.setUsed(true);
+                oldTableGet.setUsed(false);
                 coffeeTableService.save(oldTableGet);
                 CoffeeTable newTableGet = coffeeTableService.findById(newTable).get();
                 newTableGet.setUsed(true);

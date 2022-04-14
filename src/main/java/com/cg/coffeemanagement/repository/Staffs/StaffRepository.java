@@ -42,4 +42,7 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 
     @Query("SELECT s FROM Staff s WHERE s.deleted = false AND s.hasUser= false AND s.position.permission.permissionAccess >= :permission")
     List<Staff> findStaffNotDeletedAndPermissionEqualAndNotUser(@Param("permission") int permission);
+
+    @Query("SELECT count(s.id) FROM Staff s WHERE s.deleted = false")
+    Integer countStaff();
 }

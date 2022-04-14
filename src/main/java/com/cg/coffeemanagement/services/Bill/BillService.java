@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface BillService extends IGeneralServices<Bill> {
-    String incomeToday();
-    String incomeToMonth();
-    String billToday();
+    BigDecimal incomeToday();
+    BigDecimal incomeToMonth();
+    BigDecimal billToday();
 }
