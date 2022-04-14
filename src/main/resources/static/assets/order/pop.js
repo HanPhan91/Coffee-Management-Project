@@ -1,5 +1,6 @@
 let listTables = $("#showTable ul");
 let OrderId = 0;
+let NewTable = 0;
 let history = {};
 let order = [];
 
@@ -12,6 +13,7 @@ function checkStatusOrder() {
 }
 let order=[];
 let totalAmount = 0;
+let splitOrder=[];
 
 
 function getAllDrink() {
@@ -88,8 +90,12 @@ function addOrderItemToOrder(orderId, drinkId) {
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
     let str = "";
+<<<<<<< HEAD
     let show = $(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
+=======
+    let show =$(".product-cart-item");
+>>>>>>> quang
     show.empty();
     totalAmount = 0;
     for (let i = 0; i < order.length; i++) {
@@ -172,8 +178,6 @@ function deleteItemInOrder() {
 function handlerAddItemInOrder() {
     $(".tableAndRoom").on("click", function () {
         let id = $(this).data("id");
-        console.log(id);
-        console.log(OrderId)
         addOrderItemToOrder(OrderId, id);
         // showOrderItem();
     });
@@ -294,7 +298,6 @@ function getAllTable() {
 
 =======
                     .done(function (data) {
-                        console.log(data);
                         order = data;
                         showOrderItem();
                         handlerShowSplitOrder();
@@ -305,8 +308,11 @@ function getAllTable() {
                     })
                     // $("#totalAmount").val()
                     $("#tableNumber").text("Bàn " + item.name)
+<<<<<<< HEAD
                     console.log(item.name);
 >>>>>>> main
+=======
+>>>>>>> quang
                     document.getElementById("showCart").style.display = "block";
 
                 });
@@ -412,9 +418,12 @@ $("#createOrder").on('click', function () {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $("#createBill").on('click', function () {
 =======
 
+=======
+>>>>>>> quang
 // Xuất bill tính tiền
 $("#createBill").on('click',function (){
 >>>>>>> main
@@ -439,16 +448,74 @@ $("#createBill").on('click',function (){
 // hiển thị form tách ghép đơn
 function handlerShowSplitOrder(){
     $("button.split").on("click", function () {
+
+        //Ajax đổ ra bàn chuyển đến
+
         $.ajax({
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "/api/orders/" + OrderId,
+            url: "/api/tables",
         })
             .done(function (data) {
-                console.log(data);
+                for (let i = 0; i < data.length; i++) {
+                    let id = data[i].id;
+                    let name = data[i].name;
+                    $("#catalogDropDownList").append(`<option value=${id}>${name}</option>`);
+                }
+
+                $.ajax({
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "/api/orders/" + OrderId,
+                })
+                    .done(function (data) {
+                        order = data;
+                        splitOrder = JSON.parse(JSON.stringify(data));
+                        for (let i = 0; i < splitOrder.length; i++) {
+                            splitOrder[i].quantity = 0;
+                        }
+                        //danh sách để tách
+                            let newline = "";
+                            let oldList =$(".list-oldOrder");
+                            oldList.empty();
+                            for (let i = 0; i < data.length; i++) {
+                                newline += `
+                                        <tr>
+                                    <th scope="row">1</th>
+                                    <td>${data[i].name}</td>
+                                    <td id = "quantity-${data[i].id}">${data[i].quantity}</td>
+                                    <td>
+
+                                        <button class="btn-icon downDrink" data-id="${data[i].id}" type="button" >
+                                            <svg class="svg-inline--fa fa-circle-minus" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-minus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM168 232C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H168z"></path></svg><!-- <i class="fas fa-minus-circle"></i> Font Awesome fontawesome.com -->
+                                        </button>
+                                        <button class="form-control form-control-sm item-quantity" id="splitAmount-${data[i].id}" >0</button>
+                                        <button class="btn-icon upDrink" data-id="${data[i].id}"  type="button" >
+                                            <svg class="svg-inline--fa fa-circle-plus" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"></path></svg><!-- <i class="fas fa-plus-circle"></i> Font Awesome fontawesome.com -->
+                                        </button>
+                                    </td>
+                               </tr>
+                            `
+                            }
+                            oldList.append(newline);
+
+                            handlerSplitUpDrink()
+
+                            handlerSplitDownDrink()
+
+                        })
+
+                    .fail(function (jqXHR) {
+                        console.log("get drinks fails");
+                    })
+
+
                 $("#modalSplitOrder").modal("show");
 
             })
@@ -456,5 +523,99 @@ function handlerShowSplitOrder(){
                 console.log("get drinks fails");
             })
     });
+}
+
+//số lượng đồ uống tách bàn
+function handlerSplitUpDrink(){
+    $("button.upDrink").on("click", function () {
+
+        let id = $(this).data('id');
+        let splitAmount =parseInt($("#splitAmount-"+ id).text());
+        console.log(id);
+        let index = 0;
+        for (let j = 0; j < order.length; j++) {
+            if (id == order[j].id) {
+                index = j;
+            }
+        }
+        if(order[index].quantity > 0){
+            order[index].quantity -= 1;
+            splitAmount +=1;
+            splitOrder[index].quantity = splitAmount;
+            $("#quantity-"+ id).replaceWith(`
+                <td id = "quantity-${id}">${order[index].quantity}</td>
+            `);
+            $("#splitAmount-"+ id).replaceWith(`
+                <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
+                    ${splitAmount}
+                </button>
+            `);
+        }
+
+
+    })
 
 }
+
+function handlerSplitDownDrink(){
+    $("button.downDrink").on("click", function () {
+
+        let id = $(this).data('id');
+        let splitAmount =parseInt($("#splitAmount-"+ id).text());
+        if(splitAmount > 0){
+
+            let index = 0;
+            for (let j = 0; j < order.length; j++) {
+
+                if (id == order[j].id) {
+                    index = j;
+                }
+            }
+            if(order[index].quantity >= 0){
+                order[index].quantity += 1;
+                splitAmount -=1;
+                splitOrder[index].quantity = splitAmount;
+
+                $("#quantity-"+ id).replaceWith(`
+                <td id = "quantity-${id}">${order[index].quantity}</td>
+            `);
+                $("#splitAmount-"+ id).replaceWith(`
+                <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
+                    ${splitAmount}
+                </button>
+            `);
+            }
+        }
+
+    })
+
+}
+
+
+$("#catalogDropDownList").on("change", function () {
+    NewTable = $("#catalogDropDownList").val();
+});
+// Sự kiện gửi đồ uống đã tách
+$("#confirmSplit").on('click',function(){
+    for (let i = 0; i < splitOrder.length; i++) {
+        if (splitOrder[i].quantity == 0){
+            splitOrder.splice(i,1);
+        }
+    }
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        type: "POST",
+        url: "/api/split/" + OrderId + "/" + NewTable,
+        data: JSON.stringify(splitOrder)
+    })
+        .done(function (data) {
+            swal("Thành công", "Tạo order thành công","success").then(function () {
+                location.reload()});
+        })
+        .fail(function (resp){
+            console.log(resp);
+        })
+});

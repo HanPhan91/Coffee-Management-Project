@@ -1,8 +1,5 @@
 package com.cg.coffeemanagement.model;
-<<<<<<< HEAD
 
-=======
->>>>>>> quang
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
