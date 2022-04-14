@@ -71,8 +71,6 @@
             }
         });
 
-
-
         function updateDrink() {
             let id = $("#idDrinkUpdate").val(),
             form = new FormData();
@@ -84,6 +82,7 @@
             if ($("#uploadUpdate")[0].files[0] != null) {
                 form.append("file", $("#uploadUpdate")[0].files[0]);
             }
+                $("div.loader").removeClass("hide");
             $.ajax({
                 type: "PUT",
                 contentType: false,

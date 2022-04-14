@@ -18,18 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
-public class CoffeeManagementApplication implements CommandLineRunner {
+public class CoffeeManagementApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoffeeManagementApplication.class, args);
-    }
-
-    @Autowired
-    BillDetailService billService;
-
-    @Override
-    public void run(String... args) throws Exception {
-
-        List<SummaryDrink> list = billService.summaryDrinkInBillDetail();
-        System.out.println(list.toString());
     }
 }
