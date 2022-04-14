@@ -34,6 +34,7 @@ function getAllDrink() {
                         <a container="body" placement="right top" skip-disable=""
                            triggers="mouseenter:mouseleave" class="">
                             <div class="table-room"><span></span></div>
+                           
                             <div class="product-info">
                             <span class="product-name">${item.name}</span>
                             <span class = "product-price">${item.price}</span>
