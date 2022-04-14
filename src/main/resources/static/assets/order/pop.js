@@ -1,7 +1,6 @@
 let listTables = $("#showTable ul");
 let OrderId = 0;
 let history = {};
-<<<<<<< HEAD
 let order = [];
 
 function checkStatusOrder() {
@@ -11,11 +10,9 @@ function checkStatusOrder() {
         $("#createBill").removeAttr("disabled");
     }
 }
-=======
 let order=[];
 let totalAmount = 0;
 
->>>>>>> main
 
 function getAllDrink() {
     $.ajax({
