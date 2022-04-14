@@ -84,4 +84,9 @@ public class StaffServicesImpl implements IStaffServices {
     public List<Staff> findStaffNotDeletedAndPermissionEqualAndNotUser(int permission) {
         return staffRepository.findStaffNotDeletedAndPermissionEqualAndNotUser(permission);
     }
+
+    @Override
+    public Integer countStaff(){
+        return staffRepository.countStaff();
+    }
 }

@@ -82,7 +82,7 @@ public class OrderApi {
                 activeDiscount = optionalDiscount.get();
                 percentDiscount = activeDiscount.getPercentDiscount();
             } else {
-                throw new DataInputException("Voucher không tồn tại hoặc đã hết hạn sử dụng");
+                throw new DataInputException("Voucher không thể sử dụng");
             }
         }
 

@@ -2,11 +2,11 @@ let listTables = $("#showTable ul");
 let OrderId = 0;
 let history = {};
 let order = [];
+
 function checkStatusOrder() {
-    if (order.length == 0){
+    if (order.length == 0) {
         $("#createBill").attr("disabled", "disabled");
-    }
-    else {
+    } else {
         $("#createBill").removeAttr("disabled");
     }
 }
@@ -27,16 +27,8 @@ function getAllDrink() {
                            triggers="mouseenter:mouseleave" class="">
                             <div class="table-room"><span></span></div>
                             <div class="product-info">
-                            <span class="product-name">${item.name}</span>
-                            <span class = "product-price">${item.price}</span>
-                                <div class="wrap-note" href="javascript:void(0)">
-                                    <label>
-                                        <button class="btn-icon">
-                                            <span class="note-hint">Ghi chú...</span>
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                    </label>
-                                </div>
+                                <span class="product-name">${item.name}</span>
+                                <span class = "product-price">${item.price}</span>
                             </div>
                         </a>
                     </li>
@@ -379,7 +371,8 @@ $("#createOrder").on('click', function () {
             });
         })
         .fail(function (resp) {
-            console.log(resp);
+            let a = jQuery.parseJSON(resp.responseText);
+            swal("Lỗi", `${a.message}` , "error");
         })
 });
 

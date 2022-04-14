@@ -1,9 +1,11 @@
 package com.cg.coffeemanagement;
 import com.cg.coffeemanagement.model.Order;
 import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.SummaryDrink;
 import com.cg.coffeemanagement.repository.Users.UserRepository;
 import com.cg.coffeemanagement.services.Bill.BillService;
 import com.cg.coffeemanagement.services.Bill.BillServiceImpl;
+import com.cg.coffeemanagement.services.BillDetailService.BillDetailService;
 import com.cg.coffeemanagement.services.Order.OrderService;
 import com.cg.coffeemanagement.services.OrderItem.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,18 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
-public class CoffeeManagementApplication  {
+public class CoffeeManagementApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(CoffeeManagementApplication.class, args);
+    }
+
+    @Autowired
+    BillDetailService billService;
+
+    @Override
+    public void run(String... args) throws Exception {
+
+        List<SummaryDrink> list = billService.summaryDrinkInBillDetail();
+        System.out.println(list.toString());
     }
 }

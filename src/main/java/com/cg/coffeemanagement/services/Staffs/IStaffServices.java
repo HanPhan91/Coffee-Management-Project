@@ -27,4 +27,6 @@ public interface IStaffServices extends IGeneralServices<Staff> {
     List<Staff> findStaffNotDeletedAndPermissionSmaller(@Param("permission") int permission);
 
     List<Staff> findStaffNotDeletedAndPermissionEqualAndNotUser(@Param("permission") int permission);
+
+    Integer countStaff();
 }

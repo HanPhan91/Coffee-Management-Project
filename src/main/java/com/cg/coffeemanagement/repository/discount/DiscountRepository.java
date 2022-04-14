@@ -33,4 +33,7 @@ public interface DiscountRepository extends JpaRepository<Discount, Long > {
     @Modifying
     @Query("UPDATE Discount d SET d.deleted = false WHERE d.id = :id")
     void restoreDiscount(@Param("id") Long id);
+
+    Integer countByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(Integer quantity, Date date);
+
 }
