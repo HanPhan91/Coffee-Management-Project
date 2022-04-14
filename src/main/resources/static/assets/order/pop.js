@@ -2,8 +2,8 @@ let listTables = $("#showTable ul");
 let OrderId = 0;
 let NewTable = 0;
 let history = {};
-<<<<<<< HEAD
 let order = [];
+
 function checkStatusOrder() {
     if (order.length == 0){
         $("#createBill").attr("disabled", "disabled");
@@ -12,12 +12,9 @@ function checkStatusOrder() {
         $("#createBill").removeAttr("disabled");
     }
 }
-=======
 let order=[];
 let totalAmount = 0;
 let splitOrder=[];
-
->>>>>>> main
 
 function getAllDrink() {
     $.ajax({
@@ -102,12 +99,8 @@ function addOrderItemToOrder(orderId, drinkId) {
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
     let str = "";
-<<<<<<< HEAD
-    let show = $(".product-cart-item");
     // let show = `<div className="product-cart-item" id="${OrderId}">`;
-=======
     let show =$(".product-cart-item");
->>>>>>> quang
     show.empty();
     totalAmount = 0;
     for (let i = 0; i < order.length; i++) {
@@ -195,7 +188,6 @@ function handlerAddItemInOrder() {
     });
 }
 
-<<<<<<< HEAD
 // hiển thị form tách ghép đơn
 function handlerShowSplitOrder() {
     $("button.split").on("click", function () {
@@ -244,10 +236,8 @@ function handlerShowAvailableInOrder() {
 }
 
 
-=======
 
 //Hiển thị bàn sẵn có + order hiện có trong bàn
->>>>>>> main
 function getAllTable() {
     $.ajax({
         type: "GET",
@@ -298,7 +288,6 @@ function getAllTable() {
                         type: "GET",
                         url: "/api/orders/" + OrderId,
                     })
-<<<<<<< HEAD
                         .done(function (data) {
                             order = data;
                             showOrderItem();
@@ -308,7 +297,6 @@ function getAllTable() {
                             console.log("get drinks fails");
                         })
 
-=======
                     .done(function (data) {
                         order = data;
                         showOrderItem();
@@ -320,11 +308,7 @@ function getAllTable() {
                     })
                     // $("#totalAmount").val()
                     $("#tableNumber").text("Bàn " + item.name)
-<<<<<<< HEAD
                     console.log(item.name);
->>>>>>> main
-=======
->>>>>>> quang
                     document.getElementById("showCart").style.display = "block";
 
                 });
@@ -351,12 +335,9 @@ $(".kv-tabs a").click(function () {
 });
 
 
-<<<<<<< HEAD
 function handlerUpQuantity() {
-=======
 //Sự kiện tăng giảm số lượng
 function handlerUpQuantity () {
->>>>>>> main
     $("button.up").on("click", function () {
         let id = $(this).data('id');
 
@@ -428,72 +409,66 @@ $("#createOrder").on('click', function () {
         })
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 $("#createBill").on('click', function () {
-=======
 
-=======
->>>>>>> quang
 // Xuất bill tính tiền
-$("#createBill").on('click',function (){
->>>>>>> main
-    $.ajax({
-        headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "PUT",
-        url: "/api/orders/pay/" + OrderId,
-    })
-        .done(function (data) {
-            swal("Thành công", "Thanh toán thành công", "success").then(function () {
-                location.reload()
-            });
-        })
-        .fail(function (resp) {
-            console.log(resp);
-        })
-});
-
-// hiển thị form tách ghép đơn
-function handlerShowSplitOrder(){
-    $("button.split").on("click", function () {
-
-        //Ajax đổ ra bàn chuyển đến
-
+    $("#createBill").on('click', function () {
         $.ajax({
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
-            type: "GET",
-            url: "/api/tables",
+            type: "PUT",
+            url: "/api/orders/pay/" + OrderId,
         })
             .done(function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    let id = data[i].id;
-                    let name = data[i].name;
-                    $("#catalogDropDownList").append(`<option value=${id}>${name}</option>`);
-                }
+                swal("Thành công", "Thanh toán thành công", "success").then(function () {
+                    location.reload()
+                });
+            })
+            .fail(function (resp) {
+                console.log(resp);
+            })
+    });
 
-                $.ajax({
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-type": "application/json"
-                    },
-                    type: "GET",
-                    url: "/api/orders/" + OrderId,
-                })
-                    .done(function (data) {
-                        order = data;
-                        splitOrder = JSON.parse(JSON.stringify(data));
-                        for (let i = 0; i < splitOrder.length; i++) {
-                            splitOrder[i].quantity = 0;
-                        }
-                        //danh sách để tách
+// hiển thị form tách ghép đơn
+    function handlerShowSplitOrder() {
+        $("button.split").on("click", function () {
+
+            //Ajax đổ ra bàn chuyển đến
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "/api/tables",
+            })
+                .done(function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let id = data[i].id;
+                        let name = data[i].name;
+                        $("#catalogDropDownList").append(`<option value=${id}>${name}</option>`);
+                    }
+
+                    $.ajax({
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: "/api/orders/" + OrderId,
+                    })
+                        .done(function (data) {
+                            order = data;
+                            splitOrder = JSON.parse(JSON.stringify(data));
+                            for (let i = 0; i < splitOrder.length; i++) {
+                                splitOrder[i].quantity = 0;
+                            }
+                            //danh sách để tách
                             let newline = "";
-                            let oldList =$(".list-oldOrder");
+                            let oldList = $(".list-oldOrder");
                             oldList.empty();
                             for (let i = 0; i < data.length; i++) {
                                 newline += `
@@ -522,111 +497,113 @@ function handlerShowSplitOrder(){
 
                         })
 
-                    .fail(function (jqXHR) {
-                        console.log("get drinks fails");
-                    })
+                        .fail(function (jqXHR) {
+                            console.log("get drinks fails");
+                        })
 
 
-                $("#modalSplitOrder").modal("show");
+                    $("#modalSplitOrder").modal("show");
 
-            })
-            .fail(function (jqXHR) {
-                console.log("get drinks fails");
-            })
-    });
-}
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        });
+    }
 
 //số lượng đồ uống tách bàn
-function handlerSplitUpDrink(){
-    $("button.upDrink").on("click", function () {
+    function handlerSplitUpDrink() {
+        $("button.upDrink").on("click", function () {
 
-        let id = $(this).data('id');
-        let splitAmount =parseInt($("#splitAmount-"+ id).text());
-        console.log(id);
-        let index = 0;
-        for (let j = 0; j < order.length; j++) {
-            if (id == order[j].id) {
-                index = j;
-            }
-        }
-        if(order[index].quantity > 0){
-            order[index].quantity -= 1;
-            splitAmount +=1;
-            splitOrder[index].quantity = splitAmount;
-            $("#quantity-"+ id).replaceWith(`
-                <td id = "quantity-${id}">${order[index].quantity}</td>
-            `);
-            $("#splitAmount-"+ id).replaceWith(`
-                <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
-                    ${splitAmount}
-                </button>
-            `);
-        }
-
-
-    })
-
-}
-
-function handlerSplitDownDrink(){
-    $("button.downDrink").on("click", function () {
-
-        let id = $(this).data('id');
-        let splitAmount =parseInt($("#splitAmount-"+ id).text());
-        if(splitAmount > 0){
-
+            let id = $(this).data('id');
+            let splitAmount = parseInt($("#splitAmount-" + id).text());
+            console.log(id);
             let index = 0;
             for (let j = 0; j < order.length; j++) {
-
                 if (id == order[j].id) {
                     index = j;
                 }
             }
-            if(order[index].quantity >= 0){
-                order[index].quantity += 1;
-                splitAmount -=1;
+            if (order[index].quantity > 0) {
+                order[index].quantity -= 1;
+                splitAmount += 1;
                 splitOrder[index].quantity = splitAmount;
-
-                $("#quantity-"+ id).replaceWith(`
+                $("#quantity-" + id).replaceWith(`
                 <td id = "quantity-${id}">${order[index].quantity}</td>
             `);
-                $("#splitAmount-"+ id).replaceWith(`
+                $("#splitAmount-" + id).replaceWith(`
                 <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
                     ${splitAmount}
                 </button>
             `);
             }
-        }
-
-    })
-
-}
 
 
-$("#catalogDropDownList").on("change", function () {
-    NewTable = $("#catalogDropDownList").val();
-});
-// Sự kiện gửi đồ uống đã tách
-$("#confirmSplit").on('click',function(){
-    for (let i = 0; i < splitOrder.length; i++) {
-        if (splitOrder[i].quantity == 0){
-            splitOrder.splice(i,1);
-        }
+        })
+
     }
-    $.ajax({
-        headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "POST",
-        url: "/api/split/" + OrderId + "/" + NewTable,
-        data: JSON.stringify(splitOrder)
-    })
-        .done(function (data) {
-            swal("Thành công", "Tạo order thành công","success").then(function () {
-                location.reload()});
+
+    function handlerSplitDownDrink() {
+        $("button.downDrink").on("click", function () {
+
+            let id = $(this).data('id');
+            let splitAmount = parseInt($("#splitAmount-" + id).text());
+            if (splitAmount > 0) {
+
+                let index = 0;
+                for (let j = 0; j < order.length; j++) {
+
+                    if (id == order[j].id) {
+                        index = j;
+                    }
+                }
+                if (order[index].quantity >= 0) {
+                    order[index].quantity += 1;
+                    splitAmount -= 1;
+                    splitOrder[index].quantity = splitAmount;
+
+                    $("#quantity-" + id).replaceWith(`
+                <td id = "quantity-${id}">${order[index].quantity}</td>
+            `);
+                    $("#splitAmount-" + id).replaceWith(`
+                <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
+                    ${splitAmount}
+                </button>
+            `);
+                }
+            }
+
         })
-        .fail(function (resp){
-            console.log(resp);
+
+    }
+
+
+    $("#catalogDropDownList").on("change", function () {
+        NewTable = $("#catalogDropDownList").val();
+    });
+// Sự kiện gửi đồ uống đã tách
+    $("#confirmSplit").on('click', function () {
+        for (let i = 0; i < splitOrder.length; i++) {
+            if (splitOrder[i].quantity == 0) {
+                splitOrder.splice(i, 1);
+            }
+        }
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "POST",
+            url: "/api/split/" + OrderId + "/" + NewTable,
+            data: JSON.stringify(splitOrder)
         })
-});
+            .done(function (data) {
+                swal("Thành công", "Tạo order thành công", "success").then(function () {
+                    location.reload()
+                });
+            })
+            .fail(function (resp) {
+                console.log(resp);
+            })
+    });
+}
