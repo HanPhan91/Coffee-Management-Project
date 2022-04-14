@@ -24,7 +24,9 @@ function getAllDrink() {
                         <div class="tableroom-actions"></div>
                         <a container="body" placement="right top" skip-disable=""
                            triggers="mouseenter:mouseleave" class="">
-                            <div _ngcontent-yaj-c29="" class="product-img" style = "height: calc(100% - 40px);"><img _ngcontent-yaj-c29="" kvfallbackimg="" src="${item.imgUrl}"></div>
+                            <div _ngcontent-yaj-c29="" class="product-img" style = "height: calc(100% - 40px);">
+                            <img _ngcontent-yaj-c29="" kvfallbackimg="" src="${item.imgUrl}">
+                            </div>
                            
                             <div class="product-info">
                             <span class="product-name">${item.name}</span>
