@@ -4,12 +4,9 @@ let nameTable = null;
 let NewTable = 0;
 let history = {};
 let order = [];
-<<<<<<< HEAD
-=======
 let totalAmount = 0;
 let subAmount = 0;
 let splitOrder = [];
-<<<<<<< HEAD
 let percent = 0;
 let codeDiscount = null;
 let listFind = [];
@@ -93,9 +90,6 @@ const handlerChooseTable = () => {
         $("#nameTable").text(nameTable);
     }
 }
-=======
->>>>>>> han
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
 
 function checkStatusOrder() {
     if (order.length == 0) {
@@ -106,47 +100,8 @@ function checkStatusOrder() {
         $("#btnSplitOrder").removeAttr("disabled");
     }
 }
-<<<<<<< HEAD
-let order=[];
-let totalAmount = 0;
-let splitOrder=[];
 
-=======
-
-<<<<<<< HEAD
 function getAllTable() {
-=======
-
-// function getAllDrink() {
-//     $.ajax({
-//         type: "GET",
-//         url: "/api/drinks",
-//     })
-//         .done(function (data) {
-//             listDrink = data;
-//             listTables.empty();
-//             data.forEach(function (item) {
-//                 listTables.append(`
-//                     <li class="tableAndRoom" style="text-align: center;" tabindex="1" data-id="${item.id}">
-//                         <div class="tableroom-actions"></div>
-//                         <a container="body" placement="right top" skip-disable=""
-//                            triggers="mouseenter:mouseleave" class="">
-//                             <div class="table-room"><span></span></div>
-//                             <div class="product-info">
-//                                 <span class="product-name">${item.name}</span>
-//                                 <span class = "product-price">${item.price}</span>
-//                             </div>
-//                         </a>
-//                     </li>
-//                     `);
-//             });
-//             // handlerShowAvailableInOrder();
-//             handlerAddItemInOrder();
-//         })
-// }
->>>>>>> han
-function getAllDrink() {
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
     $.ajax({
         type: "GET",
         url: "/api/tables",
@@ -165,18 +120,7 @@ function getAllDrink() {
                         <div class="tableroom-actions"></div>
                         <a container="body" placement="right top" skip-disable=""
                            triggers="mouseenter:mouseleave" class="">
-<<<<<<< HEAD
                             <div class="table-room">${statusTable}</div>
-=======
-<<<<<<< HEAD
-                            <div class="table-room"><span></span></div>
-                           
-=======
-                            <div _ngcontent-yaj-c29="" class="product-img" style = "height: calc(100% - 40px);">
-                                ${img}
-                            </div>
->>>>>>> han
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
                             <div class="product-info">
                             <span class="product-name">${item.name}</span>
                             </div>
@@ -293,16 +237,7 @@ function addOrderItemToOrder(orderId, drinkId) {
 // hiển thị đồ uống vừa chọn vào order
 function showOrderItem() {
     let str = "";
-<<<<<<< HEAD
-    // let show = `<div className="product-cart-item" id="${OrderId}">`;
-    let show =$(".product-cart-item");
-=======
     let show = $(".product-cart-item");
-<<<<<<< HEAD
-=======
-    // let show = `<div className="product-cart-item" id="${OrderId}">`;
->>>>>>> han
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
     show.empty();
     subAmount = 0;
     totalAmount = 0;
@@ -403,96 +338,8 @@ function handlerAddItemInOrder() {
 }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> han
 //Hiển thị bàn sẵn có + order hiện có trong bàn
-<<<<<<< HEAD
 
-=======
-function getAllTable() {
-    $.ajax({
-        type: "GET",
-        url: "/api/tables",
-
-    })
-        .done(function (data) {
-            listTables.empty();
-            let statusTable = '';
-            data.forEach(function (item) {
-                if (item.used == true) {
-                    statusTable = `<span style="background: blue"></span>`;
-                } else {
-                    statusTable = `<span></span>`;
-                }
-                listTables.append(`
-                    <li class="table" style="text-align: center;" tabindex="1" id="${item.id}">
-                        <div class="tableroom-actions"></div>
-                        <a container="body" placement="right top" skip-disable=""
-                           triggers="mouseenter:mouseleave" class="">
-                            <div class="table-room">${statusTable}</div>
-                            <div class="product-info">
-                            <span class="product-name">${item.name}</span>
-                            </div>
-                        </a>
-                    </li>
-                    `);
-                let idtable = item.id;
-                $("#" + idtable).on("click", function () {
-                    getAllDrink();
-                    OrderId = item.id;
-                    $("a#showDrink").trigger('click');
-                    // handlerShowAvailableInOrder();
-
-                    $.ajax({
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-type": "application/json"
-                        },
-                        type: "GET",
-                        url: "/api/orders/" + OrderId,
-                    })
-                        .done(function (data) {
-                            order = data;
-                            showOrderItem();
-                            checkStatusOrder();
-                        })
-                        .fail(function (jqXHR) {
-                            console.log("get drinks fails");
-                        })
-
-<<<<<<< HEAD
-                    .done(function (data) {
-                        order = data;
-                        showOrderItem();
-                        handlerShowSplitOrder();
-=======
-                        .done(function (data) {
-                            order = data;
-                            showOrderItem();
-                            handlerShowSplitOrder();
->>>>>>> han
-
-                        })
-                        .fail(function (jqXHR) {
-                            console.log("get drinks fails");
-                        })
-                    // $("#totalAmount").val()
-<<<<<<< HEAD
-                    $("#tableNumber").text("Bàn " + item.name)
-                    console.log(item.name);
-=======
-                    $("#tableNumber").text("Bàn " + item.name);
->>>>>>> han
-                    document.getElementById("showCart").style.display = "block";
-
-                });
-
-            })
-        })
-}
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
 
 //Hiển thị bàn và thức uống
 $(".kv-tabs a").click(function () {
@@ -513,15 +360,8 @@ $(".kv-tabs a").click(function () {
     }
 });
 
-<<<<<<< HEAD
-
-function handlerUpQuantity() {
-//Sự kiện tăng giảm số lượng
-function handlerUpQuantity () {
-=======
 //Sự kiện tăng giảm số lượng
 function handlerUpQuantity() {
->>>>>>> han
     $("button.up").on("click", function () {
         let id = $(this).data('id');
         let index = 0;
@@ -586,72 +426,6 @@ $("#createOrder").on('click', function () {
             swal("Lỗi", `${a.message}`, "error");
         })
 });
-<<<<<<< HEAD
-
-$("#createBill").on('click', function () {
-
-// Xuất bill tính tiền
-    $("#createBill").on('click', function () {
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "PUT",
-            url: "/api/orders/pay/" + OrderId,
-        })
-            .done(function (data) {
-                swal("Thành công", "Thanh toán thành công", "success").then(function () {
-                    location.reload()
-                });
-            })
-            .fail(function (resp) {
-                console.log(resp);
-            })
-    });
-
-// hiển thị form tách ghép đơn
-    function handlerShowSplitOrder() {
-        $("button.split").on("click", function () {
-
-            //Ajax đổ ra bàn chuyển đến
-
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "/api/tables",
-            })
-                .done(function (data) {
-                    for (let i = 0; i < data.length; i++) {
-                        let id = data[i].id;
-                        let name = data[i].name;
-                        $("#catalogDropDownList").append(`<option value=${id}>${name}</option>`);
-                    }
-
-                    $.ajax({
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-type": "application/json"
-                        },
-                        type: "GET",
-                        url: "/api/orders/" + OrderId,
-                    })
-                        .done(function (data) {
-                            order = data;
-                            splitOrder = JSON.parse(JSON.stringify(data));
-                            for (let i = 0; i < splitOrder.length; i++) {
-                                splitOrder[i].quantity = 0;
-                            }
-                            //danh sách để tách
-                            let newline = "";
-                            let oldList = $(".list-oldOrder");
-                            oldList.empty();
-                            for (let i = 0; i < data.length; i++) {
-                                newline += `
-=======
 // Xuất bill tính tiền
 $("#createBill").on('click', function () {
     $.ajax({
@@ -746,7 +520,6 @@ function callOrder() {
             oldList.empty();
             for (let i = 0; i < data.length; i++) {
                 newline += `
->>>>>>> han
                                         <tr>
                                     <th scope="row">${i + 1}</th>
                                     <td>${data[i].name}</td>
@@ -762,30 +535,6 @@ function callOrder() {
                                     </td>
                                </tr>
                             `
-<<<<<<< HEAD
-                            }
-                            oldList.append(newline);
-
-                            handlerSplitUpDrink()
-
-                            handlerSplitDownDrink()
-
-                        })
-
-                        .fail(function (jqXHR) {
-                            console.log("get drinks fails");
-                        })
-
-
-                    $("#modalSplitOrder").modal("show");
-
-                })
-                .fail(function (jqXHR) {
-                    console.log("get drinks fails");
-                })
-        });
-    }
-=======
             }
             oldList.append(newline);
             handlerSplitUpDrink()
@@ -796,35 +545,12 @@ function callOrder() {
             console.log("get drinks fails");
         })
 }
->>>>>>> han
 
 $("#modalSplitOrder").on('hidden.bs.modal', function () {
     $("#catalogDropDownList option").remove();
 });
 
 //số lượng đồ uống tách bàn
-<<<<<<< HEAD
-    function handlerSplitUpDrink() {
-        $("button.upDrink").on("click", function () {
-
-            let id = $(this).data('id');
-            let splitAmount = parseInt($("#splitAmount-" + id).text());
-            console.log(id);
-            let index = 0;
-            for (let j = 0; j < order.length; j++) {
-                if (id == order[j].id) {
-                    index = j;
-                }
-            }
-            if (order[index].quantity > 0) {
-                order[index].quantity -= 1;
-                splitAmount += 1;
-                splitOrder[index].quantity = splitAmount;
-                $("#quantity-" + id).replaceWith(`
-                <td id = "quantity-${id}">${order[index].quantity}</td>
-            `);
-                $("#splitAmount-" + id).replaceWith(`
-=======
 function handlerSplitUpDrink() {
     $("button.upDrink").on("click", function () {
         let id = $(this).data('id');
@@ -843,58 +569,27 @@ function handlerSplitUpDrink() {
                 <td id = "quantity-${id}">${order[index].quantity}</td>
             `);
             $("#splitAmount-" + id).replaceWith(`
->>>>>>> han
                 <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
                     ${splitAmount}
                 </button>
             `);
-<<<<<<< HEAD
         }
     })
 }
-=======
-            }
 
-
-        })
-
-    }
->>>>>>> f68bb68e0fc0a955d781fdfcfa3bce474686ab1f
-
-<<<<<<< HEAD
-    function handlerSplitDownDrink() {
-        $("button.downDrink").on("click", function () {
-
-            let id = $(this).data('id');
-            let splitAmount = parseInt($("#splitAmount-" + id).text());
-            if (splitAmount > 0) {
-=======
 function handlerSplitDownDrink() {
     $("button.downDrink").on("click", function () {
 
         let id = $(this).data('id');
         let splitAmount = parseInt($("#splitAmount-" + id).text());
         if (splitAmount > 0) {
->>>>>>> han
 
-                let index = 0;
-                for (let j = 0; j < order.length; j++) {
+            let index = 0;
+            for (let j = 0; j < order.length; j++) {
 
-                    if (id == order[j].id) {
-                        index = j;
-                    }
+                if (id == order[j].id) {
+                    index = j;
                 }
-<<<<<<< HEAD
-                if (order[index].quantity >= 0) {
-                    order[index].quantity += 1;
-                    splitAmount -= 1;
-                    splitOrder[index].quantity = splitAmount;
-
-                    $("#quantity-" + id).replaceWith(`
-                <td id = "quantity-${id}">${order[index].quantity}</td>
-            `);
-                    $("#splitAmount-" + id).replaceWith(`
-=======
             }
             if (order[index].quantity >= 0) {
                 order[index].quantity += 1;
@@ -905,49 +600,18 @@ function handlerSplitDownDrink() {
                 <td id = "quantity-${id}">${order[index].quantity}</td>
             `);
                 $("#splitAmount-" + id).replaceWith(`
->>>>>>> han
                 <button class="form-control form-control-sm item-quantity" id="splitAmount-${id}" >
                     ${splitAmount}
                 </button>
             `);
-                }
-            }
-
-        })
-
-    }
-
-
-<<<<<<< HEAD
-    $("#catalogDropDownList").on("change", function () {
-        NewTable = $("#catalogDropDownList").val();
-    });
-// Sự kiện gửi đồ uống đã tách
-    $("#confirmSplit").on('click', function () {
-        for (let i = 0; i < splitOrder.length; i++) {
-            if (splitOrder[i].quantity == 0) {
-                splitOrder.splice(i, 1);
             }
         }
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "POST",
-            url: "/api/split/" + OrderId + "/" + NewTable,
-            data: JSON.stringify(splitOrder)
-        })
-            .done(function (data) {
-                swal("Thành công", "Tạo order thành công", "success").then(function () {
-                    location.reload()
-                });
-            })
-            .fail(function (resp) {
-                console.log(resp);
-            })
-    });
-=======
+
+    })
+
+}
+
+
 $("#catalogDropDownList").on("change", function () {
     NewTable = $("#catalogDropDownList").val();
 });
@@ -997,5 +661,4 @@ function doSplit() {
         .fail(function (resp) {
             console.log(resp);
         })
->>>>>>> han
 }
