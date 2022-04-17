@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:fragment="modalSplitOrder">
-    <div class="modal" id="modalSplitOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<th:block th:fragment="modalBillDetail">
+    <div class="modal" id="modalBillDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tách đơn</h5>
+                    <h5 class="modal-title">Thông tin hóa đơn</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="form-group row">
                             <div class="col-4">
-                                <label for="catalogDropDownList" class="form-label fw-bold">Tách đến: </label>
+                                <label class="form-label fw-bold">Bàn: </label>
                             </div>
                             <div class="col-8">
-                                <select class="form-select" style="width: 50%" id="catalogDropDownList">
-                                    <option value="0" disabled selected>--Vui lòng chọn bàn--</option>
-                                </select>
+                                <label id="nameTable"></label>
                             </div>
                         </div>
                         <div class="row">
@@ -25,13 +23,14 @@
                                 <table class="table" style="width: 100%">
                                     <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên đồ uống</th>
-                                        <th scope="col">SL trên đơn tách</th>
-                                        <th scope="col">Sl tách</th>
+                                        <th scope="col" class="text-center">#</th>
+                                        <th scope="col" class="text-center">Tên đồ uống</th>
+                                        <th scope="col" class="text-center">Đơn giá (VNĐ)</th>
+                                        <th scope="col" class="text-center">Số lượng</th>
+                                        <th scope="col" class="text-center">Tổng tiền (VNĐ)</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="list-oldOrder">
+                                    <tbody id="billdetails">
 
                                     </tbody>
                                 </table>
@@ -40,10 +39,16 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="confirmSplit">Tách bàn</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $("#modalBillDetail").on('hidden.bs.modal', function () {
+            swal("Thành công", "Thanh toán thành công", "success").then(function () {
+                location.reload();
+            })
+        })
+    </script>
 </th:block>

@@ -28,13 +28,15 @@ public class OrderItem {
 
     private int quantity;
 
+    private BigDecimal price;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cart")
+    @JoinColumn(name = "id_order")
     private Order order;
 
     private BigDecimal totalPrice;
+
+    private String discount;
 
     public BillDetail toBillDetail() {
         return new BillDetail()

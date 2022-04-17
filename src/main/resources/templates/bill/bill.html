@@ -116,15 +116,15 @@
                 data: 'codeDiscount', render: function (data) {
                     if (data == null) {
                         return null;
-                    } else return 'data'
-                }
+                    } else return `${data}`;
+                }, className: 'text-center'
             },
             {
                 data: 'discountPercent', render: function (data) {
                     if (data == null) {
                         return null;
-                    } else return 'data'
-                }
+                    } else return `${data}`;
+                }, className: 'text-center'
             },
             {
                 data: 'totalAmount', render: function (data) {

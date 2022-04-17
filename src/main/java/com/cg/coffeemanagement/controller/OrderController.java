@@ -29,6 +29,8 @@ public class OrderController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IDiscountService discountService;
     @GetMapping
     public ModelAndView listOrder(){
         ModelAndView modelAndView = new ModelAndView();
@@ -36,10 +38,12 @@ public class OrderController {
         modelAndView.setViewName("order/orderHome");
         List<Drink> drinks = drinkService.findAllNotDeleted();
         List<CoffeeTable> tables = coffeeTableService.findAllNotDeleted();
+        List<Discount> discounts = discountService.findAllDiscountActive();
         User user = userService.getByUsername(Principal.getPrincipal()).get();
         modelAndView.addObject("user", user);
         modelAndView.addObject("tables", tables);
         modelAndView.addObject("drinks", drinks);
+        modelAndView.addObject("discounts", discounts);
         return modelAndView;
     }
 }

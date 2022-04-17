@@ -22,9 +22,9 @@ public class Order {
     @Id
     private Long id = System.currentTimeMillis()/1000;
 
-    @OneToMany
-    @JoinColumn(name = "id_orderitem")
-    private Set<OrderItem> orderItem;
+//    @OneToMany
+//    @JoinColumn(name = "id_orderitem")
+//    private Set<OrderItem> orderItem;
 
     @Column(name = "table_id")
     private Long coffeeTable;
@@ -46,17 +46,5 @@ public class Order {
         return new Order()
                 .setId(id)
                 .setCoffeeTable(coffeeTable);
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", orderItem=" + orderItem +
-                ", coffeeTable=" + coffeeTable +
-                ", subAmount=" + subAmount +
-                ", discount=" + discount +
-                ", totalAmount=" + totalAmount +
-                '}';
     }
 }

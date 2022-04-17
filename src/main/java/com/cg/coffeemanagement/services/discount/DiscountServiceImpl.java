@@ -87,4 +87,9 @@ public class DiscountServiceImpl implements IDiscountService{
     public Integer countByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual() {
         return discountRepository.countByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(0, new Date());
     }
+
+    @Override
+    public List<Discount> findAllDiscountActive() {
+        return discountRepository.findAllByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(0, new Date());
+    }
 }

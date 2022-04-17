@@ -23,14 +23,19 @@ public class OrderItemMenuDto {
 
     private int quantity;
 
+    private BigDecimal price;
+
     private BigDecimal totalPrice;
+
+    private String discount;
 
     public OrderItemDto toOrderItemDto(Drink drink) {
         return new OrderItemDto()
                 .setId(id)
                 .setDrink(drink)
                 .setQuantity(quantity)
-                .setTotalPrice(totalPrice);
+                .setPrice(price)
+                .setDiscount(discount);
     }
 
 }

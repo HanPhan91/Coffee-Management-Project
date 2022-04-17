@@ -50,9 +50,18 @@
 
                         </div>
                         <div class="header-right">
+                            <div id="divNameTable"
+                                 style="background: white;margin-left: 15px;border-top-left-radius: 15px;border-top-right-radius: 15px;width: 120px;color: #0090DA;  display: none">
+                                <ul style="list-style-type: none;">
+                                    <li>
+                                        <label style="padding: 8px 25px;text-align: center;font-weight: bold;line-height: 22px;text-transform: inherit;position: absolute;">
+                                            <i class="fas fa-table" style="margin-right: 5px"></i><span
+                                                id="nameTable"></span></label>
+                                    </li>
+                                </ul>
+                            </div>
                             <kv-cashier-menu>
                                 <ul class="header-right-ul pull-right">
-
                                     <li class="user-name" style="width: 150px;margin-right: 20px;"><a skip-disable="">
                                         <th:block>
                                             <span th:text="${user.staff.name}"></span>
@@ -73,8 +82,9 @@
                                             class="swiper-container swiper-container-initialized swiper-container-horizontal">
                                         <div class="swiper-wrapper" style="transition-duration: 0ms;">
 
-                                            <div class="swiper-slide swiper-slide-active" id="showTable"
-                                                 style="width: 624px;">
+                                            <div class="swiper-slide swiper-slide-active" id="showTable" style="width: 624px;">
+                                                <input width="100%" id="searchDrink" placeholder="Tên thức uống" style="margin-top: 20px; display: none"
+                                                       class="form-control form-control-sm ng-untouched ng-pristine ng-valid">
                                                 <ul tabindex="1">
                                                 </ul>
                                             </div>
@@ -115,13 +125,32 @@
                                             <div class="form-output">
                                                 <input id="inputVoucher"
                                                        class="form-control form-control-sm ng-untouched ng-pristine ng-valid"
-                                                       kvautonumeric="" value="" style="width: 100px"/>
+                                                       value="" style="width: 100px"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-actions-right">
                                         <label class="control-label"><span
                                                 translate="">Tổng tiền: </span>
+                                        </label>
+                                        <span class="form-control-static total-price" id="subAmount"></span>
+
+                                    </div>
+                                </div>
+                                <div class="row-div">
+                                    <div class="col-auto form-actions-left">
+                                        <div class="form-group"><label
+                                                class="form-label control-label" translate="" style="color: #111111;font-size: 14px;">Giảm giá (%): </label>
+                                            <div class="form-output" style="margin-bottom: 10px">
+                                                <input id="percentDiscount" disabled
+                                                       class="form-control form-control-sm ng-untouched ng-pristine ng-valid"
+                                                       value="0" style="width: 100px;font-size: 14px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions-right" style="position: relative;font-size: 12px;text-align: right;width: auto;min-width: 0;display: flex;align-items: center;">
+                                        <label class="control-label" style="color: #111111;font-size: 14px;"><span
+                                                translate="">Thành tiền: </span>
                                         </label>
                                         <span class="form-control-static total-price" id="totalAmount"></span>
 
@@ -150,62 +179,22 @@
                     </div>
                 </div>
             </div>
-            <kv-cashier-history-cart>
-                <kv-pull-over>
-                    <div class="float-nav right" skip-disable="" hidden="">
-                        <div class="float-nav-content">
-                            <button
-                                    class="float-nav-close"><i class="fal fa-times"></i></button>
-                            <h4 class="float-title">Lịch sử</h4>
-
-                            <div class="parse-history empty-area">
-
-                                <div class="page-empty"><i class="fal fa-inbox"></i>
-                                    <div class="empty-content" translate=""> Không có dữ liệu</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="float-overlay" hidden=""></div>
-                </kv-pull-over>
-            </kv-cashier-history-cart>
-            <!--                <div class="support">-->
-            <!--                    <ul>-->
-            <!--                        <li><i class="fa fa-phone"></i> Hỗ trợ khách hàng 1900 6522</li>-->
-
-            <!--                        <li><i class="fa fa-map-marker"></i> Chi nhánh trung tâm</li>-->
-
-            <!--                        <li class="sort-key"><a outsideclick="true" placement="top"-->
-            <!--                                                skip-disable="" title="Danh sách các phím tắt"><i-->
-            <!--                                class="fas fa-info-circle"></i>-->
-            <!--                            Phím tắt </a></li>-->
-            <!--                        <li class="app-version"><span>Phiên bản 1.39.0</span></li>-->
-            <!--                    </ul>-->
-            <!--                </div>-->
-            <!--            <div class="download-app"><img class="app-logo"-->
-            <!--                                           src="./tatcat_files/app-logo.png">-->
-            <!--                <h1 class="title"> Sử dụng<span> màn hình ngang hoặc<br-->
-            <!--                ></span> App KiotViet Bán hàng </h1>-->
-            <!--                <p> Để thực hiện thao tác bán hàng linh hoạt<br> và dễ dàng hơn trên-->
-            <!--                    thiết bị này </p>-->
-            <!--            </div>-->
-
-            <kv-request-allow-notification>
-                <p><a class="show-alert" href="javascript:void(0);">Click để
-                    bật</a> thông báo cho các yêu cầu thanh toán và cung ứng từ bếp. <a
-                        class="hide-alert" href="javascript:void(0);" translate="">Ẩn</a></p>
-            </kv-request-allow-notification>
         </kv-cashier-page>
     </div>
 </kv-root>
 </body>
+<style>
+
+</style>
 <th:block th:replace="layout/script :: script"/>
 <th:block th:replace="order/modalSplitOrder :: modalSplitOrder"/>
+<th:block th:replace="order/modalBillDetail :: modalBillDetail"/>
 <script th:inline="javascript">
     let listDrink = [[${drinks}]];
     let Drinks = [];
     let Carts = [];
     let listOrder = [[${orders}]];
+    let discounts = [[${discounts}]];
 </script>
 <script src="/assets/order/pop.js"></script>
 </html>

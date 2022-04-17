@@ -60,18 +60,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--                        <th:block th:each= "discount, count: ${discounts}">-->
-                        <!--                            <tr th:id="'tr_'+ ${discount.id}">-->
-                        <!--                                <td th:text="${discount.code}"></td>-->
-                        <!--                                <td th:text="${discount.description}"></td>-->
-                        <!--                                <td th:text="${discount.percentDiscount}"></td>-->
-                        <!--                                <td th:text="${#dates.format(discount.createdAt, 'dd-MM-yyyy')}"></td>-->
-                        <!--                                <td th:text="${#dates.format(discount.endedAt, 'dd-MM-yyyy')}"></td>-->
-                        <!--                                <td th:text="${discount.quantity}"></td>-->
-                        <!--                                <td class="text-center"><button class="btn btn-outline-warning editDiscount" th:data-id="${discount.id}"><i class="fa fa-pencil-alt"></i></button></td>-->
-                        <!--                                <td class="text-center"><button class="btn btn-outline-danger deleteDiscount" th:data-id="${discount.id}"><i class="fa fa-trash"></i></button></td>-->
-                        <!--                            </tr>-->
-                        <!--                        </th:block>-->
                         </tbody>
                     </table>
                 </div>
@@ -85,16 +73,7 @@
             </div>
 
         </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
         <th:block th:replace="layout/footer :: footer"/>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
     </div>
 </div>
 <th:block th:replace="layout/script :: script"/>

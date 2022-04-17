@@ -4,6 +4,7 @@ import com.cg.coffeemanagement.model.Discount;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,4 +27,6 @@ public interface IDiscountService extends IGeneralServices<Discount> {
     void updateQuantity(@Param("code") String code, @Param("quantity") int quantity);
 
     Integer countByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual();
+
+    List<Discount> findAllDiscountActive();
 }

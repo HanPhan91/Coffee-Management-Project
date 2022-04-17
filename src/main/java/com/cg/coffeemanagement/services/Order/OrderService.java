@@ -1,6 +1,9 @@
 package com.cg.coffeemanagement.services.Order;
 
+import com.cg.coffeemanagement.model.Discount;
 import com.cg.coffeemanagement.model.Order;
+import com.cg.coffeemanagement.model.User;
+import com.cg.coffeemanagement.model.dto.OrderItemDto;
 import com.cg.coffeemanagement.services.IGeneralServices;
 import org.springframework.data.repository.query.Param;
 
@@ -32,6 +35,6 @@ public interface OrderService extends IGeneralServices<Order> {
     Optional<Order> getByCoffeeTable(Long id);
 
     void deleteOrderById(Long id);
-
+    void doSplitOrder(Order oldOrder, Order newOrder, List<OrderItemDto> listOrderSplit, Discount discount, User user);
 
 }

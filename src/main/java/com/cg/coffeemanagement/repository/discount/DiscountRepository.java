@@ -36,4 +36,6 @@ public interface DiscountRepository extends JpaRepository<Discount, Long > {
 
     Integer countByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(Integer quantity, Date date);
 
+    List<Discount> findAllByDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(Integer quantity, Date date);
+
 }

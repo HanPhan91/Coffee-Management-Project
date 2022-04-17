@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class OrderItemDto {
+
     @Autowired
     DrinkService drinkService;
     @Autowired
@@ -34,11 +35,17 @@ public class OrderItemDto {
 
     private BigDecimal totalPrice;
 
+    private BigDecimal price;
+
+    private String discount;
+
     public OrderItem toOderItem() {
         return new OrderItem()
                 .setId(id)
                 .setDrink(drink)
                 .setQuantity(quantity)
-                .setTotalPrice(totalPrice);
+                .setPrice(price)
+                .setTotalPrice(totalPrice)
+                .setDiscount(discount);
     }
 }
