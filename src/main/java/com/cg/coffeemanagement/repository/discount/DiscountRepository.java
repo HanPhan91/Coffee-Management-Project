@@ -17,7 +17,7 @@ public interface DiscountRepository extends JpaRepository<Discount, Long > {
     List<Discount> findByDeletedFalse();
     List<Discount> findByDeletedTrue();
 
-    @Query(value = "SELECT * FROM discounts as d where d.code = :code and d.quantity >0 and d.endedAt >= CURDATE()", nativeQuery = true)
+    @Query(value = "SELECT * FROM discounts as d where d.code = :code and d.quantity >0 and d.endedAt >= GETDATE()", nativeQuery = true)
     Discount findDiscountActive(@Param("code") String code);
 
     Optional<Discount> findDiscountByCodeAndDeletedFalseAndQuantityIsGreaterThanAndEndedAtGreaterThanEqual(String code, Integer quantity, Date date);

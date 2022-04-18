@@ -13,16 +13,16 @@ import java.math.BigDecimal;
 public interface BillRepository extends JpaRepository<Bill,Long> {
 
 
-    @Query(value = "SELECT SUM(total_amount) FROM bills o WHERE DAY(o.created_at) = DAY(CURDATE()) AND " +
-            "MONTH(o.created_at) = MONTH(CURDATE()) AND YEAR(o.created_at) = YEAR(CURDATE()) ; ", nativeQuery = true)
+    @Query(value = "SELECT SUM(total_amount) FROM bills o WHERE DAY(o.created_at) = DAY(GETDATE()) AND " +
+            "MONTH(o.created_at) = MONTH(GETDATE()) AND YEAR(o.created_at) = YEAR(GETDATE()) ; ", nativeQuery = true)
     BigDecimal incomeToday();
 
-    @Query(value = "SELECT SUM(total_amount) FROM bills o WHERE MONTH(o.created_at) = MONTH(CURDATE())" +
-            "AND YEAR(o.created_at) = YEAR(CURDATE()); ", nativeQuery = true)
+    @Query(value = "SELECT SUM(total_amount) FROM bills o WHERE MONTH(o.created_at) = MONTH(GETDATE())" +
+            "AND YEAR(o.created_at) = YEAR(GETDATE()); ", nativeQuery = true)
     BigDecimal incomeToMonth();
 
-    @Query(value = "SELECT COUNT(id) FROM bills o WHERE DAY(o.created_at) = DAY(CURDATE()) \n" +
-            "AND MONTH(o.created_at) = MONTH(CURDATE()) AND YEAR(o.created_at) = YEAR(CURDATE()) ;", nativeQuery = true)
+    @Query(value = "SELECT COUNT(id) FROM bills o WHERE DAY(o.created_at) = DAY(GETDATE()) \n" +
+            "AND MONTH(o.created_at) = MONTH(GETDATE()) AND YEAR(o.created_at) = YEAR(GETDATE()) ;", nativeQuery = true)
     BigDecimal billToday();
 
 }
