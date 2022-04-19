@@ -2,3 +2,4 @@
 /.idea/
 /.mvn/
 .vscode/launch.json
+src/main/resources/application-heroku.properties
