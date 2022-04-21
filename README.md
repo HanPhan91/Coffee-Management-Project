@@ -31,7 +31,7 @@
 2. Lê Nhật Quang
 3. Hồ Thị Na
 # Review sản phẩm: #
-## https://bit.ly/3KW9SWS ##
-## https://bit.ly/37W4pAI ##
+## Sản phẩm sử dụng MySQL: https://bit.ly/3KW9SWS ##
+## Sản phẩm sử dụng SQL Server: https://bit.ly/37W4pAI ##
 ## Tên đăng nhập: admin ##
 ## Mật khẩu: Abc123@ ##
